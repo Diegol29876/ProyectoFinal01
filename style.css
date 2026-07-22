@@ -18,13 +18,13 @@ header{
 }
 .logo{
     display: flex;
-    aling-items: center;
+    align-items: center;
     gap: 10px
 }
 .logo img{
     width: 60px;
 }
-,logo h1{
+.logo h1{
     font-size: 30px;
     color:darkslateblue
 }
