@@ -44,7 +44,7 @@ main {
 
 .bienvenida {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 30px;
 }
 .bienvenida img { width: 90px; }
 .bienvenida h2 { font-size: 40px; color: #13315c; margin: 15px; }
