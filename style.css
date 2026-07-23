@@ -1,34 +1,157 @@
-*{ 
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 body{
-    background-color: #f2f2f2;
-    color: #333;
+    background: #eef5fc;
+    color: #1b2a41;
 }
+
+
+
 header{
-    background-color: #4CAF50;
-    color: #fff;
+    background: white;
     padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 2px 8px #ccc;
 }
+
 .logo{
     display: flex;
     align-items: center;
-    gap: 10px
+    gap: 15px;
 }
+
 .logo img{
     width: 60px;
 }
+
 .logo h1{
-    font-size: 30px;
-    color:darkslateblue
+    color: #0b5fa5;
+    font-size: 28px;
 }
+
 .logo p{
-    font-size: 16px;
-    color: #fff;
+    color: gray;
+}
+
+
+main{
+    padding: 30px 15px;
+}
+
+.contenedor{
+    max-width: 800px;
+    margin: auto;
+}
+
+
+.bienvenida{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.bienvenida img{
+    width: 90px;
+}
+
+.bienvenida h2{
+    font-size: 40px;
+    color: #13315c;
+    margin: 15px;
+}
+
+.bienvenida p{
+    font-size: 18px;
+}
+
+
+
+.tarjetas{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.tarjeta{
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 5px 15px #ddd;
+}
+
+
+.tarjeta:hover{
+    transform: scale(1.02);
+}
+
+
+.izquierda{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.icono{
+    background: #dcebff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+
+.icono img{
+    width: 35px;
+}
+
+
+.texto h3{
+    color: #0b5fa5;
+    font-size: 22px;
+}
+
+
+.texto p{
+    color: #666;
+    margin-top: 5px;
+}
+
+
+.flecha{
+    font-size: 30px;
+    color: gray;
+}
+
+
+
+footer{
+    text-align: center;
+    background: white;
+    padding: 20px;
+    margin-top: 30px;
+    color: gray;
+}
+
+
+@media(max-width:600px){
+
+    .logo h1{
+        font-size: 22px;
+    }
+
+    .bienvenida h2{
+        font-size: 32px;
+    }
+
+    .tarjeta{
+        padding: 15px;
+    }
+
 }
