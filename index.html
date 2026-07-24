@@ -11,72 +11,77 @@
 <body>
 
     <header>
-        <div class="logo"></div>
-        <div>
+        <div class="logo">
+            <img src="Logo_Hc.png" alt="Logo Hospital de Clínicas">
+        </div>
+        <div class="texto-header">
             <h1>HOSPITAL DE CLÍNICAS</h1>
             <p>Dr. Manuel Quintela</p>
         </div>
     </header>
 
     <main>
+        <div class="contenedor">
 
-        <div class="logo"></div>
-
-        <h2>Bienvenido</h2>
-
-        <p class="descripcion">
-            Accedé a la información y documentos<br>
-            del Hospital de Clínicas de forma digital
-        </p>
-
-        <section class="opciones">
-
-            <h3>¿Qué deseas hacer?</h3>
-            <p>Seleccioná una opción para continuar</p>
-
-            <div class="opcion">
-                <div class="icono-opcion"></div>
-
-                <div>
-                    <h4>Ver Documentos</h4>
-                    <p>Accedé a la documentación<br>disponible para pacientes</p>
-                </div>
-
-                <span>></span>
+            <div class="bienvenida">
+                <h2>Bienvenido</h2>
+                <p>Accedé a la información y documentos del Hospital de Clínicas de forma digital</p>
             </div>
 
-            <div class="opcion">
-                <div class="icono-opcion"></div>
-
-                <div>
-                    <h4>Encuestas de Satisfacción</h4>
-                    <p>Completá encuestas y ayudanos<br>a mejorar nuestros servicios</p>
+            <section class="tarjetas">
+                <div class="bienvenida" style="margin-bottom: 0;">
+                    <h3 style="color: #0b5fa5; font-size: 22px;">¿Qué deseas hacer?</h3>
+                    <p style="color: #666; margin-top: 5px;">Seleccioná una opción para continuar</p>
                 </div>
 
-                <span>></span>
-            </div>
+                <a href="documentos.php" class="tarjeta">
+    <div class="izquierda">
+        <div class="icono">
+            <img src="Icono Documento.png" alt="Icono documentos">
+        </div>
+        <div class="texto">
+            <h3>Ver Documentos</h3>
+            <p>Accedé a la documentación disponible para pacientes</p>
+        </div>
+    </div>
+    <span class="flecha">></span>
+</a>
 
-            <div class="opcion">
-                <div class="icono-opcion"></div>
+                <a href="#" class="tarjeta">
+                    <div class="izquierda">
+                        <div class="icono">
+                            <img src="Icono  Encuesta.png" alt="Icono encuestas">
+                        </div>
+                        <div class="texto">
+                            <h3>Encuestas de Satisfacción</h3>
+                            <p>Completá encuestas y ayudanos a mejorar</p>
+                        </div>
+                    </div>
+                    <span class="flecha">></span>
+                </a>
 
-                <div>
-                    <h4>Información General</h4>
-                    <p>Información útil sobre el hospital<br>y sus servicios</p>
-                </div>
+                <a href="#" class="tarjeta">
+                    <div class="izquierda">
+                        <div class="icono">
+                            <img src="Icono Informacion.png" alt="Icono información">
+                        </div>
+                        <div class="texto">
+                            <h3>Información General</h3>
+                            <p>Información útil sobre el hospital y sus servicios</p>
+                        </div>
+                    </div>
+                    <span class="flecha">></span>
+                </a>
+            </section>
 
-                <span>></span>
-            </div>
-
-        </section>
-
+        </div>
     </main>
 
     <footer>
-        <div>
-            <strong>Tu información está protegida</strong>
-            <p>Sitio oficial del Hospital de Clínicas</p>
-        </div>
+        <strong>Tu información está protegida</strong>
+        <p>Sitio oficial del Hospital de Clínicas</p>
     </footer>
 
 </body>
+
 </html>
