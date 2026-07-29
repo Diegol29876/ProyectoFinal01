@@ -28,7 +28,6 @@
             </div>
 
             <section class="tarjetas">
-                <!-- Ejemplo de tarjeta para un documento -->
                 <a href="#" class="tarjeta">
                     <div class="izquierda">
                         <div class="icono">
@@ -42,7 +41,6 @@
                     <span class="flecha">></span>
                 </a>
 
-                <!-- Botón para volver al inicio -->
                 <a href="index.html" class="tarjeta" style="justify-content: center; text-align: center; margin-top: 20px;">
                     <div class="texto">
                         <h3 style="color: #0b5fa5;">← Volver al inicio</h3>
