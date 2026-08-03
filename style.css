@@ -12,7 +12,7 @@ body {
 
 header, footer {
     background: #fff;
-    padding: 10px;
+    padding: 15px 20px;
     text-align: center;
     color: gray;
 }
@@ -34,22 +34,20 @@ header {
 }
 
 .logo img {
-    width: 250px;
+    width: 200px;
 }
 
-.texto-header {
-    text-align: right;
-}
-
-.texto-header h1 {
-    color: #0b5fa5;
-    font-size: 22px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.texto-header p {
-    color: gray;
+.btn-login {
+    background-color: #0b5fa5;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
     font-size: 14px;
+}
+
+.btn-login:hover {
+    background-color: #094d86;
 }
 
 main {
@@ -61,19 +59,24 @@ main {
     margin: auto;
 }
 
+.contenedor-login {
+    max-width: 450px;
+    margin: auto;
+}
+
 .bienvenida {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .bienvenida h2 {
     font-size: 65px;
     color: #13315c;
-    margin: 15px;
+    margin-bottom: 10px;
 }
 
 .bienvenida p {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .tarjetas {
@@ -121,8 +124,68 @@ main {
 }
 
 .flecha {
-    font-size: 30px;
+    font-size: 24px;
     color: gray;
+}
+
+.formulario {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #ddd;
+}
+
+.formulario label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #0b5fa5;
+    font-size: 14px;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.formulario button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #0b5fa5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.formulario button:hover {
+    background-color: #094d86;
+}
+
+.texto-registro {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.texto-registro p {
+    font-size: 14px;
+    color: #666;
+}
+
+.texto-registro a {
+    color: #0b5fa5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.texto-registro a:hover {
+    text-decoration: underline;
 }
 
 footer {
@@ -130,13 +193,13 @@ footer {
 }
 
 @media (max-width: 600px) {
-    .texto-header h1 {
-        font-size: 18px;
-    }
     .bienvenida h2 {
         font-size: 32px;
     }
     .tarjeta {
         padding: 15px;
+    }
+    .logo img {
+        width: 150px;
     }
 }

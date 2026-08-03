@@ -4,56 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentos - Hospital de Clínicas</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Gestión de Documentos</title>
+
+<link rel="stylesheet" href="/ProyectoFinal01/documentos.css">
+
 </head>
 
 <body>
 
     <header>
-        <div class="logo">
-            <img src="Logo_Hc.png" alt="Logo Hospital de Clínicas">
+
+        <div class="logo-header">
+
+            <img src="../Logo_Hc.png" alt="Logo Hospital" height="50">
+
+
         </div>
-        <div class="texto-header">
-            <h1>HOSPITAL DE CLÍNICAS</h1>
-            <p>Dr. Manuel Quintela</p>
-        </div>
+        
+        <a href="../index.html" class="boton-inicio">
+            Volver al inicio
+        </a>
+
     </header>
 
     <main>
-        <div class="contenedor">
-            <div class="bienvenida">
-                <h2>Documentos Disponibles</h2>
-                <p>Aquí podés consultar la documentación para pacientes</p>
-            </div>
 
-            <section class="tarjetas">
-                <a href="#" class="tarjeta">
-                    <div class="izquierda">
-                        <div class="icono">
-                            <img src="Logo_Hc.png" alt="PDF">
-                        </div>
-                        <div class="texto">
-                            <h3>Guía del Paciente</h3>
-                            <p>Información útil sobre internación y horarios</p>
-                        </div>
-                    </div>
-                    <span class="flecha">></span>
-                </a>
+        <h1>Gestión de Documentos</h1>
 
-                <a href="index.html" class="tarjeta" style="justify-content: center; text-align: center; margin-top: 20px;">
-                    <div class="texto">
-                        <h3 style="color: #0b5fa5;">← Volver al inicio</h3>
-                    </div>
-                </a>
-            </section>
+        <form>
+
+            <label>Nombre del documento</label>
+
+            <input type="text" placeholder="Ej: Preparación para estudios">
+
+            <label>Categoría</label>
+
+            <select>
+
+                <option>Radiología</option>
+                <option>Cardiología</option>
+                <option>Nefrología</option>
+                <option>Otro</option>
+
+            </select>
+
+            <label>Seleccionar archivo PDF</label>
+
+            <input type="file">
+
+            <button type="submit">Guardar Documento</button>
+
+        </form>
+
+        <h2>Documentos registrados</h2>
+
+        <div class="documento">
+
+            <h3>Preparación para estudios imagenológicos</h3>
+
+            <p>Categoría: Radiología</p>
+
+            <button>Editar</button>
+
+            <button>Eliminar</button>
+
         </div>
-    </main>
 
-    <footer>
-        <strong>Tu información está protegida</strong>
-        <p>Sitio oficial del Hospital de Clínicas</p>
-    </footer>
+        <div class="documento">
+
+            <h3>Indicaciones para pacientes con Warfarina</h3>
+
+            <p>Categoría: Cardiología</p>
+
+            <button>Editar</button>
+
+            <button>Eliminar</button>
+
+        </div>
+
+    </main>
 
 </body>
 
