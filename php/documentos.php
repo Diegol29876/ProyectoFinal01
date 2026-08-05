@@ -3,86 +3,81 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Documentos</title>
+    <title>Documentos para Pacientes</title>
 
-<link rel="stylesheet" href="/ProyectoFinal01/documentos.css">
-
+    <link rel="stylesheet" href="../documentos.css">
 </head>
 
 <body>
 
-    <header>
+<header>
 
-        <div class="logo-header">
+    <div class="logo-header">
+        <img src="../Logo_Hc_small.png" alt="Logo Hospital">
+    </div>
 
-            <img src="../Logo_Hc.png" alt="Logo Hospital" height="50">
+    <a href="../index.html" class="boton-inicio">Volver al Inicio</a>
 
+</header>
 
-        </div>
-        
-        <a href="../index.html" class="boton-inicio">
-            Volver al inicio
+<main>
+
+    <h1>Documentos para Pacientes</h1>
+
+    <p>
+        En esta sección podrá consultar y descargar los documentos informativos
+        del Hospital de Clínicas.
+    </p>
+
+    <div class="documento">
+
+        <h3>Preparación para estudios imagenológicos</h3>
+
+        <p>Información para pacientes antes de realizar el estudio.</p>
+
+        <a href="../pdf/preparacion_estudios.pdf" target="_blank">
+            <button>Ver Documento</button>
         </a>
 
-    </header>
+        <a href="../pdf/preparacion_estudios.pdf" download>
+            <button>Descargar PDF</button>
+        </a>
 
-    <main>
+    </div>
 
-        <h1>Gestión de Documentos</h1>
+    <div class="documento">
 
-        <form>
+        <h3>Indicaciones para pacientes con Warfarina</h3>
 
-            <label>Nombre del documento</label>
+        <p>Recomendaciones para pacientes en tratamiento.</p>
 
-            <input type="text" placeholder="Ej: Preparación para estudios">
+        <a href="../pdf/warfarina.pdf" target="_blank">
+            <button>Ver Documento</button>
+        </a>
 
-            <label>Categoría</label>
+        <a href="../pdf/warfarina.pdf" download>
+            <button>Descargar PDF</button>
+        </a>
 
-            <select>
+    </div>
 
-                <option>Radiología</option>
-                <option>Cardiología</option>
-                <option>Nefrología</option>
-                <option>Otro</option>
+    <div class="documento">
 
-            </select>
+        <h3>Prevención de infecciones</h3>
 
-            <label>Seleccionar archivo PDF</label>
+        <p>Consejos para prevenir infecciones durante el tratamiento.</p>
 
-            <input type="file">
+        <a href="../pdf/infecciones.pdf" target="_blank">
+            <button>Ver Documento</button>
+        </a>
 
-            <button type="submit">Guardar Documento</button>
+        <a href="../pdf/infecciones.pdf" download>
+            <button>Descargar PDF</button>
+        </a>
 
-        </form>
+    </div>
 
-        <h2>Documentos registrados</h2>
-
-        <div class="documento">
-
-            <h3>Preparación para estudios imagenológicos</h3>
-
-            <p>Categoría: Radiología</p>
-
-            <button>Editar</button>
-
-            <button>Eliminar</button>
-
-        </div>
-
-        <div class="documento">
-
-            <h3>Indicaciones para pacientes con Warfarina</h3>
-
-            <p>Categoría: Cardiología</p>
-
-            <button>Editar</button>
-
-            <button>Eliminar</button>
-
-        </div>
-
-    </main>
+</main>
 
 </body>
 

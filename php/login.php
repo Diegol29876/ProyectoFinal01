@@ -27,17 +27,13 @@
             </div>
 
             <form class="formulario">
-                <label>Nombre de usuario</label>
-                <input type="text" placeholder="Ingresá tu usuario">
+                <label>Cedula</label>
+                <input type="text" id="cedula" name="cedula" maxlength="8" inputmode="numeric" pattern="[0-9]*" placeholder="Ingresá tu Cedula">
 
                 <label>Contraseña</label>
-                <input type="password" placeholder="Ingresá tu contraseña">
+                <input type="password" id="password" name="password" placeholder="Ingresá tu contraseña">
 
                 <button type="submit">Iniciar sesión</button>
-
-                <div class="texto-registro">
-                    <p>¿No tienes cuenta? <a href="registro.php">Regístrate</a></p>
-                </div>
             </form>
 
         </div>
@@ -48,6 +44,7 @@
         <p>Sitio oficial del Hospital de Clínicas</p>
     </footer>
 
+    <script src="../login.js"></script>
 </body>
 
 </html>
