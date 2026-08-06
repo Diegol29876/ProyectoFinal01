@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #eef5fc;
+    color: #1b2a41;
+}
+
+header, footer {
+    background: #fff;
+    padding: 15px 20px;
+    text-align: center;
+    color: gray;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.logo, .tarjeta, .izquierda {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    gap: 15px;
+}
+
+.logo img {
+    width: 200px;
+}
+
+.btn-login {
+    background-color: #0b5fa5;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 30px;
+}
+
+.btn-login:hover {
+    background-color: #094d86;
+}
+
+main {
+    padding: 30px 15px;
+}
+
+.contenedor {
+    max-width: 800px;
+    margin: auto;
+}
+
+.contenedor-login {
+    max-width: 450px;
+    margin: auto;
+}
+
+.bienvenida {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.bienvenida h2 {
+    font-size: 65px;
+    color: #13315c;
+    margin-bottom: 10px;
+}
+
+.bienvenida p {
+    font-size: 16px;
+}
+
+.tarjetas {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tarjeta {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    justify-content: space-between;
+    text-decoration: none;
+    box-shadow: 0 5px 15px #ddd;
+    transition: transform 0.2s;
+}
+
+.tarjeta:hover {
+    transform: scale(1.02);
+}
+
+.izquierda {
+    gap: 15px;
+}
+
+.icono {
+    background: #dcebff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.icono img {
+    width: 35px;
+}
+
+.texto h3 {
+    color: #0b5fa5;
+    font-size: 22px;
+}
+
+.texto p {
+    color: #666;
+    margin-top: 5px;
+}
+
+.flecha {
+    font-size: 24px;
+    color: gray;
+}
+
+.formulario {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #ddd;
+}
+
+.formulario label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #0b5fa5;
+    font-size: 14px;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.formulario button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #0b5fa5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.formulario button:hover {
+    background-color: #094d86;
+}
+
+.texto-registro {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.texto-registro p {
+    font-size: 14px;
+    color: #666;
+}
+
+.texto-registro a {
+    color: #0b5fa5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.texto-registro a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 30px;
+}
+
+@media (max-width: 600px) {
+    .bienvenida h2 {
+        font-size: 32px;
+    }
+    .tarjeta {
+        padding: 15px;
+    }
+    .logo img {
+        width: 150px;
+    }
+}
