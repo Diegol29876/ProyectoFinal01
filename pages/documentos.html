@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Documentos para Pacientes</title>
 
-    <link rel="stylesheet" href="documentos.css">
+    <link rel="stylesheet" href="../css/documentos.css">
 </head>
 
 <body>
@@ -13,10 +13,10 @@
 <header>
 
     <div class="logo-header">
-        <img src="Logo_Hc_small.png" alt="Logo Hospital">
+        <img src="../img/Logo_Hc_small.png" alt="Logo Hospital">
     </div>
 
-    <a href="index.html" class="boton-inicio">Volver al Inicio</a>
+    <a href="../index.html" class="boton-inicio">Volver al Inicio</a>
 
 </header>
 
@@ -36,13 +36,15 @@
 
         <p>Información para pacientes antes de realizar el estudio.</p>
 
-        <a href="../pdf/preparacion_estudios.pdf" target="_blank">
-            <button>Ver Documento</button>
-        </a>
+        <form id="form-documentos" class="form-carga">
+            <label for="nombre">Nombre del documento</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ingresá el nombre del documento" required>
 
-        <a href="../pdf/preparacion_estudios.pdf" download>
-            <button>Descargar PDF</button>
-        </a>
+            <label for="archivo">Archivo</label>
+            <input type="file" id="archivo" name="archivo" required>
+
+            <button type="submit" id="boton">Subir documento</button>
+        </form>
 
     </div>
 
