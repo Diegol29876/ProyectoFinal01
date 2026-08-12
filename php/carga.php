@@ -14,6 +14,16 @@ if (!isset($_FILES['archivo']) || $_FILES['archivo']['error'] !== UPLOAD_ERR_OK)
 }
 
 $nombre = isset($_POST['nombre']) ? trim($_POST['nombre']) : '';
+
+if ($nombre === '') {
+    http_response_code(400);
+    echo 'Falta el nombre del documento';
+    exit;
+}
+
+// limpio caracteres que pueden romper el nombre del archivo
+$nombre = preg_replace('/[\\\\\/:*?"<>|]/', '', $nombre);
+
 $uploadDir = __DIR__ . '/../uploads';
 
 if (!is_dir($uploadDir)) {
@@ -21,10 +31,29 @@ if (!is_dir($uploadDir)) {
 }
 
 $archivo = $_FILES['archivo'];
-$destino = $uploadDir . '/' . basename($archivo['name']);
+$extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
 
-if (move_uploaded_file($archivo['tmp_name'], $destino)) {
-    echo "Archivo subido correctamente: $nombre";
+$nombreBase = $nombre;
+$ruta = $uploadDir . '/' . $nombreBase;
+
+if ($extension !== '') {
+    $ruta .= '.' . $extension;
+}
+
+$contador = 1;
+
+while (file_exists($ruta)) {
+    $ruta = $uploadDir . '/' . $nombreBase . '_' . $contador;
+
+    if ($extension !== '') {
+        $ruta .= '.' . $extension;
+    }
+
+    $contador++;
+}
+
+if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
+    echo 'Archivo subido correctamente: ' . basename($ruta);
 } else {
     http_response_code(500);
     echo 'No se pudo guardar el archivo';
