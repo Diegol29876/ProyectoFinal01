@@ -21,7 +21,6 @@ if ($nombre === '') {
     exit;
 }
 
-// limpio caracteres que pueden romper el nombre del archivo
 $nombre = preg_replace('/[\\\\\/:*?"<>|]/', '', $nombre);
 
 $uploadDir = __DIR__ . '/../uploads';
