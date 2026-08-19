@@ -6,25 +6,121 @@
 }
 
 body {
-    background-color: #f0f2f5;
+    background: #eef5fc;
+    color: #1b2a41;
 }
 
-header, footer {
+
+footer {
     background: #fff;
-    padding: 15px;
+    padding: 15px 20px;
     text-align: center;
     color: gray;
 }
 
 header {
-    height: auto; 
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     box-shadow: 0 2px 8px #ccc;
+    padding: 15px 20px;
 }
-img {
-    width: 250px;
-    height: 150px;
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logo img {
+    width: 200px;
+    height: auto;
     object-fit: contain;
+    display: block;
+}
+main {
+    padding: 30px 15px;
+}
+
+.contenedor-login {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.bienvenida {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.bienvenida h2 {
+    color: #13315c;
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.bienvenida p {
+    color: #5b6b7b;
+    font-size: 16px;
+}
+
+.formulario {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #5473ac;
+}
+
+.formulario label {
+    display: block;
+    margin: 14px 0 4px;
+    color: #23136d;
+    font-size: 17px;
+    font-weight: bold;
+}
+.formulario input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #4d4c4b;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #fff;
+}
+.formulario input:focus {
+    outline: none;
+    border-color: #5689cc;
+    box-shadow: 0 0 0 3px rgba(11, 95, 165, 0.12);
+}
+
+.formulario button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #85c275;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.formulario button:hover {
+    background: #137520;
+}
+
+footer {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+footer strong {
+    display: block;
+    color: #13315c;
+    margin-bottom: 5px;
+}
+
+footer p {
+    color: #666;
+    font-size: 14px;
 }
