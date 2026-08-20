@@ -44,14 +44,14 @@ try {
 	$consulta->bind_param(
 		'ssissssss',
 		$usuario,
+        $contrasenia,
 		$correo,
-		$telefono,
-		$contraseña,
 		$direccion,
-		$nacimiento,
-		$cedula,
-		$estado,
-		$ingreso
+        $f_nacimiento,
+        $cedula,
+		$n_telefono,
+        $f_ingreso,
+        $estado
 	);
 	$consulta->execute();
 
