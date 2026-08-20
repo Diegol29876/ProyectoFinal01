@@ -36,7 +36,7 @@ try {
 	$conexion = conectar_bd();
 	$consulta = $conexion->prepare(
 		'INSERT INTO funcionarios
-		(n_usuario, c_electronico, n_telefono, contraseña, direccion, f_nacimiento, cedula, estado, f_ingreso)
+		(n_usuario, contrasenia, c_electronico, direccion , f_nacimiento , cedula  , n_telefono , f_ingreso , estado)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
 	);
 
