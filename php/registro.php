@@ -42,7 +42,7 @@ try {
 
 	$contraseña = password_hash($contraseña, PASSWORD_DEFAULT);
 	$consulta->bind_param(
-		'sssssssss',
+		'ssissssss',
 		$usuario,
 		$correo,
 		$telefono,
@@ -56,7 +56,7 @@ try {
 	$consulta->execute();
 
 	$consulta->close();
-	$conexion->close();
+
 	echo json_encode(['ok' => true, 'mensaje' => 'Registro creado correctamente.']);
 } catch (mysqli_sql_exception $error) {
 	http_response_code($error->getCode() === 1062 ? 409 : 500);

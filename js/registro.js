@@ -11,6 +11,7 @@ formulario.addEventListener('submit', async function (evento) {
 		const resultado = await respuesta.json();
 
 		alert(resultado.mensaje);
+        
 		if (resultado.ok) {
 			formulario.reset();
 		}
