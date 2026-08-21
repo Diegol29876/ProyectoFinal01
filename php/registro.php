@@ -42,7 +42,7 @@ try {
 
 	$contraseña = password_hash($contraseña, PASSWORD_DEFAULT);
 	$consulta->bind_param(
-		'ssissssss',
+		'sssssisss',
 		$usuario,
         $contrasenia,
 		$correo,
