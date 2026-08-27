@@ -9,7 +9,7 @@ formulario.addEventListener('submit', async function (evento) {
 			body: new FormData(formulario)
 		});
 		const resultado = await respuesta.json();
-
+        console.log("Error:" , resultado.status);
 		alert(resultado.mensaje);
         
 		if (resultado.ok) {
