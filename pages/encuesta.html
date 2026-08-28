@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Encuesta de satisfacción - Hospital de Clínicas</title>
+	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/encuesta.css">
+</head>
+
+<body>
+
+	<header>
+		<div class="logo">
+			<img src="../img/Logo_Hc.png" alt="Logo Hospital de Clínicas">
+		</div>
+
+		<a href="../index.html" class="btn-login">Volver al inicio</a>
+	</header>
+
+	<main>
+		<div class="contenedor-login">
+
+			<div class="bienvenida">
+				<h2>Encuesta de satisfacción</h2>
+				<p>Ayudanos a mejorar la atención del Hospital de Clínicas</p>
+			</div>
+
+			<form class="formulario" id="form-encuesta" action="../php/encuesta.php" method="post">
+				<input type="hidden" name="ID_Encuesta" value="1">
+
+				<label for="servicio">¿Qué servicio utilizaste?</label>
+				<select id="servicio" name="servicio" required>
+					<option value="">Seleccioná una opción</option>
+					<option value="consulta">Consulta médica</option>
+					<option value="emergencia">Emergencia</option>
+					<option value="internacion">Internación</option>
+					<option value="estudios">Estudios y análisis</option>
+					<option value="otro">Otro servicio</option>
+				</select>
+
+				<label for="atencion">¿Cómo calificás la atención recibida?</label>
+				<select id="atencion" name="atencion" required>
+					<option value="">Seleccioná una opción</option>
+					<option value="excelente">Excelente</option>
+					<option value="muy_buena">Muy buena</option>
+					<option value="buena">Buena</option>
+					<option value="regular">Regular</option>
+					<option value="mala">Mala</option>
+				</select>
+
+				<label for="espera">¿Cómo considerás el tiempo de espera?</label>
+				<select id="espera" name="espera" required>
+					<option value="">Seleccioná una opción</option>
+					<option value="muy_corto">Muy corto</option>
+					<option value="corto">Corto</option>
+					<option value="adecuado">Adecuado</option>
+					<option value="largo">Largo</option>
+					<option value="muy_largo">Muy largo</option>
+				</select>
+
+				<label for="instalaciones">¿Cómo calificás las instalaciones?</label>
+				<select id="instalaciones" name="instalaciones" required>
+					<option value="">Seleccioná una opción</option>
+					<option value="excelente">Excelente</option>
+					<option value="muy_buena">Muy buenas</option>
+					<option value="buena">Buenas</option>
+					<option value="regular">Regulares</option>
+					<option value="mala">Malas</option>
+				</select>
+
+				<label for="recomendaria">¿Recomendarías el Hospital de Clínicas?</label>
+				<select id="recomendaria" name="recomendaria" required>
+					<option value="">Seleccioná una opción</option>
+					<option value="si">Sí</option>
+					<option value="no">No</option>
+					<option value="tal_vez">Tal vez</option>
+				</select>
+
+				<label for="comentarios">Comentarios o sugerencias</label>
+				<textarea id="comentarios" name="comentarios" rows="5" placeholder="Escribí tu comentario"></textarea>
+
+				<button type="submit">Enviar encuesta</button>
+			</form>
+
+		</div>
+	</main>
+
+	<footer>
+		<strong>Tu información está protegida</strong>
+		<p>Sitio oficial del Hospital de Clínicas</p>
+	</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+.formulario select,
+.formulario textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 14px;
+	background: #fff;
+}
+
+.formulario select:focus,
+.formulario textarea:focus {
+	outline: none;
+	border-color: #5689cc;
+	box-shadow: 0 0 0 3px rgba(11, 95, 165, 0.12);
+}
