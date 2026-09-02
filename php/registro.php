@@ -38,6 +38,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	try {
 
 		$conexion = conectar_bd();
+
+		$verificar = $conexion->prepare(
+			'SELECT n_usuario, c_electronico, cedula FROM funcionario 
+			 WHERE n_usuario = ? OR c_electronico = ? OR cedula = ?'
+		);
+		$verificar->bind_param('sss', $usuario, $correo, $cedula);
+		$verificar->execute();
+		$resultado = $verificar->get_result();
+
+		if ($resultado->num_rows > 0) {
+			$fila = $resultado->fetch_assoc();
+
+			if ($fila['n_usuario'] === $usuario) {
+				echo json_encode([
+					'status' => false,
+					'mensaje' => "El usuario '{$usuario}' ya está registrado."
+				]);
+			} elseif ($fila['c_electronico'] === $correo) {
+				echo json_encode([
+					'status' => false,
+					'mensaje' => "El correo '{$correo}' ya está registrado."
+				]);
+			} elseif ($fila['cedula'] === $cedula) {
+				echo json_encode([
+					'status' => false,
+					'mensaje' => "La cédula '{$cedula}' ya está registrada."
+				]);
+			}
+			$verificar->close();
+			exit;
+		}
+
+		$verificar->close();
 		$contrasenia = password_hash($contrasenia, PASSWORD_DEFAULT);
 		
 		$consulta = $conexion->prepare(
