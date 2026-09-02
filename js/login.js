@@ -1,21 +1,55 @@
-const cedulaInput = document.querySelector("#cedula");
-const passwordInput = document.querySelector("#password");
+const formulario = document.getElementById('form-login');
+const cedulaInput = document.getElementById('cedula');
 
-cedulaInput.addEventListener("input", function() {
-    let texto = cedulaInput.value;
-    let soloNumeros = "";
+// Filtrar solo números en cédula
+if (cedulaInput) {
+	cedulaInput.addEventListener("input", function() {
+		this.value = this.value.replace(/[^0-9]/g, '').slice(0, 8);
+	});
+}
 
-    for (let i = 0; i < texto.length; i++) {
-        let letra = texto[i];
-        
-        if (letra >= '0' && letra <= '9') {
-            soloNumeros += letra;
-        }
-    }
+// Enviar formulario
+if (formulario) {
+	formulario.addEventListener('submit', function(e) {
+		e.preventDefault();
 
-    if (soloNumeros.length > 8) {
-        soloNumeros = soloNumeros.slice(0, 8);
-    }
+		const cedula = document.getElementById('cedula').value;
+		const password = document.getElementById('password').value;
 
-    cedulaInput.value = soloNumeros;
-});
+		if (!cedula || !password) {
+			alert('Por favor completa todos los campos');
+			return;
+		}
+
+		// Crear FormData
+		const datos = new FormData();
+		datos.append('cedula', cedula);
+		datos.append('password', password);
+
+		// Enviar al servidor
+		fetch('../php/login.php', {
+			method: 'POST',
+			body: datos
+		})
+		.then(respuesta => respuesta.json())
+		.then(resultado => {
+			console.log('Respuesta:', resultado);
+			
+			if (resultado.status) {
+				alert(resultado.mensaje);
+				// Redirigir después de 1 segundo
+				setTimeout(() => {
+					window.location.href = './panel_fun.html';
+				}, 1000);
+			} else {
+				alert('Error: ' + resultado.mensaje);
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			alert('No se pudo conectar con el servidor');
+		});
+	});
+} else {
+	console.error('Formulario no encontrado');
+}
