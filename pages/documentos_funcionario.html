@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de documentos - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/documentos_funcionario.css">
+</head>
+<body>
+    <header class="encabezado-documentos">
+        <a href="panel_fun.html" class="marca">
+            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
+            <span>Panel de funcionarios</span>
+        </a>
+        <a href="panel_fun.html" class="boton-secundario">Volver al panel</a>
+    </header>
+
+    <main class="contenido">
+        <section class="encabezado-vista">
+            <div>
+                <p class="eyebrow">Gestión interna</p>
+                <h1>Documentación para pacientes</h1>
+                <p>Administrá manuales de preparación, pautas de enfermería y documentos informativos.</p>
+            </div>
+            <span class="contador" id="contador-documentos">3 documentos</span>
+        </section>
+
+        <section class="panel-carga" aria-labelledby="titulo-carga">
+            <div>
+                <h2 id="titulo-carga">Cargar nuevo documento</h2>
+                <p>El archivo quedará disponible para generar un código QR.</p>
+            </div>
+            <form id="form-documento" class="formulario-carga">
+                <label for="nombre-documento">Nombre del documento</label>
+                <input type="text" id="nombre-documento" name="nombre" placeholder="Ej. Preparación para resonancia" required>
+
+                <label for="tipo-documento">Tipo de documento</label>
+                <select id="tipo-documento" name="tipo" required>
+                    <option value="Manual de preparación">Manual de preparación</option>
+                    <option value="Pauta de enfermería">Pauta de enfermería</option>
+                    <option value="Documento de paciente">Documento de paciente</option>
+                </select>
+
+                <label for="archivo-documento">Archivo (PDF, DOC o DOCX)</label>
+                <input type="file" id="archivo-documento" name="archivo" accept=".pdf,.doc,.docx" required>
+                <button type="submit" class="boton-principal">Cargar documento</button>
+                <p id="estado-carga" class="estado" role="status"></p>
+            </form>
+        </section>
+
+        <section class="lista-documentos" aria-labelledby="titulo-lista">
+            <div class="titulo-seccion">
+                <div>
+                    <h2 id="titulo-lista">Documentos cargados</h2>
+                </div>
+                <label class="busqueda" for="buscar-documento">
+                    <span class="sr-only">Buscar documentos</span>
+                    <input type="search" id="buscar-documento" placeholder="Buscar documento">
+                </label>
+            </div>
+            <div id="lista-documentos" class="documentos-grid"></div>
+        </section>
+
+        <section class="panel-qr" aria-labelledby="titulo-qr">
+            <div>
+                <h2 id="titulo-qr">Código QR del documento</h2>
+                <p id="qr-ayuda">Seleccioná “Generar QR” en un documento para verlo aquí.</p>
+            </div>
+            <div class="qr-contenedor">
+                <div id="qr-preview" class="qr-preview" aria-live="polite">Sin código QR</div>
+                <a id="descargar-qr" class="boton-secundario oculto" download="codigo-qr.png">Descargar QR</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="../js/documentos_funcionario.js"></script>
+</body>
+</html>
