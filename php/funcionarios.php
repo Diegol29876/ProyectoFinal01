@@ -42,8 +42,8 @@ try {
                 n_telefono,
                 f_Ingreso,
                 estado
-             FROM funcionario
-             ORDER BY ID_Funcionario DESC'
+            FROM funcionario
+            ORDER BY ID_Funcionario DESC'
         );
 
 
@@ -217,7 +217,7 @@ try {
 
     <a
         class="volver"
-        href="../pages/panel_fun.php"
+        href="../pages/panel_fun.html"
     >
         ← Volver al panel
     </a>
