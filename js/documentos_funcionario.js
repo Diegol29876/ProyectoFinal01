@@ -1,10 +1,4 @@
-const documentosIniciales = [
-    { id: 1, nombre: 'Preparación para estudios imagenológicos', tipo: 'Manual de preparación', archivo: '../pdf/preparacion_estudios.pdf' },
-    { id: 2, nombre: 'Indicaciones para pacientes con Warfarina', tipo: 'Pauta de enfermería', archivo: '../pdf/warfarina.pdf' },
-    { id: 3, nombre: 'Prevención de infecciones', tipo: 'Documento de paciente', archivo: '../pdf/infecciones.pdf' },
-];
-
-let documentos = [...documentosIniciales];
+let documentos = [];
 const lista = document.getElementById('lista-documentos');
 const contador = document.getElementById('contador-documentos');
 const formulario = document.getElementById('form-documento');
@@ -29,6 +23,17 @@ function renderizarDocumentos() {
     `).join('') : '<p class="sin-resultados">No se encontraron documentos.</p>';
 }
 
+async function cargarCatalogo() {
+    try {
+        const respuesta = await fetch('../php/documentos_publicos.php');
+        if (!respuesta.ok) throw new Error('No se pudo cargar el catálogo.');
+        documentos = await respuesta.json();
+        renderizarDocumentos();
+    } catch (error) {
+        lista.innerHTML = '<p class="sin-resultados">No se pudieron cargar los documentos.</p>';
+    }
+}
+
 async function cargarDocumento(event) {
     event.preventDefault();
     const archivo = document.getElementById('archivo-documento').files[0];
@@ -39,15 +44,9 @@ async function cargarDocumento(event) {
         const respuesta = await fetch('../php/carga.php', { method: 'POST', body: datos });
         if (!respuesta.ok) throw new Error('No se pudo conectar con el servidor.');
         const mensaje = await respuesta.text();
-        documentos.unshift({
-            id: Date.now(),
-            nombre: datos.get('nombre'),
-            tipo: datos.get('tipo'),
-            archivo: URL.createObjectURL(archivo),
-        });
         formulario.reset();
         estado.textContent = mensaje || 'Documento cargado correctamente.';
-        renderizarDocumentos();
+        await cargarCatalogo();
     } catch (error) {
         estado.textContent = `No se pudo cargar el documento: ${error.message}`;
     }
@@ -86,4 +85,4 @@ lista.addEventListener('click', (event) => {
 
 formulario.addEventListener('submit', cargarDocumento);
 busqueda.addEventListener('input', renderizarDocumentos);
-renderizarDocumentos();
+cargarCatalogo();

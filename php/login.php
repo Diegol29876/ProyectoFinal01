@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once 'conexion.php';
 
 header('Content-Type: application/json');
@@ -21,8 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		$conexion = conectar_bd();
 
-		// Buscar usuario por cédula
-		$consulta = $conexion->prepare('SELECT n_usuario, contrasenia FROM funcionario WHERE cedula = ?');
+		// Buscar usuario por su cedula
+		$consulta = $conexion->prepare(
+    'SELECT ID_Funcionario, n_usuario, contrasenia FROM funcionario WHERE cedula = ?'
+);
 		$consulta->bind_param('s', $cedula);
 		$consulta->execute();
 		$resultado = $consulta->get_result();
@@ -37,13 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		$fila = $resultado->fetch_assoc();
 
-		// Verificar contraseña
+		// Verificar la contraseña
 		if (password_verify($contrasenia, $fila['contrasenia'])) {
-			echo json_encode([
-				'status' => true,
-				'mensaje' => 'Inicio de sesión exitoso.',
-				'usuario' => $fila['n_usuario']
-			]);
+
+        $_SESSION['funcionario_id'] = $fila['ID_Funcionario'];
+        $_SESSION['usuario'] = $fila['n_usuario'];
+
+        echo json_encode([
+        'status' => true,
+        'mensaje' => 'Inicio de sesión exitoso.',
+        'usuario' => $fila['n_usuario']
+    ]);
 		} else {
 			echo json_encode([
 				'status' => false,

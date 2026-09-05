@@ -43,6 +43,10 @@
 
                 <label for="archivo-documento">Archivo (PDF, DOC o DOCX)</label>
                 <input type="file" id="archivo-documento" name="archivo" accept=".pdf,.doc,.docx" required>
+                <label class="confirmacion">
+                    <input type="checkbox" name="confirmar_publico" value="1" required>
+                    Confirmo que el documento contiene información general para pacientes y no datos privados.
+                </label>
                 <button type="submit" class="boton-principal">Cargar documento</button>
                 <p id="estado-carga" class="estado" role="status"></p>
             </form>
