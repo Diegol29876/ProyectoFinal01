@@ -1,20 +1,18 @@
-<?php 
+<?php
 
-    require_once 'config.php';
+require_once 'config.php';
 
-    function conectar_bd() : mysqli {
-
+function conectar_bd(): mysqli
+{
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-        $con = new mysqli(DB_host, DB_usuario, DB_contraseña, DB_nombre);
+    $conexion = new mysqli(
+        DB_HOST,
+        DB_USUARIO,
+        DB_CONTRASENA,
+        DB_NOMBRE
+    );
 
-        if($con->connect_error){
-            
-            die("Error de conexión: " . $con->connect_error);
-        }
-
-        return $con;
-
-    }
-
-?> 
+    $conexion->set_charset('utf8mb4');
+    return $conexion;
+}

@@ -1,79 +1,51 @@
 <?php
 
 session_start();
-
 require_once 'conexion.php';
-
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+function responder($correcto, $mensaje, $usuario = null)
+{
+    $respuesta = [
+        'status' => $correcto,
+        'mensaje' => $mensaje
+    ];
 
-	$cedula = trim($_POST['cedula'] ?? '');
-	$contrasenia = $_POST['password'] ?? '';
+    if ($usuario !== null) {
+        $respuesta['usuario'] = $usuario;
+    }
 
-	if ($cedula === '' || $contrasenia === '') {
-		echo json_encode([
-			'status' => false,
-			'mensaje' => 'Completá todos los campos.'
-		]);
-		exit;
-	}
-
-	try {
-
-		$conexion = conectar_bd();
-
-		// Buscar usuario por su cedula
-		$consulta = $conexion->prepare(
-    'SELECT ID_Funcionario, n_usuario, contrasenia FROM funcionario WHERE cedula = ?'
-);
-		$consulta->bind_param('s', $cedula);
-		$consulta->execute();
-		$resultado = $consulta->get_result();
-
-		if ($resultado->num_rows === 0) {
-			echo json_encode([
-				'status' => false,
-				'mensaje' => 'Cédula o contraseña incorrecta.'
-			]);
-			exit;
-		}
-
-		$fila = $resultado->fetch_assoc();
-
-		// Verificar la contraseña
-		if (password_verify($contrasenia, $fila['contrasenia'])) {
-
-        $_SESSION['funcionario_id'] = $fila['ID_Funcionario'];
-        $_SESSION['usuario'] = $fila['n_usuario'];
-
-        echo json_encode([
-        'status' => true,
-        'mensaje' => 'Inicio de sesión exitoso.',
-        'usuario' => $fila['n_usuario']
-    ]);
-		} else {
-			echo json_encode([
-				'status' => false,
-				'mensaje' => 'Cédula o contraseña incorrecta.'
-			]);
-		}
-
-		$consulta->close();
-		$conexion->close();
-
-	} catch (Exception $error) {
-		echo json_encode([
-			'status' => false,
-			'mensaje' => 'Error en el servidor.'
-		]);
-		exit;
-	}
-
-} else {
-	echo json_encode([
-		'status' => false,
-		'mensaje' => 'Método no permitido.'
-	]);
+    echo json_encode($respuesta);
+    exit;
 }
-?>
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    responder(false, 'Método no permitido.');
+}
+
+$cedula = trim($_POST['cedula'] ?? '');
+$contrasenia = $_POST['password'] ?? '';
+
+if ($cedula === '' || $contrasenia === '') {
+    responder(false, 'Completá todos los campos.');
+}
+
+try {
+    $conexion = conectar_bd();
+    $consulta = $conexion->prepare(
+        'SELECT ID_Funcionario, n_usuario, contrasenia FROM funcionario WHERE cedula = ?'
+    );
+    $consulta->bind_param('s', $cedula);
+    $consulta->execute();
+    $fila = $consulta->get_result()->fetch_assoc();
+
+    if (!$fila || !password_verify($contrasenia, $fila['contrasenia'])) {
+        responder(false, 'Cédula o contraseña incorrecta.');
+    }
+
+    $_SESSION['funcionario_id'] = $fila['ID_Funcionario'];
+    $_SESSION['usuario'] = $fila['n_usuario'];
+    responder(true, 'Inicio de sesión exitoso.', $fila['n_usuario']);
+} catch (Exception $error) {
+    responder(false, 'Error en el servidor.');
+}

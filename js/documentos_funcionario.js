@@ -7,20 +7,41 @@ const busqueda = document.getElementById('buscar-documento');
 
 function renderizarDocumentos() {
     const termino = busqueda.value.trim().toLowerCase();
-    const visibles = documentos.filter((documento) => documento.nombre.toLowerCase().includes(termino));
-    contador.textContent = `${documentos.length} ${documentos.length === 1 ? 'documento' : 'documentos'}`;
-    lista.innerHTML = visibles.length ? visibles.map((documento) => `
-        <article class="documento-card">
-            <span class="tipo">${documento.tipo}</span>
-            <h3>${documento.nombre}</h3>
+    const visibles = documentos.filter(function (documento) {
+        return documento.nombre.toLowerCase().includes(termino);
+    });
+
+    contador.textContent = documentos.length + (documentos.length === 1 ? ' documento' : ' documentos');
+    lista.innerHTML = '';
+
+    if (visibles.length === 0) {
+        lista.innerHTML = '<p class="sin-resultados">No se encontraron documentos.</p>';
+        return;
+    }
+
+    visibles.forEach(function (documento) {
+        const tarjeta = document.createElement('article');
+        tarjeta.className = 'documento-card';
+        tarjeta.innerHTML = `
+            <span class="tipo"></span>
+            <h3></h3>
             <div class="acciones">
-                <a class="accion" href="${documento.archivo}" target="_blank" rel="noopener">Ver documento</a>
-                <button class="accion" data-accion="editar" data-id="${documento.id}">Modificar</button>
-                <button class="accion eliminar" data-accion="eliminar" data-id="${documento.id}">Eliminar</button>
-                <button class="accion" data-accion="qr" data-id="${documento.id}">Generar QR</button>
-            </div>
-        </article>
-    `).join('') : '<p class="sin-resultados">No se encontraron documentos.</p>';
+                <a class="accion" target="_blank" rel="noopener">Ver documento</a>
+                <button class="accion" data-accion="editar">Modificar</button>
+                <button class="accion eliminar" data-accion="eliminar">Eliminar</button>
+                <button class="accion" data-accion="qr">Generar QR</button>
+            </div>`;
+
+        tarjeta.querySelector('.tipo').textContent = documento.tipo;
+        tarjeta.querySelector('h3').textContent = documento.nombre;
+        tarjeta.querySelector('a').href = documento.archivo;
+
+        tarjeta.querySelectorAll('[data-accion]').forEach(function (boton) {
+            boton.dataset.id = documento.id;
+        });
+
+        lista.appendChild(tarjeta);
+    });
 }
 
 async function cargarCatalogo() {
@@ -36,7 +57,6 @@ async function cargarCatalogo() {
 
 async function cargarDocumento(event) {
     event.preventDefault();
-    const archivo = document.getElementById('archivo-documento').files[0];
     const datos = new FormData(formulario);
     estado.textContent = 'Cargando documento...';
 
@@ -70,16 +90,32 @@ function generarQr(documento) {
 lista.addEventListener('click', (event) => {
     const boton = event.target.closest('[data-accion]');
     if (!boton) return;
-    const documento = documentos.find((item) => item.id === Number(boton.dataset.id));
-    if (boton.dataset.accion === 'qr') generarQr(documento);
-    if (boton.dataset.accion === 'eliminar' && confirm(`¿Eliminar “${documento.nombre}”?`)) {
-        documentos = documentos.filter((item) => item.id !== documento.id);
-        renderizarDocumentos();
+    const documento = documentos.find(function (item) {
+        return String(item.id) === boton.dataset.id;
+    });
+
+    if (!documento) return;
+
+    if (boton.dataset.accion === 'qr') {
+        generarQr(documento);
     }
+
+    if (boton.dataset.accion === 'eliminar') {
+        if (confirm('¿Eliminar "' + documento.nombre + '"?')) {
+            documentos = documentos.filter(function (item) {
+                return item.id !== documento.id;
+            });
+            renderizarDocumentos();
+        }
+    }
+
     if (boton.dataset.accion === 'editar') {
-        const nombre = prompt('Nuevo nombre del documento:', documento.nombre);
-        if (nombre && nombre.trim()) documento.nombre = nombre.trim();
-        renderizarDocumentos();
+        const nombreNuevo = prompt('Nuevo nombre del documento:', documento.nombre);
+
+        if (nombreNuevo && nombreNuevo.trim()) {
+            documento.nombre = nombreNuevo.trim();
+            renderizarDocumentos();
+        }
     }
 });
 

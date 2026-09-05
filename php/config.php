@@ -1,5 +1,6 @@
 <?php
-define('DB_host', 'localhost');
-define('DB_usuario', 'root');
-define('DB_contraseña', '');
-define('DB_nombre', 'hospital_de_clinicas');
+
+define('DB_HOST', 'localhost');
+define('DB_USUARIO', 'root');
+define('DB_CONTRASENA', '');
+define('DB_NOMBRE', 'hospital_de_clinicas');

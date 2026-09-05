@@ -1,19 +1,22 @@
 const botones = document.querySelectorAll('.boton-panel');
 const secciones = document.querySelectorAll('.seccion-panel');
 
-botones.forEach((boton) => {
-    boton.addEventListener('click', (event) => {
-        event.preventDefault();
-
+botones.forEach(function (boton) {
+    boton.addEventListener('click', function (evento) {
         const destino = boton.getAttribute('href');
 
-        secciones.forEach((seccion) => {
-            const mostrar = '#' + seccion.id === destino;
-            seccion.classList.toggle('active', mostrar);
+        if (!destino.startsWith('#')) {
+            return;
+        }
+
+        evento.preventDefault();
+
+        secciones.forEach(function (seccion) {
+            seccion.classList.toggle('active', '#' + seccion.id === destino);
         });
 
-        botones.forEach((btn) => {
-            btn.classList.toggle('active', btn === boton);
+        botones.forEach(function (otroBoton) {
+            otroBoton.classList.toggle('active', otroBoton === boton);
         });
     });
 });
