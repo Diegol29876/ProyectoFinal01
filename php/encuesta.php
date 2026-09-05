@@ -24,11 +24,12 @@ if ($id_encuesta === 0 || $servicio === '' || $atencion === '' || $espera === ''
 try {
 	$conexion = conectar_bd();
 	$conexion->begin_transaction();
+	$id_envio = bin2hex(random_bytes(16));
 
 	$consulta = $conexion->prepare(
 		'INSERT INTO Respuesta
-		(ID_Encuesta, Fecha, Clasificacion, Respuesta_Texto)
-		VALUES (?, NOW(), ?, ?)'
+		(ID_Encuesta, Fecha, Clasificacion, Respuesta_Texto, ID_Envio)
+		VALUES (?, NOW(), ?, ?, ?)'
 	);
 
 	$respuestas = [
@@ -41,7 +42,7 @@ try {
 	];
 
 	foreach ($respuestas as $clasificacion => $respuesta_texto) {
-		$consulta->bind_param('iss', $id_encuesta, $clasificacion, $respuesta_texto);
+		$consulta->bind_param('isss', $id_encuesta, $clasificacion, $respuesta_texto, $id_envio);
 		$consulta->execute();
 	}
 
@@ -51,10 +52,11 @@ try {
 
 	echo 'Encuesta enviada correctamente.';
 } catch (mysqli_sql_exception $error) {
-	if (isset($conexion)) {
+	if (isset($conexion) && $conexion->thread_id) {
 		$conexion->rollback();
 	}
-	echo 'No se pudo guardar la encuesta.';
+	error_log('Error al guardar encuesta: ' . $error->getMessage());
+	echo 'No se pudo guardar la encuesta. Revisá que exista la encuesta con ID 1.';
 }
 
 ?>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuestas - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/encuestas_funcionario.css">
+</head>
+<body>
+    <header class="encabezado-encuestas">
+        <a href="panel_fun.html" class="marca">
+            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
+            <span>Panel de funcionarios</span>
+        </a>
+        <a href="panel_fun.html" class="boton-secundario">Volver al panel</a>
+    </header>
+
+    <main class="contenido-encuestas">
+        <section class="encabezado-vista">
+            <div>
+                <p class="etiqueta">Módulo de encuestas</p>
+                <h1>Opiniones de los pacientes</h1>
+                <p>Consultá la encuesta de satisfacción y las respuestas recibidas para mejorar la atención.</p>
+            </div>
+            <a class="boton-principal" href="encuesta.html" target="_blank" rel="noopener">Abrir encuesta pública</a>
+        </section>
+
+        <section class="bloque" aria-labelledby="titulo-vista-previa">
+            <div class="titulo-bloque">
+                <div>
+                    <p class="etiqueta">Vista del formulario</p>
+                    <h2 id="titulo-vista-previa">Encuesta de satisfacción</h2>
+                </div>
+                <span class="estado-formulario">Solo previsualización</span>
+            </div>
+
+            <form class="formulario-previa">
+                <label>¿Qué servicio utilizaste?</label>
+                <select disabled><option>Consulta médica</option></select>
+                <label>¿Cómo calificás la atención recibida?</label>
+                <select disabled><option>Excelente</option></select>
+                <label>¿Cómo considerás el tiempo de espera?</label>
+                <select disabled><option>Adecuado</option></select>
+                <label>¿Cómo calificás las instalaciones?</label>
+                <select disabled><option>Muy buenas</option></select>
+                <label>¿Recomendarías el Hospital de Clínicas?</label>
+                <select disabled><option>Sí</option></select>
+                <label>Comentarios o sugerencias</label>
+                <textarea disabled rows="3" placeholder="Comentario del paciente"></textarea>
+            </form>
+        </section>
+
+        <section class="bloque" aria-labelledby="titulo-respuestas">
+            <div class="titulo-bloque">
+                <div>
+                    <p class="etiqueta">Bandeja de respuestas</p>
+                    <h2 id="titulo-respuestas">Encuestas realizadas</h2>
+                </div>
+                <button id="actualizar-respuestas" class="boton-secundario" type="button">Actualizar</button>
+            </div>
+            <p id="estado-respuestas" class="estado-respuestas">Cargando respuestas...</p>
+            <div id="lista-respuestas" class="lista-respuestas"></div>
+        </section>
+    </main>
+
+    <script src="../js/encuestas_funcionario.js"></script>
+</body>
+</html>
