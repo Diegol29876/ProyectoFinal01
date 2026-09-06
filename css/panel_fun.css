@@ -43,24 +43,25 @@ header {
 
 .titulo-panel h1 {
     color: #13315c;
-    font-size: 40px;
+    font-size: 32px;
     margin: 0;
 }
 
 .titulo-panel h2 {
     color: #0b5fa5;
-    font-size: 20px;
+    font-size: 18px;
     margin: 5px 0 0;
 }
 
 .perfil-header {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     background: #f5f9ff;
     border: 1px solid #dfeaf7;
     border-radius: 14px;
     padding: 8px 14px;
+    min-width: 180px;
 }
 
 .perfil-texto {
@@ -77,21 +78,6 @@ header {
 .perfil-texto span {
     font-size: 12px;
     color: #5b6b7b;
-}
-
-.btn-cerrar-header {
-    background: #c0392b;
-    color: #ffffff;
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-.btn-cerrar-header:hover {
-    background: #a93226;
 }
 
 main {
@@ -117,8 +103,8 @@ main {
 .botones-panel {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    max-width: 800px;
+    gap: 18px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -127,7 +113,7 @@ main {
     align-items: center;
     justify-content: center;
     background: #fff;
-    padding: 25px 20px;
+    padding: 20px;
     border-radius: 15px;
     box-shadow: 0 5px 15px #ddd;
     text-decoration: none;
@@ -144,8 +130,31 @@ main {
 
 .boton-panel span {
     color: #0b5fa5;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
+}
+
+.contenedor-cerrar {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+    border-top: 1px solid #e4edf7;
+    padding-top: 15px;
+}
+
+.btn-cerrar-sesion {
+    background: #c0392b;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-cerrar-sesion:hover {
+    background: #a93226;
 }
 
 footer {
@@ -169,11 +178,11 @@ footer p {
     }
 
     .titulo-panel h1 {
-        font-size: 28px;
+        font-size: 26px;
     }
 
     .titulo-panel h2 {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .botones-panel {
