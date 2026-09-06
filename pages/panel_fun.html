@@ -21,7 +21,7 @@
         <div class="perfil-header">
             <div class="perfil-texto">
                 <strong id="nombre-usuario">Funcionario</strong>
-                <span>Sesión Activa</span>
+                <span id="estado-usuario">Estado no disponible</span>
             </div>
         </div>
     </header>
@@ -31,23 +31,19 @@
             <h2>Gestión del Sistema</h2>
 
             <div class="botones-panel">
-                <a href="../php/funcionarios.php" class="boton-panel pos-1">
-                    <span>Lista de Funcionarios</span>
-                </a>
-
-                <a href="registro.html" class="boton-panel pos-2">
+                <a href="registro.html" class="boton-panel pos-1">
                     <span>Registrar Funcionario</span>
                 </a>
 
-                <a href="documentos_funcionarios.html" class="boton-panel pos-3">
+                <a href="../pages/documentos_funcionario.html" class="boton-panel pos-2">
                     <span>Cargar Documentación</span>
                 </a>
 
-                <a href="documentos_funcionarios.html#documentos-grabados" class="boton-panel pos-4">
-                    <span>Ver Documentación</span>
+                <a href="a" class="boton-panel pos-3">
+                    <span>Hambulancia</span>
                 </a>
 
-                <a href="encuesta.html" class="boton-panel pos-5">
+                <a href="../pages/encuestas_funcionario.html" class="boton-panel pos-4">
                     <span>Encuesta de Funcionarios</span>
                 </a>
             </div>
@@ -62,13 +58,6 @@
         <p>Hospital de Clínicas - Sistema Interno de Gestión</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var usuarioGuardado = localStorage.getItem('usuario') || localStorage.getItem('nombre');
-            if (usuarioGuardado) {
-                document.getElementById('nombre-usuario').textContent = usuarioGuardado;
-            }
-        });
-    </script>
+    <script src="../js/panel_fun.js"></script>
 </body>
 </html>

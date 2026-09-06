@@ -23,7 +23,8 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 8px #ccc;
-    gap: 20px;
+    gap: 70px;
+    min-height: 130px;
 }
 
 .logo-panel {

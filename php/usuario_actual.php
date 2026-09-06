@@ -13,18 +13,19 @@ if (!isset($_SESSION['funcionario_id'])) {
 try {
     $conexion = conectar_bd();
     $consulta = $conexion->prepare(
-        'SELECT n_usuario FROM funcionario WHERE ID_Funcionario = ?'
+        'SELECT n_usuario, estado FROM funcionario WHERE ID_Funcionario = ?'
     );
     $consulta->bind_param('i', $_SESSION['funcionario_id']);
     $consulta->execute();
     $fila = $consulta->get_result()->fetch_assoc();
 
     echo json_encode([
-        'nombre' => $fila['n_usuario'] ?? 'Usuario'
+        'nombre' => $fila['n_usuario'] ?? 'Usuario',
+        'estado' => $fila['estado'] ?? 'Sin estado'
     ]);
 
     $consulta->close();
     $conexion->close();
 } catch (Exception $error) {
-    echo json_encode(['nombre' => 'Usuario']);
+    echo json_encode(['nombre' => 'Usuario', 'estado' => 'Sin estado']);
 }

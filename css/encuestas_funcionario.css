@@ -29,7 +29,9 @@ body {
     text-decoration: none;
 }
 
-.marca img { width: 200px; }
+.marca img {
+    width: 200px;
+}
 
 .boton-principal,
 .boton-secundario {
