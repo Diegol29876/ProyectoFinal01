@@ -197,6 +197,10 @@ footer p {
     }
 }
 
+/* ==========================================
+   ESTILOS PARA TABLAS DE REPORTES Y IMPRESIÓN
+   ========================================== */
+
 .acciones-reporte {
     display: flex;
     justify-content: space-between;
@@ -242,4 +246,26 @@ footer p {
 
 .btn-imprimir:hover {
     background: #13315c;
+}
+
+@media print {
+    .perfil-header, 
+    .btn-imprimir {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff;
+    }
+
+    .panel-principal {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+    }
+
+    header {
+        box-shadow: none;
+        border-bottom: 1px solid #ccc;
+    }
 }
