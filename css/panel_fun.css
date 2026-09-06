@@ -56,21 +56,11 @@ header {
 .perfil-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     background: #f5f9ff;
     border: 1px solid #dfeaf7;
     border-radius: 14px;
     padding: 8px 14px;
-    min-width: 220px;
-}
-
-.foto-perfil {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #dcebff;
-    border: 2px solid #cfe1ff;
 }
 
 .perfil-texto {
@@ -87,6 +77,21 @@ header {
 .perfil-texto span {
     font-size: 12px;
     color: #5b6b7b;
+}
+
+.btn-cerrar-header {
+    background: #c0392b;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-cerrar-header:hover {
+    background: #a93226;
 }
 
 main {
@@ -106,56 +111,40 @@ main {
     color: #13315c;
     font-size: 28px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .botones-panel {
     display: grid;
-    grid-template-columns: repeat(3, minmax(180px, 1fr));
-    gap: 18px;
-    max-width: 780px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 800px;
     margin: 0 auto;
-}
-
-.boton-panel:nth-child(4) {
-    grid-column: 1;
-    justify-self: start;
-    width: min(100%, 260px);
-}
-
-.boton-panel:nth-child(5) {
-    grid-column: 3;
-    justify-self: end;
-    width: min(100%, 260px);
 }
 
 .boton-panel {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
     background: #fff;
-    padding: 20px;
+    padding: 25px 20px;
     border-radius: 15px;
     box-shadow: 0 5px 15px #ddd;
     text-decoration: none;
     color: #1b2a41;
     transition: transform 0.2s;
-    min-height: 110px;
+    min-height: 100px;
     border: 1px solid #e4edf7;
+    text-align: center;
 }
 
 .boton-panel:hover {
     transform: scale(1.02);
 }
 
-.boton-panel img {
-    width: 35px;
-    height: 35px;
-}
-
 .boton-panel span {
     color: #0b5fa5;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -189,83 +178,5 @@ footer p {
 
     .botones-panel {
         grid-template-columns: 1fr;
-        max-width: 100%;
-    }
-
-    .boton-panel span {
-        font-size: 18px;
-    }
-}
-
-/* ==========================================
-   ESTILOS PARA TABLAS DE REPORTES Y IMPRESIÓN
-   ========================================== */
-
-.acciones-reporte {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.tabla-reporte {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-.tabla-reporte th, 
-.tabla-reporte td {
-    padding: 12px;
-    border: 1px solid #dfeaf7;
-    text-align: left;
-    font-size: 14px;
-}
-
-.tabla-reporte th {
-    background-color: #0b5fa5;
-    color: #ffffff;
-    font-weight: bold;
-}
-
-.tabla-reporte tr:nth-child(even) {
-    background-color: #f5f9ff;
-}
-
-.btn-imprimir {
-    background: #0b5fa5;
-    color: #ffffff;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    transition: background 0.2s;
-}
-
-.btn-imprimir:hover {
-    background: #13315c;
-}
-
-@media print {
-    .perfil-header, 
-    .btn-imprimir {
-        display: none !important;
-    }
-
-    body {
-        background: #ffffff;
-    }
-
-    .panel-principal {
-        box-shadow: none;
-        padding: 0;
-        max-width: 100%;
-    }
-
-    header {
-        box-shadow: none;
-        border-bottom: 1px solid #ccc;
     }
 }
