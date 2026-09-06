@@ -1,42 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
     <header>
         <div class="logo">
             <img src="../img/Logo_Hc.png" alt="Logo Hospital de Clínicas">
         </div>
-        
         <a href="../index.html" class="btn-login">Volver al inicio</a>
     </header>
 
     <main>
         <div class="contenedor-login">
-
             <div class="bienvenida">
                 <h2>Iniciar Sesión</h2>
                 <p>Ingresá tus datos para continuar</p>
             </div>
 
             <form class="formulario" id="form-login">
-                <label>Cedula</label>
-                <input type="text" id="cedula" name="cedula" maxlength="8" inputmode="numeric" pattern="[0-9]*" placeholder="Ingresá tu Cedula">
+                <label for="cedula">Cédula</label>
+                <input type="text" id="cedula" name="cedula" maxlength="8" inputmode="numeric" pattern="[0-9]*" placeholder="Ingresá tu Cédula" required>
 
-                <label>Contraseña</label>
-                <input type="password" id="password" name="password" placeholder="Ingresá tu contraseña">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Ingresá tu contraseña" required>
 
                 <button type="submit" class="btn-submit">Iniciar Sesión</button>
-
             </form>
-
         </div>
     </main>
 
@@ -47,5 +41,4 @@
 
     <script src="../js/login.js"></script>
 </body>
-
 </html>

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Cuenta</title>
+    <title>Crear Cuenta - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/registro.css">
-
 </head>
 <body>
 
@@ -13,55 +12,54 @@
         <div class="logo">
             <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
         </div>
+        <a href="panel_fun.html" class="btn-login">Volver al panel</a>
     </header>
 
     <main>
         <div class="contenedor-login">
-
             <div class="bienvenida">
-                <h2>Crear Cuenta</h2>
-                <p>Ingresá tus datos para continuar</p>
+                <h2>Registrar Funcionario</h2>
+                <p>Ingresá los datos correspondientes para dar de alta la cuenta</p>
             </div>
 
             <form class="formulario" id="form-registro">
                 <label for="n_usuario">Nombre de usuario</label>
-                <input type="text" placeholder="Ingresá tu usuario" id="n_usuario" name="n_usuario" required>
+                <input type="text" placeholder="Ingresá el usuario" id="n_usuario" name="n_usuario" required>
 
                 <label for="contrasenia">Contraseña</label>
-                <input type="password" placeholder="Ingresá tu contraseña" id="contraseña" name="contraseña" required>
+                <input type="password" placeholder="Ingresá la contraseña" id="contrasenia" name="contrasenia" required>
 
                 <label for="c_electronico">Correo electrónico</label>
-                <input type="email" placeholder="Ingresá tu correo electrónico" id="c_electronico" name="c_electronico" required>
+                <input type="email" placeholder="correo@hospitalclinicas.uy" id="c_electronico" name="c_electronico" required>
 
                 <label for="direccion">Dirección</label>
-                <input type="text" placeholder="Ingresá tu dirección" id="direccion" name="direccion" required>
+                <input type="text" placeholder="Ingresá la dirección" id="direccion" name="direccion" required>
 
                 <label for="f_nacimiento">Fecha de nacimiento</label>
-                <input type="date" placeholder="Ingresá tu fecha de nacimiento" id="f_nacimiento" name="f_nacimiento" required>
+                <input type="date" id="f_nacimiento" name="f_nacimiento" required>
 
                 <label for="cedula">Cédula</label>
-                <input type="text" id="cedula" name="cedula" maxlength="8" inputmode="numeric" pattern="[0-9]*" placeholder="Ingresá tu Cédula" required>
+                <input type="text" id="cedula" name="cedula" maxlength="8" inputmode="numeric" pattern="[0-9]*" placeholder="Sin puntos ni guiones" required>
 
                 <label for="n_telefono">Número de teléfono</label>
-                <input type="number" placeholder="Ingresá tu número de teléfono" id="n_telefono" name="n_telefono" required>
+                <input type="tel" placeholder="099123456" id="n_telefono" name="n_telefono" required>
 
                 <label for="f_ingreso">Fecha de Ingreso</label>
-                <input type="date" placeholder="Ingresá tu fecha de ingreso" id="f_ingreso" name="f_ingreso" required>
+                <input type="date" id="f_ingreso" name="f_ingreso" required>
 
                 <label for="estado">Estado</label>
-                <input type="text" placeholder="Ingresá tu estado" id="estado" name="estado" required>
+                <input type="text" placeholder="Ej. Activo" id="estado" name="estado" required>
 
-                <button type="submit">Iniciar sesión</button>
+                <button type="submit">Registrar usuario</button>
             </form>
-            <script src="../js/registro.js"></script>
-
         </div>
     </main>
 
     <footer>
         <strong>Tu información está protegida</strong>
-        <p>Sitio desarollado por GIT Stack</p>
+        <p>Sitio desarrollado por GIT Stack</p>
     </footer>
 
+    <script src="../js/registro.js"></script>
 </body>
 </html>

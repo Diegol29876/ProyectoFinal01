@@ -1,24 +1,31 @@
-const formulario = document.getElementById('form-registro');
+document.addEventListener('DOMContentLoaded', () => {
+    const formRegistro = document.getElementById('form-registro');
 
-if (formulario) {
-    formulario.addEventListener('submit', async function (evento) {
-        evento.preventDefault();
+    if (!formRegistro) return;
+
+    formRegistro.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(formRegistro);
 
         try {
             const respuesta = await fetch('../php/registro.php', {
                 method: 'POST',
-                body: new FormData(formulario)
+                body: formData
             });
+
             const resultado = await respuesta.json();
 
-            if (!respuesta.ok || !resultado.status) {
-                alert(resultado.mensaje || 'Ocurrió un error al registrar el usuario.');
-                return;
+            if (resultado.status) {
+                alert('Funcionario registrado con éxito.');
+                formRegistro.reset();
+                window.location.href = 'panel_fun.html';
+            } else {
+                alert(resultado.mensaje || 'No se pudo completar el registro.');
             }
-
-            alert('Usuario registrado correctamente.');
         } catch (error) {
-            alert('No se pudo conectar con el servidor.');
+            console.error('Error al registrar:', error);
+            alert('Error de conexión con el servidor.');
         }
     });
-}
+});

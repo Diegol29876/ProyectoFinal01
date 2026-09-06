@@ -1,5 +1,12 @@
 <?php
+session_start();
 header('Content-Type: text/plain; charset=utf-8');
+
+if (!isset($_SESSION['funcionario_id'])) {
+    http_response_code(401);
+    echo 'Acceso no autorizado.';
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -13,9 +20,9 @@ if (!isset($_FILES['archivo']) || $_FILES['archivo']['error'] !== UPLOAD_ERR_OK)
     exit;
 }
 
-$nombre = isset($_POST['nombre']) ? trim($_POST['nombre']) : '';
-$tipo = isset($_POST['tipo']) ? trim($_POST['tipo']) : 'Documento de paciente';
-$confirmarPublico = isset($_POST['confirmar_publico']) && $_POST['confirmar_publico'] === '1';
+$nombre = trim($_POST['nombre'] ?? '');
+$tipo = trim($_POST['tipo'] ?? 'Documento de paciente');
+$confirmarPublico = ($_POST['confirmar_publico'] ?? '') === '1';
 
 if ($nombre === '' || !$confirmarPublico) {
     http_response_code(400);
@@ -24,7 +31,6 @@ if ($nombre === '' || !$confirmarPublico) {
 }
 
 $nombre = preg_replace('/[\\\\\/:*?"<>|]/', '', $nombre);
-
 $uploadDir = __DIR__ . '/../uploads';
 
 if (!is_dir($uploadDir)) {
@@ -41,21 +47,11 @@ if (!in_array($extension, ['pdf', 'doc', 'docx'], true)) {
 }
 
 $nombreBase = $nombre;
-$ruta = $uploadDir . '/' . $nombreBase;
-
-if ($extension !== '') {
-    $ruta .= '.' . $extension;
-}
-
+$ruta = $uploadDir . '/' . $nombreBase . ($extension !== '' ? '.' . $extension : '');
 $contador = 1;
 
 while (file_exists($ruta)) {
-    $ruta = $uploadDir . '/' . $nombreBase . '_' . $contador;
-
-    if ($extension !== '') {
-        $ruta .= '.' . $extension;
-    }
-
+    $ruta = $uploadDir . '/' . $nombreBase . '_' . $contador . ($extension !== '' ? '.' . $extension : '');
     $contador++;
 }
 

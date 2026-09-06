@@ -1,39 +1,30 @@
-const formulario = document.getElementById('form-login');
-const cedula = document.getElementById('cedula');
+document.addEventListener('DOMContentLoaded', () => {
+    const formLogin = document.getElementById('form-login');
 
-if (cedula) {
-    cedula.addEventListener('input', function () {
-        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 8);
-    });
-}
+    if (!formLogin) return;
 
-if (formulario) {
-    formulario.addEventListener('submit', function (evento) {
-        evento.preventDefault();
+    formLogin.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        const datos = new FormData(formulario);
-        const numeroCedula = datos.get('cedula');
-        const contrasenia = datos.get('password');
+        const formData = new FormData(formLogin);
 
-        if (!numeroCedula || !contrasenia) {
-            alert('Por favor completa todos los campos');
-            return;
+        try {
+            const respuesta = await fetch('../php/login.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const resultado = await respuesta.json();
+
+            if (resultado.status) {
+                alert(`¡Bienvenido/a, ${resultado.usuario}!`);
+                window.location.href = 'panel_fun.html';
+            } else {
+                alert(resultado.mensaje || 'Error al iniciar sesión.');
+            }
+        } catch (error) {
+            console.error('Error en la petición:', error);
+            alert('Ocurrió un error al conectar con el servidor.');
         }
-
-        fetch('../php/login.php', {
-            method: 'POST',
-            body: datos
-        })
-            .then((respuesta) => respuesta.json())
-            .then((resultado) => {
-                if (!resultado.status) {
-                    alert('Error: ' + resultado.mensaje);
-                    return;
-                }
-
-                alert(resultado.mensaje);
-                window.location.href = './panel_fun.html';
-            })
-            .catch(() => alert('No se pudo conectar con el servidor'));
     });
-}
+});

@@ -1,11 +1,9 @@
 <?php
-
 session_start();
 require_once 'conexion.php';
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-function responder($correcto, $mensaje, $usuario = null)
-{
+function responder($correcto, $mensaje, $usuario = null) {
     $respuesta = [
         'status' => $correcto,
         'mensaje' => $mensaje
@@ -26,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $cedula = trim($_POST['cedula'] ?? '');
 $contrasenia = $_POST['password'] ?? '';
 
-if ($cedula === '' || $contrasenia === '') {
+if (empty($cedula) || empty($contrasenia)) {
     responder(false, 'Completá todos los campos.');
 }
 
@@ -43,9 +41,11 @@ try {
         responder(false, 'Cédula o contraseña incorrecta.');
     }
 
+    session_regenerate_id(true);
     $_SESSION['funcionario_id'] = $fila['ID_Funcionario'];
     $_SESSION['usuario'] = $fila['n_usuario'];
+
     responder(true, 'Inicio de sesión exitoso.', $fila['n_usuario']);
 } catch (Exception $error) {
-    responder(false, 'Error en el servidor.');
+    responder(false, 'Error interno en el servidor.');
 }
