@@ -5,101 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Funcionario - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/panel_fun.css">
-    <style>
-        .panel-contenedor {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-        .grid-opciones {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .card-opcion {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 25px;
-            text-decoration: none;
-            color: #333;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .card-opcion:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-        .card-opcion h3 {
-            margin-top: 0;
-            color: #0056b3;
-            font-size: 1.25rem;
-        }
-        .card-opcion p {
-            color: #666;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-        .card-opcion .btn-link {
-            font-weight: bold;
-            color: #0056b3;
-        }
-    </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">
+        <div class="logo-panel">
             <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
         </div>
-        <div class="header-acciones">
-            <a href="../index.html" class="btn-login">Cerrar Sesión</a>
+        
+        <div class="titulo-panel">
+            <h1>Hospital de Clínicas</h1>
+            <h2>Panel de Funcionario</h2>
+        </div>
+
+        <div class="perfil-header">
+            <div class="perfil-texto">
+                <strong>Funcionario</strong>
+                <span>Sesión Activa</span>
+            </div>
         </div>
     </header>
 
-    <main class="panel-contenedor">
-        <h2>Panel de Control del Funcionario</h2>
-        <p>Seleccioná la gestión que querés realizar:</p>
+    <main>
+        <section class="panel-principal">
+            <h2>Gestión del Sistema</h2>
 
-        <div class="grid-opciones">
-            
-            <!-- Opción: Gestión de Funcionarios -->
-            <a href="../php/funcionarios.php" class="card-opcion">
-                <div>
-                    <h3>Lista de Funcionarios</h3>
-                    <p>Consultá el listado completo de funcionarios registrados en el sistema.</p>
-                </div>
-                <span class="btn-link">Acceder &rarr;</span>
-            </a>
+            <div class="botones-panel">
+                
+                <a href="../php/funcionarios.php" class="boton-panel">
+                    <span>Lista de Funcionarios</span>
+                </a>
 
-            <!-- Opción: Registrar Nuevo Funcionario -->
-            <a href="registro.html" class="card-opcion">
-                <div>
-                    <h3>Registrar Funcionario</h3>
-                    <p>Dar de alta un nuevo usuario funcionario dentro de la base de datos.</p>
-                </div>
-                <span class="btn-link">Acceder &rarr;</span>
-            </a>
+                <a href="registro.html" class="boton-panel">
+                    <span>Registrar Funcionario</span>
+                </a>
 
-            <!-- Opción: Reporte de Ambulancias y Traslados -->
-            <a href="../php/reportes.php" class="card-opcion">
-                <div>
-                    <h3>Reporte de Ambulancias</h3>
-                    <p>Consultar, filtrar e imprimir el historial de traslados y unidades activas.</p>
-                </div>
-                <span class="btn-link">Acceder &rarr;</span>
-            </a>
+                <a href="../php/reportes.php" class="boton-panel">
+                    <span>Reporte de Ambulancias</span>
+                </a>
 
-        </div>
+                <a href="carga.html" class="boton-panel">
+                    <span>Cargar Documentación</span>
+                </a>
+
+                <a href="../index.html" class="boton-panel">
+                    <span>Cerrar Sesión</span>
+                </a>
+
+            </div>
+        </section>
     </main>
 
     <footer>
-        <strong>Hospital de Clínicas</strong>
-        <p>Sistema Interno de Gestión - Grupo GIT Stack</p>
+        <p>Hospital de Clínicas - Sistema Interno de Gestión</p>
     </footer>
 
 </body>
