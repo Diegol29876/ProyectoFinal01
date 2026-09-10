@@ -50,7 +50,8 @@ try {
 	$conexion->commit();
 	$conexion->close();
 
-	echo 'Encuesta enviada correctamente.';
+	header('Location: ../index.html');
+	exit;
 } catch (mysqli_sql_exception $error) {
 	if (isset($conexion) && $conexion->thread_id) {
 		$conexion->rollback();
