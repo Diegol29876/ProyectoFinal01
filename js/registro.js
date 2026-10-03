@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!formRegistro) return;
 
+    formRegistro.reset();
+
     formRegistro.addEventListener('submit', async (e) => {
         e.preventDefault();
 

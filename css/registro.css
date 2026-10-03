@@ -77,7 +77,8 @@ main {
     font-size: 17px;
     font-weight: bold;
 }
-.formulario input {
+.formulario input,
+.formulario select {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #4d4c4b;
@@ -85,7 +86,8 @@ main {
     font-size: 14px;
     background: #fff;
 }
-.formulario input:focus {
+.formulario input:focus,
+.formulario select:focus {
     outline: none;
     border-color: #5689cc;
     box-shadow: 0 0 0 3px rgba(11, 95, 165, 0.12);
