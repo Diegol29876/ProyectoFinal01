@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traslado de Ambulancias - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/traslados.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="panel_fun.html" class="marca">
+            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
+            <span>Panel de funcionarios</span>
+        </a>
+        <div class="titulo">
+            <p>Gestión interna</p>
+            <h1>Traslado de Ambulancias</h1>
+        </div>
+        <a href="panel_fun.html" class="boton-secundario">Volver al panel</a>
+    </header>
+
+    <main class="contenido">
+        <section class="encabezado-vista">
+            <div>
+                <h2>Traslados registrados</h2>
+                <p>Registrá y consultá los traslados de pacientes del hospital.</p>
+            </div>
+            <button id="nuevo-traslado" class="boton-principal" type="button">+ Nuevo traslado</button>
+        </section>
+
+        <p id="estado-pagina" class="estado" role="status" aria-live="polite">Cargando traslados...</p>
+
+        <section class="tabla-contenedor" aria-label="Listado de traslados">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Chofer</th>
+                        <th>Acompañante</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="filas-traslados">
+                    <tr><td colspan="9">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <dialog id="dialogo-traslado" aria-labelledby="titulo-dialogo">
+        <form id="formulario-traslado">
+            <div class="titulo-dialogo">
+                <div>
+                    <p class="etiqueta">Gestión de traslados</p>
+                    <h2 id="titulo-dialogo">Nuevo traslado</h2>
+                </div>
+                <button id="cerrar-dialogo" class="cerrar-dialogo" type="button" aria-label="Cerrar">×</button>
+            </div>
+            <input type="hidden" name="id">
+            <input type="hidden" name="csrf_token">
+
+            <div class="campos">
+                <label for="paciente">Paciente</label>
+                <select id="paciente" name="paciente_id" required></select>
+                <div id="nuevo-paciente" class="grupo-nuevo oculto">
+                    <h3>Datos del paciente</h3>
+                    <label>Nombre<input name="paciente_nombre" maxlength="100"></label>
+                    <label>Apellido<input name="paciente_apellido" maxlength="100"></label>
+                    <label>Cédula<input name="paciente_cedula" maxlength="20"></label>
+                    <label>Fecha de nacimiento<input name="paciente_nacimiento" type="date"></label>
+                    <label>Correo electrónico<input name="paciente_email" type="email" maxlength="100"></label>
+                </div>
+
+                <label for="origen">Origen</label>
+                <input id="origen" name="origen" type="text" maxlength="255" required>
+                <label for="destino">Destino</label>
+                <input id="destino" name="destino" type="text" maxlength="255" required>
+
+                <label for="fecha">Fecha</label>
+                <input id="fecha" name="fecha" type="date" required>
+                <label for="hora">Hora de salida</label>
+                <input id="hora" name="hora" type="time" required>
+                <label for="hora-estimada">Hora estimada de llegada (opcional)</label>
+                <input id="hora-estimada" name="hora_estimada" type="time">
+                <label for="hora-efectiva">Hora efectiva de llegada (opcional)</label>
+                <input id="hora-efectiva" name="hora_efectiva" type="time">
+
+                <label for="conductor">Chofer / responsable</label>
+                <select id="conductor" name="conductor_id" required></select>
+                <div id="nuevo-conductor" class="grupo-nuevo oculto">
+                    <h3>Datos del chofer</h3>
+                    <label>Nombre<input name="conductor_nombre" maxlength="100"></label>
+                    <label>Documento<input name="conductor_documento" maxlength="20"></label>
+                    <label>Licencia<input name="conductor_licencia" maxlength="50"></label>
+                    <label>Teléfono<input name="conductor_telefono" maxlength="20"></label>
+                </div>
+
+                <label for="ambulancia">Ambulancia</label>
+                <select id="ambulancia" name="ambulancia_id" required></select>
+                <div id="nueva-ambulancia" class="grupo-nuevo oculto">
+                    <h3>Datos de la ambulancia</h3>
+                    <label>Modelo<input name="ambulancia_modelo" maxlength="100"></label>
+                    <label>Matrícula<input name="ambulancia_matricula" maxlength="30"></label>
+                    <label>Año<input name="ambulancia_anio" type="number" min="1900" max="2100"></label>
+                    <label>Estado<input name="ambulancia_estado" maxlength="50" value="Disponible"></label>
+                </div>
+
+                <label for="acompanante">Acompañante / copiloto</label>
+                <input id="acompanante" name="acompanante" type="text" maxlength="100" required>
+                <label for="estado">Estado del traslado</label>
+                <select id="estado" name="estado" required>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En camino">En camino</option>
+                    <option value="Finalizado">Finalizado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+                <label for="observaciones">Observaciones (opcional)</label>
+                <textarea id="observaciones" name="observaciones" maxlength="255" rows="3"></textarea>
+            </div>
+
+            <p id="estado-formulario" class="estado" role="status" aria-live="polite"></p>
+            <div class="acciones-formulario">
+                <button id="cancelar-dialogo" class="boton-secundario" type="button">Cancelar</button>
+                <button class="boton-principal" type="submit">Guardar traslado</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="../js/traslados.js"></script>
+</body>
+</html>

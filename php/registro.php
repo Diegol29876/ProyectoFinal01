@@ -85,11 +85,19 @@ try {
     exit;
 
 } catch (mysqli_sql_exception $error) {
+    error_log(sprintf(
+        'registro.php: error MySQL %d: %s',
+        $error->getCode(),
+        $error->getMessage()
+    ));
+
     echo json_encode([
         'status' => false,
         'mensaje' => $error->getCode() === 1062
             ? 'El usuario, correo o cédula ya está registrado.'
-            : 'No se pudo guardar el registro.'
+            : ($error->getCode() === 1049
+                ? 'No existe la base de datos "hospital_de_clinicas". Creala e importá el archivo SQL del proyecto desde phpMyAdmin.'
+                : sprintf('No se pudo guardar el registro (error MySQL %d).', $error->getCode()))
     ]);
     exit;
 }
