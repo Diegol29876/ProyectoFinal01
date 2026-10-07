@@ -20,7 +20,7 @@ footer {
 
 header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 8px #ccc;
     padding: 15px 20px;
@@ -94,21 +94,21 @@ main {
 }
 
 .formulario button {
-    width: 100%;
+    width: auto;
     margin-top: 20px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     border: none;
-    border-radius: 10px;
-    background: #85c275;
+    border-radius: 8px;
+    background: #0b5fa5;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .formulario button:hover {
-    background: #137520;
+    background: #094d86;
 }
 
 footer {

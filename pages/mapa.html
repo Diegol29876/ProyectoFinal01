@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de ambulancias - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <header>
+        <a href="traslados_funcionario.html">Volver a traslados</a>
+        <h1>Mapa de ambulancias</h1>
+    </header>
+
+    <main>
+        <section aria-labelledby="titulo-origen">
+            <h2 id="titulo-origen">Ubicación de origen</h2>
+            <p>Arrastrá el marcador del mapa hasta el origen y guardá la ubicación.</p>
+            <button id="ingresarO" type="button">Guardar origen</button>
+            <label for="lat">Latitud</label>
+            <input id="lat" name="lat" type="text" readonly>
+            <label for="lng">Longitud</label>
+            <input id="lng" name="lng" type="text" readonly>
+        </section>
+
+        <section aria-labelledby="titulo-destino">
+            <h2 id="titulo-destino">Buscar destino</h2>
+            <label for="dir">Dirección</label>
+            <input id="dir" name="direccion" type="text" placeholder="Ej. Avenida Italia 1234">
+            <label for="departamento">Departamento</label>
+            <select id="departamento" name="departamento" required>
+                <option value="">Seleccioná un departamento</option>
+                <option value="Artigas">Artigas</option>
+                <option value="Canelones">Canelones</option>
+                <option value="Cerro Largo">Cerro Largo</option>
+                <option value="Colonia">Colonia</option>
+                <option value="Durazno">Durazno</option>
+                <option value="Flores">Flores</option>
+                <option value="Florida">Florida</option>
+                <option value="Lavalleja">Lavalleja</option>
+                <option value="Maldonado">Maldonado</option>
+                <option value="Montevideo">Montevideo</option>
+                <option value="Paysandú">Paysandú</option>
+                <option value="Río Negro">Río Negro</option>
+                <option value="Rivera">Rivera</option>
+                <option value="Rocha">Rocha</option>
+                <option value="Salto">Salto</option>
+                <option value="San José">San José</option>
+                <option value="Soriano">Soriano</option>
+                <option value="Tacuarembó">Tacuarembó</option>
+                <option value="Treinta y Tres">Treinta y Tres</option>
+            </select>
+            <button id="ubicar" type="button">Ubicar y trazar ruta</button>
+        </section>
+
+        <div id="visualizar" role="application" aria-label="Mapa interactivo de ambulancias"></div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/mapa.js"></script>
+</body>
+</html>

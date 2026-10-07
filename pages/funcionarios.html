@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Funcionarios - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/funcionarios.css">
+    <link rel="stylesheet" href="../css/boton_panel.css?v=20261007">
+</head>
+<body>
+    <header class="encabezado-panel">
+        <h1>Gestión de funcionarios</h1>
+        <a href="panel_fun.html" class="boton-volver-panel">Volver al Panel</a>
+    </header>
+
+    <main>
+        <p id="mensaje" role="status" aria-live="polite"></p>
+
+        <section>
+            <h2>Funcionarios registrados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Dirección</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Cédula</th>
+                        <th>Teléfono</th>
+                        <th>Fecha de ingreso</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-funcionarios"></tbody>
+            </table>
+        </section>
+
+        <section>
+            <form id="form-editar" hidden>
+                <h2>Editar funcionario</h2>
+                <input id="id" name="id" type="hidden">
+
+                <label for="n_usuario">Nombre de usuario</label>
+                <input id="n_usuario" name="n_usuario" type="text" maxlength="100" required>
+
+                <label for="c_electronico">Correo electrónico</label>
+                <input id="c_electronico" name="c_electronico" type="email" maxlength="100" required>
+
+                <label for="direccion">Dirección</label>
+                <input id="direccion" name="direccion" type="text" maxlength="150" required>
+
+                <label for="f_nacimiento">Fecha de nacimiento</label>
+                <input id="f_nacimiento" name="f_nacimiento" type="date" required>
+
+                <label for="cedula">Cédula</label>
+                <input id="cedula" name="cedula" type="text" maxlength="20" required>
+
+                <label for="n_telefono">Teléfono</label>
+                <input id="n_telefono" name="n_telefono" type="tel" maxlength="20" required>
+
+                <label for="f_ingreso">Fecha de ingreso</label>
+                <input id="f_ingreso" name="f_ingreso" type="date" required>
+
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado" required>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+
+                <button type="submit">Guardar cambios</button>
+                <button id="cancelar-edicion" type="button">Cancelar</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../js/funcionarios.js"></script>
+</body>
+</html>

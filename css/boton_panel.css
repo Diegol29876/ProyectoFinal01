@@ -1,0 +1,28 @@
+.boton-volver-panel {
+    background: #0b5fa5;
+    border: 0;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    flex: 0 0 auto;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: normal;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.boton-volver-panel:hover,
+.boton-volver-panel:focus-visible {
+    background: #094d86;
+}
+
+@media (max-width: 650px) {
+    .boton-volver-panel {
+        margin-left: auto;
+    }
+}

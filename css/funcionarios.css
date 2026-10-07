@@ -1,0 +1,15 @@
+.encabezado-panel {
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 2px 8px #ccc;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+@media (max-width: 650px) {
+    .encabezado-panel {
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+}
