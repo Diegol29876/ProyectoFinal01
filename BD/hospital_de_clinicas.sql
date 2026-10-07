@@ -1,3 +1,11 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 07-10-2026 a las 15:34:35
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -9,6 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Base de datos: `hospital_de_clinicas`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acompañante`
+--
+
 CREATE TABLE `acompañante` (
   `ID_Acompañante` int(11) NOT NULL,
   `Nombre` varchar(100) NOT NULL,
@@ -18,6 +36,19 @@ CREATE TABLE `acompañante` (
   `ID_Traslado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `acompañante`
+--
+
+INSERT INTO `acompañante` (`ID_Acompañante`, `Nombre`, `Documento`, `Telefono`, `Rol`, `ID_Traslado`) VALUES
+(3, 'lola', '', '', 'Acompañante', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ambulancia`
+--
+
 CREATE TABLE `ambulancia` (
   `ID_ambulancia` int(11) NOT NULL,
   `Estado` varchar(50) NOT NULL,
@@ -26,6 +57,19 @@ CREATE TABLE `ambulancia` (
   `Matricula` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `ambulancia`
+--
+
+INSERT INTO `ambulancia` (`ID_ambulancia`, `Estado`, `Año`, `Modelo`, `Matricula`) VALUES
+(1, 'activa', 2021, '2323', '12312');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `conductor`
+--
+
 CREATE TABLE `conductor` (
   `ID_Conductor` int(11) NOT NULL,
   `Nombre` varchar(100) NOT NULL,
@@ -33,6 +77,19 @@ CREATE TABLE `conductor` (
   `Licencia` varchar(50) NOT NULL,
   `Telefono` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `conductor`
+--
+
+INSERT INTO `conductor` (`ID_Conductor`, `Nombre`, `Documento`, `Licencia`, `Telefono`) VALUES
+(1, 'Juan', 'Enrique', '23123321', '31231231');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documento`
+--
 
 CREATE TABLE `documento` (
   `Id_Documento` int(11) NOT NULL,
@@ -45,6 +102,12 @@ CREATE TABLE `documento` (
   `ID_Paciente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `elementos_traslados`
+--
+
 CREATE TABLE `elementos_traslados` (
   `ID_elemento` int(11) NOT NULL,
   `Tipo` varchar(100) NOT NULL,
@@ -53,14 +116,30 @@ CREATE TABLE `elementos_traslados` (
   `Paciente_equipo_insumos` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encuesta`
+--
+
 CREATE TABLE `encuesta` (
   `ID_Encuesta` int(11) NOT NULL,
   `Titulo` varchar(150) NOT NULL,
   `Descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `encuesta`
+--
+
 INSERT INTO `encuesta` (`ID_Encuesta`, `Titulo`, `Descripcion`) VALUES
 (1, 'Encuesta de satisfacción', 'Encuesta sobre la atención recibida en el Hospital de Clínicas');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `funcionario`
+--
 
 CREATE TABLE `funcionario` (
   `ID_Funcionario` int(11) NOT NULL,
@@ -75,12 +154,38 @@ CREATE TABLE `funcionario` (
   `estado` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `funcionario`
+--
+
 INSERT INTO `funcionario` (`ID_Funcionario`, `n_usuario`, `contrasenia`, `c_electronico`, `direccion`, `f_nacimineto`, `cedula`, `n_telefono`, `f_Ingreso`, `estado`) VALUES
 (1, 'Diego', '$2y$10$Iy8VFNIQ0hf8HtVMvSB4RuVUOHqimB6Zi2d.g0eWK10zztw6PJFxG', 'diego@gmail.com', 'paysandu', '2003-06-11', '21232131', '099232332', '2026-08-31', 'activo'),
 (2, 'Thiago Diaz', '$2y$10$D2XHBzrvGcJWpjOpP/9p.uciwONReyqFqtfXuEX0e59NouVfffELK', 'Thiago@gmail.com', 'av roldan', '2008-12-10', '57792576', '098765432', '2025-10-10', 'activo'),
 (4, 'Diegol', '$2y$10$jwKfMVoxvZziTN.jQVy/GeMTA3vPDkFoT6cc8Bx6/y0fJSBf4fxWS', 'diego12@gmail.com', 'urguay', '2026-09-01', '12121212', '098212312', '2026-09-01', 'Activo'),
 (5, 'DIGOLORITO', '$2y$10$9i7hbN9WC6VJ7OfCY6MwOeiKQfRUXbAGnuiWk0lwGsiCXBoH/UDgK', 'diegolo@gmail.com', 'Panama', '2026-09-12', '23213333', '00394445', '2026-09-05', 'Inactivo'),
-(6, 'DIGOLORITO1', '$2y$10$5g5xSiZLXgRDIpNfgBYLsO1XiZAA70EPDwxw0NDoc9ov/TIbxGZye', 'diegolo32312@gmail.com', 'Panama', '2026-09-12', '13121212', '00394445', '2026-09-05', 'Inactivo');
+(6, 'DIGOLORITO1', '$2y$10$5g5xSiZLXgRDIpNfgBYLsO1XiZAA70EPDwxw0NDoc9ov/TIbxGZye', 'diegolo32312@gmail.com', 'Panama', '2026-09-12', '13121212', '00394445', '2026-09-05', 'Inactivo'),
+(7, 'Diego Gonzalez', '$2y$10$QT8BDNelGK9bYJZ3gFzUv.ODNNHXW3M2l6fGFmYXJyLJk/KAi531a', 'diego0098@gmail.com', 'Paysandu', '2026-10-03', '12345678', '123456789', '2026-10-03', 'Activo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `muestra_paciente`
+--
+
+CREATE TABLE `muestra_paciente` (
+  `ID_Muestra` int(11) NOT NULL,
+  `Nombre` varchar(100) NOT NULL,
+  `Apellido` varchar(100) NOT NULL,
+  `Cedula` varchar(20) NOT NULL,
+  `Muestra` varchar(255) NOT NULL,
+  `Fecha_Muestra` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `paciente`
+--
 
 CREATE TABLE `paciente` (
   `ID_Paciente` int(11) NOT NULL,
@@ -92,16 +197,48 @@ CREATE TABLE `paciente` (
   `ID_Encuesta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `paciente`
+--
+
+INSERT INTO `paciente` (`ID_Paciente`, `F_Nacimiento`, `Cedula`, `Nombre`, `Apellido`, `Email`, `ID_Encuesta`) VALUES
+(1, '2026-10-04', '12345678', 'Diego', 'Gonzalez', 'diego0098@gmail.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `paciente_traslado`
+--
+
 CREATE TABLE `paciente_traslado` (
   `ID_Paciente` int(11) NOT NULL,
   `ID_Traslado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `paciente_traslado`
+--
+
+INSERT INTO `paciente_traslado` (`ID_Paciente`, `ID_Traslado`) VALUES
+(1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `qr`
+--
 
 CREATE TABLE `qr` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
   `Id_Documento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuesta`
+--
 
 CREATE TABLE `respuesta` (
   `ID_Respuesta` int(11) NOT NULL,
@@ -111,6 +248,10 @@ CREATE TABLE `respuesta` (
   `ID_Encuesta` int(11) NOT NULL,
   `ID_Envio` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `respuesta`
+--
 
 INSERT INTO `respuesta` (`ID_Respuesta`, `Respuesta_Texto`, `Clasificacion`, `Fecha`, `ID_Encuesta`, `ID_Envio`) VALUES
 (3, 'emergencia', 'Servicio utilizado', '2026-09-05', 1, NULL),
@@ -130,43 +271,13 @@ INSERT INTO `respuesta` (`ID_Respuesta`, `Respuesta_Texto`, `Clasificacion`, `Fe
 (17, 'muy_corto', 'Tiempo de espera', '2026-09-05', 1, '29dc293284e282cb1690570b6bc7a519'),
 (18, 'muy_buena', 'Instalaciones', '2026-09-05', 1, '29dc293284e282cb1690570b6bc7a519'),
 (19, 'si', 'Recomendaría el hospital', '2026-09-05', 1, '29dc293284e282cb1690570b6bc7a519'),
-(20, 'La verdad es que estuvo feo xd', 'Comentarios', '2026-09-05', 1, '29dc293284e282cb1690570b6bc7a519'),
-(21, 'emergencia', 'Servicio utilizado', '2026-09-06', 1, '17af313b3bf4b2bd40323d0a83d4ddcb'),
-(22, 'excelente', 'Atención recibida', '2026-09-06', 1, '17af313b3bf4b2bd40323d0a83d4ddcb'),
-(23, 'muy_corto', 'Tiempo de espera', '2026-09-06', 1, '17af313b3bf4b2bd40323d0a83d4ddcb'),
-(24, 'excelente', 'Instalaciones', '2026-09-06', 1, '17af313b3bf4b2bd40323d0a83d4ddcb'),
-(25, 'si', 'Recomendaría el hospital', '2026-09-06', 1, '17af313b3bf4b2bd40323d0a83d4ddcb'),
-(26, 'Mal', 'Comentarios', '2026-09-06', 1, '17af313b3bf4b2bd40323d0a83d4ddcb'),
-(27, 'emergencia', 'Servicio utilizado', '2026-09-07', 1, '81860fe82723e6e3b650db92699d90dc'),
-(28, 'excelente', 'Atención recibida', '2026-09-07', 1, '81860fe82723e6e3b650db92699d90dc'),
-(29, 'muy_corto', 'Tiempo de espera', '2026-09-07', 1, '81860fe82723e6e3b650db92699d90dc'),
-(30, 'excelente', 'Instalaciones', '2026-09-07', 1, '81860fe82723e6e3b650db92699d90dc'),
-(31, 'si', 'Recomendaría el hospital', '2026-09-07', 1, '81860fe82723e6e3b650db92699d90dc'),
-(32, 'hola xd dani', 'Comentarios', '2026-09-07', 1, '81860fe82723e6e3b650db92699d90dc'),
-(33, 'estudios', 'Servicio utilizado', '2026-09-10', 1, '22c05583a03532ed31561eb6c43da47a'),
-(34, 'excelente', 'Atención recibida', '2026-09-10', 1, '22c05583a03532ed31561eb6c43da47a'),
-(35, 'largo', 'Tiempo de espera', '2026-09-10', 1, '22c05583a03532ed31561eb6c43da47a'),
-(36, 'buena', 'Instalaciones', '2026-09-10', 1, '22c05583a03532ed31561eb6c43da47a'),
-(37, 'si', 'Recomendaría el hospital', '2026-09-10', 1, '22c05583a03532ed31561eb6c43da47a'),
-(38, 'Muy bueno pero hay que esperar mucho', 'Comentarios', '2026-09-10', 1, '22c05583a03532ed31561eb6c43da47a'),
-(39, 'consulta', 'Servicio utilizado', '2026-09-10', 1, '576539c2eb9919f60b7ff34bc1542ecf'),
-(40, 'excelente', 'Atención recibida', '2026-09-10', 1, '576539c2eb9919f60b7ff34bc1542ecf'),
-(41, 'muy_corto', 'Tiempo de espera', '2026-09-10', 1, '576539c2eb9919f60b7ff34bc1542ecf'),
-(42, 'excelente', 'Instalaciones', '2026-09-10', 1, '576539c2eb9919f60b7ff34bc1542ecf'),
-(43, 'si', 'Recomendaría el hospital', '2026-09-10', 1, '576539c2eb9919f60b7ff34bc1542ecf'),
-(44, 'si', 'Comentarios', '2026-09-10', 1, '576539c2eb9919f60b7ff34bc1542ecf'),
-(45, 'consulta', 'Servicio utilizado', '2026-09-10', 1, 'b4e2cb49919a70e347ca74f68cfed676'),
-(46, 'excelente', 'Atención recibida', '2026-09-10', 1, 'b4e2cb49919a70e347ca74f68cfed676'),
-(47, 'muy_corto', 'Tiempo de espera', '2026-09-10', 1, 'b4e2cb49919a70e347ca74f68cfed676'),
-(48, 'excelente', 'Instalaciones', '2026-09-10', 1, 'b4e2cb49919a70e347ca74f68cfed676'),
-(49, 'si', 'Recomendaría el hospital', '2026-09-10', 1, 'b4e2cb49919a70e347ca74f68cfed676'),
-(50, 'sisisi', 'Comentarios', '2026-09-10', 1, 'b4e2cb49919a70e347ca74f68cfed676'),
-(51, 'estudios', 'Servicio utilizado', '2026-09-10', 1, '8b87de30320d4bbbe7a9490b0a601ddc'),
-(52, 'excelente', 'Atención recibida', '2026-09-10', 1, '8b87de30320d4bbbe7a9490b0a601ddc'),
-(53, 'muy_corto', 'Tiempo de espera', '2026-09-10', 1, '8b87de30320d4bbbe7a9490b0a601ddc'),
-(54, 'excelente', 'Instalaciones', '2026-09-10', 1, '8b87de30320d4bbbe7a9490b0a601ddc'),
-(55, 'si', 'Recomendaría el hospital', '2026-09-10', 1, '8b87de30320d4bbbe7a9490b0a601ddc'),
-(56, '', 'Comentarios', '2026-09-10', 1, '8b87de30320d4bbbe7a9490b0a601ddc');
+(20, 'La verdad es que estuvo feo xd', 'Comentarios', '2026-09-05', 1, '29dc293284e282cb1690570b6bc7a519');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ruta`
+--
 
 CREATE TABLE `ruta` (
   `ID_ruta` int(11) NOT NULL,
@@ -175,6 +286,20 @@ CREATE TABLE `ruta` (
   `Local_Nacional` varchar(50) NOT NULL,
   `ID_Traslado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ruta`
+--
+
+INSERT INTO `ruta` (`ID_ruta`, `Descripcion`, `Tipo`, `Local_Nacional`, `ID_Traslado`) VALUES
+(5, 'Montevideo', 'Origen', 'Local', 3),
+(6, 'Hostpital de clinicas', 'Destino', 'Local', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `traslado`
+--
 
 CREATE TABLE `traslado` (
   `ID_Traslado` int(11) NOT NULL,
@@ -189,92 +314,269 @@ CREATE TABLE `traslado` (
   `ID_Funcionario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `traslado`
+--
+
+INSERT INTO `traslado` (`ID_Traslado`, `Fecha_solicitud`, `Hora_Salida`, `Hora_llegada_estimada`, `Hora_llegada_efectiva`, `Estado`, `Observaciones`, `ID_ambulancia`, `ID_Conductor`, `ID_Funcionario`) VALUES
+(3, '2026-10-07', '11:11:00', '15:14:00', '00:00:00', 'En camino', 'xd', 1, 1, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `traslado_elemento`
+--
+
 CREATE TABLE `traslado_elemento` (
   `ID_Traslado` int(11) NOT NULL,
   `ID_elemento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `acompañante`
+--
 ALTER TABLE `acompañante`
   ADD PRIMARY KEY (`ID_Acompañante`),
   ADD KEY `ID_Traslado` (`ID_Traslado`);
+
+--
+-- Indices de la tabla `ambulancia`
+--
 ALTER TABLE `ambulancia`
   ADD PRIMARY KEY (`ID_ambulancia`);
+
+--
+-- Indices de la tabla `conductor`
+--
 ALTER TABLE `conductor`
   ADD PRIMARY KEY (`ID_Conductor`);
+
+--
+-- Indices de la tabla `documento`
+--
 ALTER TABLE `documento`
   ADD PRIMARY KEY (`Id_Documento`),
   ADD KEY `ID_Paciente` (`ID_Paciente`);
+
+--
+-- Indices de la tabla `elementos_traslados`
+--
 ALTER TABLE `elementos_traslados`
   ADD PRIMARY KEY (`ID_elemento`);
+
+--
+-- Indices de la tabla `encuesta`
+--
 ALTER TABLE `encuesta`
   ADD PRIMARY KEY (`ID_Encuesta`);
+
+--
+-- Indices de la tabla `funcionario`
+--
 ALTER TABLE `funcionario`
   ADD PRIMARY KEY (`ID_Funcionario`);
+
+--
+-- Indices de la tabla `muestra_paciente`
+--
+ALTER TABLE `muestra_paciente`
+  ADD PRIMARY KEY (`ID_Muestra`);
+
+--
+-- Indices de la tabla `paciente`
+--
 ALTER TABLE `paciente`
   ADD PRIMARY KEY (`ID_Paciente`),
   ADD KEY `ID_Encuesta` (`ID_Encuesta`);
+
+--
+-- Indices de la tabla `paciente_traslado`
+--
 ALTER TABLE `paciente_traslado`
   ADD PRIMARY KEY (`ID_Paciente`,`ID_Traslado`),
   ADD KEY `ID_Traslado` (`ID_Traslado`);
+
+--
+-- Indices de la tabla `qr`
+--
 ALTER TABLE `qr`
   ADD PRIMARY KEY (`id`),
   ADD KEY `Id_Documento` (`Id_Documento`);
+
+--
+-- Indices de la tabla `respuesta`
+--
 ALTER TABLE `respuesta`
   ADD PRIMARY KEY (`ID_Respuesta`),
   ADD KEY `ID_Encuesta` (`ID_Encuesta`);
+
+--
+-- Indices de la tabla `ruta`
+--
 ALTER TABLE `ruta`
   ADD PRIMARY KEY (`ID_ruta`),
   ADD KEY `ID_Traslado` (`ID_Traslado`);
+
+--
+-- Indices de la tabla `traslado`
+--
 ALTER TABLE `traslado`
   ADD PRIMARY KEY (`ID_Traslado`),
   ADD KEY `ID_ambulancia` (`ID_ambulancia`),
   ADD KEY `ID_Conductor` (`ID_Conductor`),
   ADD KEY `ID_Funcionario` (`ID_Funcionario`);
+
+--
+-- Indices de la tabla `traslado_elemento`
+--
 ALTER TABLE `traslado_elemento`
   ADD PRIMARY KEY (`ID_Traslado`,`ID_elemento`),
   ADD KEY `ID_elemento` (`ID_elemento`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `acompañante`
+--
 ALTER TABLE `acompañante`
-  MODIFY `ID_Acompañante` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Acompañante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `ambulancia`
+--
 ALTER TABLE `ambulancia`
-  MODIFY `ID_ambulancia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_ambulancia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `conductor`
+--
 ALTER TABLE `conductor`
-  MODIFY `ID_Conductor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Conductor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `documento`
+--
 ALTER TABLE `documento`
   MODIFY `Id_Documento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `elementos_traslados`
+--
 ALTER TABLE `elementos_traslados`
   MODIFY `ID_elemento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `encuesta`
+--
 ALTER TABLE `encuesta`
   MODIFY `ID_Encuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `funcionario`
+--
 ALTER TABLE `funcionario`
-  MODIFY `ID_Funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID_Funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `muestra_paciente`
+--
+ALTER TABLE `muestra_paciente`
+  MODIFY `ID_Muestra` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `paciente`
+--
 ALTER TABLE `paciente`
-  MODIFY `ID_Paciente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `qr`
+--
 ALTER TABLE `qr`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `respuesta`
+--
 ALTER TABLE `respuesta`
-  MODIFY `ID_Respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `ID_Respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `ruta`
+--
 ALTER TABLE `ruta`
-  MODIFY `ID_ruta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_ruta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `traslado`
+--
 ALTER TABLE `traslado`
-  MODIFY `ID_Traslado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Traslado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `acompañante`
+--
 ALTER TABLE `acompañante`
   ADD CONSTRAINT `acompañante_ibfk_1` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`);
+
+--
+-- Filtros para la tabla `documento`
+--
 ALTER TABLE `documento`
   ADD CONSTRAINT `documento_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`);
+
+--
+-- Filtros para la tabla `paciente`
+--
 ALTER TABLE `paciente`
   ADD CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`ID_Encuesta`) REFERENCES `encuesta` (`ID_Encuesta`);
+
+--
+-- Filtros para la tabla `paciente_traslado`
+--
 ALTER TABLE `paciente_traslado`
   ADD CONSTRAINT `paciente_traslado_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`),
   ADD CONSTRAINT `paciente_traslado_ibfk_2` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`);
+
+--
+-- Filtros para la tabla `qr`
+--
 ALTER TABLE `qr`
   ADD CONSTRAINT `qr_ibfk_1` FOREIGN KEY (`Id_Documento`) REFERENCES `documento` (`Id_Documento`);
+
+--
+-- Filtros para la tabla `respuesta`
+--
 ALTER TABLE `respuesta`
   ADD CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`ID_Encuesta`) REFERENCES `encuesta` (`ID_Encuesta`);
+
+--
+-- Filtros para la tabla `ruta`
+--
 ALTER TABLE `ruta`
   ADD CONSTRAINT `ruta_ibfk_1` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`);
+
+--
+-- Filtros para la tabla `traslado`
+--
 ALTER TABLE `traslado`
   ADD CONSTRAINT `traslado_ibfk_1` FOREIGN KEY (`ID_ambulancia`) REFERENCES `ambulancia` (`ID_ambulancia`),
   ADD CONSTRAINT `traslado_ibfk_2` FOREIGN KEY (`ID_Conductor`) REFERENCES `conductor` (`ID_Conductor`),
   ADD CONSTRAINT `traslado_ibfk_3` FOREIGN KEY (`ID_Funcionario`) REFERENCES `funcionario` (`ID_Funcionario`);
+
+--
+-- Filtros para la tabla `traslado_elemento`
+--
 ALTER TABLE `traslado_elemento`
   ADD CONSTRAINT `traslado_elemento_ibfk_1` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`),
   ADD CONSTRAINT `traslado_elemento_ibfk_2` FOREIGN KEY (`ID_elemento`) REFERENCES `elementos_traslados` (`ID_elemento`);
