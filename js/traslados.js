@@ -10,6 +10,10 @@ const selects = {
 };
 let traslados = [];
 
+function esTrasladoActivo(traslado) {
+    return ['pendiente', 'en camino'].includes(String(traslado.estado).trim().toLowerCase());
+}
+
 function agregarOpcion(select, valor, texto) {
     const opcion = document.createElement('option');
     opcion.value = valor;
@@ -48,7 +52,8 @@ async function cargarDatos() {
         traslados = datos.traslados;
         formulario.elements.csrf_token.value = datos.csrf_token;
         renderizarTraslados();
-        estadoPagina.textContent = traslados.length + (traslados.length === 1 ? ' traslado registrado.' : ' traslados registrados.');
+        const cantidadActivos = traslados.filter(esTrasladoActivo).length;
+        estadoPagina.textContent = cantidadActivos + (cantidadActivos === 1 ? ' traslado activo.' : ' traslados activos.');
     } catch (error) {
         estadoPagina.textContent = error.message;
         if (error.message === 'Iniciá sesión para gestionar traslados.') {
@@ -65,15 +70,16 @@ async function cargarDatos() {
 
 function renderizarTraslados() {
     filas.replaceChildren();
-    if (traslados.length === 0) {
+    const trasladosActivos = traslados.filter(esTrasladoActivo);
+    if (trasladosActivos.length === 0) {
         const fila = filas.insertRow();
         const celda = fila.insertCell();
         celda.colSpan = 9;
-        celda.textContent = 'Todavía no hay traslados registrados.';
+        celda.textContent = 'No hay traslados activos en este momento.';
         return;
     }
 
-    traslados.forEach(function (traslado) {
+    trasladosActivos.forEach(function (traslado) {
         const fila = filas.insertRow();
         [
             traslado.paciente,
@@ -93,6 +99,7 @@ function renderizarTraslados() {
         [
             ['Ver', 'ver'],
             ['Modificar', 'editar'],
+            ['Mapa', 'mapa'],
             ['Eliminar', 'eliminar']
         ].forEach(function (definicion) {
             const boton = document.createElement('button');
@@ -192,6 +199,8 @@ filas.addEventListener('click', async function (evento) {
             'Observaciones: ' + (traslado.observaciones || 'Sin observaciones')
         ].join('\n');
         alert(resumen);
+    } else if (boton.dataset.accion === 'mapa') {
+        alert('El mapa en vivo estará disponible próximamente.');
     } else if (boton.dataset.accion === 'editar') {
         await abrirFormulario(traslado);
     } else if (boton.dataset.accion === 'eliminar' &&

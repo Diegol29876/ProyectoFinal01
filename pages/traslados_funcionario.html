@@ -9,8 +9,7 @@
 <body>
     <header class="encabezado">
         <a href="panel_fun.html" class="marca">
-            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
-            <span>Panel de funcionarios</span>
+            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">    
         </a>
         <div class="titulo">
             <p>Gestión interna</p>
@@ -22,33 +21,54 @@
     <main class="contenido">
         <section class="encabezado-vista">
             <div>
-                <h2>Traslados registrados</h2>
-                <p>Registrá y consultá los traslados de pacientes del hospital.</p>
+                <h2>Gestión de traslados</h2>
+                <p>Elegí qué querés hacer.</p>
             </div>
-            <button id="nuevo-traslado" class="boton-principal" type="button">+ Nuevo traslado</button>
         </section>
 
-        <p id="estado-pagina" class="estado" role="status" aria-live="polite">Cargando traslados...</p>
+        <nav class="opciones-traslado" aria-label="Opciones de traslados">
+            <a class="opcion-traslado" href="muestras_paciente.html">
+                <strong>Muestras del paciente</strong>
+                <span>Consultar la sección de muestras</span>
+            </a>
+            <button id="nuevo-traslado" class="opcion-traslado" type="button">
+                <strong>Registrar traslado</strong>
+                <span>Cargar un nuevo traslado</span>
+            </button>
+            <a class="opcion-traslado" href="#traslados-activos">
+                <strong>Traslados activos</strong>
+                <span>Ver los pendientes y en camino</span>
+            </a>
+        </nav>
 
-        <section class="tabla-contenedor" aria-label="Listado de traslados">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Paciente</th>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Chofer</th>
-                        <th>Acompañante</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="filas-traslados">
-                    <tr><td colspan="9">Cargando...</td></tr>
-                </tbody>
-            </table>
+        <section id="traslados-activos" class="seccion-traslados">
+            <div class="encabezado-vista">
+                <div>
+                    <h2>Traslados activos</h2>
+                    <p>Traslados pendientes o que están en camino.</p>
+                </div>
+                <p id="estado-pagina" class="estado" role="status" aria-live="polite">Cargando traslados...</p>
+            </div>
+            <div class="tabla-contenedor" aria-label="Listado de traslados activos">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Chofer</th>
+                            <th>Acompañante</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filas-traslados">
+                        <tr><td colspan="9">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 

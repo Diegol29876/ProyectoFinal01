@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muestras del paciente - Hospital de Clínicas</title>
+</head>
+<body>
+    <header>
+        <a href="panel_fun.html">Volver al panel</a>
+        <h1>Muestras del paciente</h1>
+        <a href="traslados_funcionario.html">Volver a traslados</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>Registrar una muestra</h2>
+            <form id="formulario-muestra">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" name="nombre" type="text" maxlength="100" required>
+
+                <label for="apellido">Apellido</label>
+                <input id="apellido" name="apellido" type="text" maxlength="100" required>
+
+                <label for="cedula">Cédula</label>
+                <input id="cedula" name="cedula" type="text" maxlength="20" required>
+
+                <label for="muestra">Muestra realizada</label>
+                <input id="muestra" name="muestra" type="text" maxlength="255" required>
+
+                <label for="fecha">Fecha de la muestra</label>
+                <input id="fecha" name="fecha" type="date" required>
+
+                <input id="csrf-token" name="csrf_token" type="hidden">
+                <button type="submit">Guardar muestra</button>
+                <p id="estado-formulario" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section>
+            <h2>Muestras registradas</h2>
+            <p id="estado-listado" role="status" aria-live="polite">Cargando muestras...</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cédula</th>
+                        <th>Muestra realizada</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody id="filas-muestras">
+                    <tr><td colspan="5">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="../js/muestras_paciente.js"></script>
+</body>
+</html>
