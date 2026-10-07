@@ -373,6 +373,7 @@ try {
     if (isset($conexion) && $conexion->thread_id) {
         $conexion->rollback();
     }
+    $mensaje = 'No se pudo guardar el traslado.';
     if ($error instanceof InvalidArgumentException) {
         responder_json(false, $error->getMessage(), [], 422);
     } elseif ($error instanceof mysqli_sql_exception) {
