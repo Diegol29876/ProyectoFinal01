@@ -220,9 +220,6 @@ filas.addEventListener('click', async function (evento) {
     }
 });
 
-document.getElementById('nuevo-traslado').addEventListener('click', function () {
-    abrirFormulario(null);
-});
 document.getElementById('cerrar-dialogo').addEventListener('click', function () {
     dialogo.close();
 });

@@ -5,56 +5,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa de ambulancias - Hospital de Clínicas</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="../css/mapa.css?v=20261009">
+    <link rel="stylesheet" href="../css/boton_panel.css?v=20261007">
     <link rel="stylesheet" href="../css/footer.css?v=20261007">
 </head>
 <body>
-    <header>
-        <a href="traslados_funcionario.html">Volver a traslados</a>
-        <h1>Mapa de ambulancias</h1>
+    <header class="encabezado-mapa">
+        <a href="panel_fun.html" class="marca">
+            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
+        </a>
+        <div class="titulo">
+            <p>Gestión interna</p>
+            <h1>Mapa de ambulancias</h1>
+        </div>
+        <a href="panel_fun.html" class="boton-volver-panel">Volver al Panel</a>
     </header>
 
     <main>
-        <section aria-labelledby="titulo-origen">
-            <h2 id="titulo-origen">Ubicación de origen</h2>
-            <p>Arrastrá el marcador del mapa hasta el origen y guardá la ubicación.</p>
-            <button id="ingresarO" type="button">Guardar origen</button>
-            <label for="lat">Latitud</label>
-            <input id="lat" name="lat" type="text" readonly>
-            <label for="lng">Longitud</label>
-            <input id="lng" name="lng" type="text" readonly>
-        </section>
+        <h2>Registrar traslado</h2>
+        <form id="formulario-traslado">
+            <input type="hidden" name="csrf_token">
 
-        <section aria-labelledby="titulo-destino">
-            <h2 id="titulo-destino">Buscar destino</h2>
-            <label for="dir">Dirección</label>
-            <input id="dir" name="direccion" type="text" placeholder="Ej. Avenida Italia 1234">
-            <label for="departamento">Departamento</label>
-            <select id="departamento" name="departamento" required>
-                <option value="">Seleccioná un departamento</option>
-                <option value="Artigas">Artigas</option>
-                <option value="Canelones">Canelones</option>
-                <option value="Cerro Largo">Cerro Largo</option>
-                <option value="Colonia">Colonia</option>
-                <option value="Durazno">Durazno</option>
-                <option value="Flores">Flores</option>
-                <option value="Florida">Florida</option>
-                <option value="Lavalleja">Lavalleja</option>
-                <option value="Maldonado">Maldonado</option>
-                <option value="Montevideo">Montevideo</option>
-                <option value="Paysandú">Paysandú</option>
-                <option value="Río Negro">Río Negro</option>
-                <option value="Rivera">Rivera</option>
-                <option value="Rocha">Rocha</option>
-                <option value="Salto">Salto</option>
-                <option value="San José">San José</option>
-                <option value="Soriano">Soriano</option>
-                <option value="Tacuarembó">Tacuarembó</option>
-                <option value="Treinta y Tres">Treinta y Tres</option>
-            </select>
-            <button id="ubicar" type="button">Ubicar y trazar ruta</button>
-        </section>
+            <section aria-labelledby="titulo-paciente">
+                <h3 id="titulo-paciente">Paciente</h3>
+                <label for="paciente">Paciente</label>
+                <select id="paciente" name="paciente_id" required></select>
+                <div id="nuevo-paciente" hidden>
+                    <h4>Datos del paciente</h4>
+                    <label for="paciente-nombre">Nombre</label>
+                    <input id="paciente-nombre" name="paciente_nombre" maxlength="100" required disabled>
+                    <label for="paciente-apellido">Apellido</label>
+                    <input id="paciente-apellido" name="paciente_apellido" maxlength="100" required disabled>
+                    <label for="paciente-cedula">Cédula</label>
+                    <input id="paciente-cedula" name="paciente_cedula" maxlength="20" required disabled>
+                    <label for="paciente-nacimiento">Fecha de nacimiento</label>
+                    <input id="paciente-nacimiento" name="paciente_nacimiento" type="date" required disabled>
+                    <label for="paciente-email">Correo electrónico</label>
+                    <input id="paciente-email" name="paciente_email" type="email" maxlength="100" required disabled>
+                </div>
+            </section>
 
-        <div id="visualizar" role="application" aria-label="Mapa interactivo de ambulancias"></div>
+            <section aria-labelledby="titulo-origen">
+                <h3 id="titulo-origen">Dirección de origen</h3>
+                <label for="origen">Dirección</label>
+                <input id="origen" name="origen" type="text" maxlength="200" placeholder="Ej. Avenida Italia 1234" required>
+                <label for="departamento-origen">Departamento</label>
+                <select id="departamento-origen" name="departamento_origen" required>
+                    <option value="">Seleccioná un departamento</option>
+                    <option value="Artigas">Artigas</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Paysandú">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Salto">Salto</option>
+                    <option value="San José">San José</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Tacuarembó">Tacuarembó</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                </select>
+                <button id="ubicar-origen" type="button">Ubicar origen en el mapa</button>
+            </section>
+
+            <section aria-labelledby="titulo-destino">
+                <h3 id="titulo-destino">Dirección de destino</h3>
+                <label for="dir">Dirección</label>
+                <input id="dir" name="direccion" type="text" maxlength="200" placeholder="Ej. Avenida Italia 1234" required>
+                <label for="departamento">Departamento</label>
+                <select id="departamento" name="departamento" required>
+                    <option value="">Seleccioná un departamento</option>
+                    <option value="Artigas">Artigas</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Paysandú">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Salto">Salto</option>
+                    <option value="San José">San José</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Tacuarembó">Tacuarembó</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                </select>
+                <button id="ubicar" type="button">Ubicar y trazar ruta</button>
+                <input id="destino" name="destino" type="hidden">
+            </section>
+
+            <div id="visualizar" role="application" aria-label="Mapa interactivo de ambulancias"></div>
+
+            <section aria-labelledby="titulo-horario">
+                <h3 id="titulo-horario">Fecha y horario</h3>
+                <label for="fecha">Fecha</label>
+                <input id="fecha" name="fecha" type="date" required>
+                <label for="hora">Hora de salida</label>
+                <input id="hora" name="hora" type="time" required>
+                <label for="hora-estimada">Hora estimada de llegada (opcional)</label>
+                <input id="hora-estimada" name="hora_estimada" type="time">
+                <label for="hora-efectiva">Hora efectiva de llegada (opcional)</label>
+                <input id="hora-efectiva" name="hora_efectiva" type="time">
+            </section>
+
+            <section aria-labelledby="titulo-conductor">
+                <h3 id="titulo-conductor">Chofer</h3>
+                <label for="conductor">Chofer / responsable</label>
+                <select id="conductor" name="conductor_id" required></select>
+                <div id="nuevo-conductor" hidden>
+                    <h4>Datos del chofer</h4>
+                    <label for="conductor-nombre">Nombre</label>
+                    <input id="conductor-nombre" name="conductor_nombre" maxlength="100" required disabled>
+                    <label for="conductor-documento">Documento</label>
+                    <input id="conductor-documento" name="conductor_documento" maxlength="20" required disabled>
+                    <label for="conductor-licencia">Licencia</label>
+                    <input id="conductor-licencia" name="conductor_licencia" maxlength="50" required disabled>
+                    <label for="conductor-telefono">Teléfono</label>
+                    <input id="conductor-telefono" name="conductor_telefono" maxlength="20" required disabled>
+                </div>
+            </section>
+
+            <section aria-labelledby="titulo-ambulancia">
+                <h3 id="titulo-ambulancia">Ambulancia</h3>
+                <label for="ambulancia">Ambulancia</label>
+                <select id="ambulancia" name="ambulancia_id" required></select>
+                <div id="nueva-ambulancia" hidden>
+                    <h4>Datos de la ambulancia</h4>
+                    <label for="ambulancia-modelo">Modelo</label>
+                    <input id="ambulancia-modelo" name="ambulancia_modelo" maxlength="100" required disabled>
+                    <label for="ambulancia-matricula">Matrícula</label>
+                    <input id="ambulancia-matricula" name="ambulancia_matricula" maxlength="30" required disabled>
+                    <label for="ambulancia-anio">Año</label>
+                    <input id="ambulancia-anio" name="ambulancia_anio" type="number" min="1900" max="2100" required disabled>
+                    <label for="ambulancia-estado">Estado</label>
+                    <input id="ambulancia-estado" name="ambulancia_estado" maxlength="50" value="Disponible" required disabled>
+                </div>
+            </section>
+
+            <section aria-labelledby="titulo-detalles">
+                <h3 id="titulo-detalles">Detalles del traslado</h3>
+                <label for="acompanante">Acompañante / copiloto</label>
+                <input id="acompanante" name="acompanante" type="text" maxlength="100" required>
+                <label for="estado">Estado del traslado</label>
+                <select id="estado" name="estado" required>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En camino">En camino</option>
+                    <option value="Finalizado">Finalizado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+                <label for="observaciones">Observaciones (opcional)</label>
+                <textarea id="observaciones" name="observaciones" maxlength="255" rows="3"></textarea>
+            </section>
+
+            <p id="estado-traslado" role="status" aria-live="polite"></p>
+            <button id="guardar-traslado" type="submit">Registrar traslado</button>
+        </form>
     </main>
 
     <footer class="footer-site">
