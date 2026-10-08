@@ -17,12 +17,12 @@ h1, h2, h3 {
     color: #13315c;
 }
 
-.encabezado {
+.encabezado-traslados {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 18px;
-    padding: 14px 22px;
+    gap: 20px;
+    padding: 15px 20px;
     background: #fff;
     box-shadow: 0 2px 8px #ccc;
 }
@@ -30,13 +30,14 @@ h1, h2, h3 {
 .marca {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     color: #13315c;
+    font-size: 16px;
     font-weight: bold;
     text-decoration: none;
 }
 
-.marca img { width: 160px; }
+.marca img { width: 200px; }
 .titulo { text-align: center; }
 .titulo p, .etiqueta {
     margin: 0 0 5px;
@@ -212,14 +213,15 @@ dialog::backdrop { background: #13315c88; }
 .acciones-formulario { margin-top: 12px; }
 
 @media (max-width: 650px) {
-    .encabezado {
-        flex-wrap: wrap;
-        justify-content: center;
+    .encabezado-traslados,
+    .encabezado-vista {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
-    .marca img { width: 125px; }
+    .marca { align-items: flex-start; flex-direction: column; gap: 5px; }
+    .marca img { width: 150px; }
     .titulo { order: 1; width: 100%; }
-    .encabezado-vista { align-items: flex-start; flex-direction: column; }
     .opciones-traslado { grid-template-columns: 1fr; }
     .contenido { padding: 20px 12px; }
 }

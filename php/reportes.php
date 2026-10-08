@@ -42,6 +42,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Ambulancias - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/panel_fun.css">
+    <link rel="stylesheet" href="../css/footer.css?v=20261007">
 </head>
 <body>
 
@@ -106,8 +107,9 @@ try {
         </section>
     </main>
 
-    <footer>
-        <p>Hospital de Clínicas - Sistema Interno de Gestión</p>
+    <footer class="footer-site">
+        <strong>Tu información está protegida</strong>
+        <p>Sitio desarrollado por GIT Stack</p>
     </footer>
 
 </body>

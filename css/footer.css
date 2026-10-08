@@ -1,0 +1,35 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body > main {
+    flex: 1 0 auto;
+}
+
+footer.footer-site {
+    flex-shrink: 0;
+    background: #fff;
+    color: gray;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: normal;
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+}
+
+
+footer.footer-site strong {
+    color: #13315c;
+    display: block;
+    margin-bottom: 5px;
+}
+
+footer.footer-site p {
+    color: #666;
+    font-size: 14px;
+    line-height: normal;
+    margin: 0;
+}
