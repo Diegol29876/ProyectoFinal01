@@ -7,6 +7,8 @@ const direccionOrigen = document.getElementById('origen');
 const departamentoOrigen = document.getElementById('departamento-origen');
 const direccionDestino = document.getElementById('dir');
 const departamentoDestino = document.getElementById('departamento');
+const horaSalida = document.getElementById('hora');
+const horaEstimada = document.getElementById('hora-estimada');
 const selects = {
     paciente: document.getElementById('paciente'),
     conductor: document.getElementById('conductor'),
@@ -39,6 +41,7 @@ let posicionDestino = null;
 let marcadorOrigen = null;
 let marcadorDestino = null;
 let ruta = null;
+let duracionRutaSegundos = null;
 
 function fechaActual() {
     const hoy = new Date();
@@ -115,7 +118,21 @@ function limpiarRuta() {
         marcadorDestino = null;
     }
     posicionDestino = null;
+    duracionRutaSegundos = null;
     destino.value = '';
+    horaEstimada.value = '';
+}
+
+function actualizarHoraEstimada() {
+    if (duracionRutaSegundos === null || !horaSalida.value) {
+        horaEstimada.value = '';
+        return;
+    }
+
+    const [horas, minutos] = horaSalida.value.split(':').map(Number);
+    const minutosLlegada = (horas * 60 + minutos + Math.ceil(duracionRutaSegundos / 60)) % (24 * 60);
+    horaEstimada.value = String(Math.floor(minutosLlegada / 60)).padStart(2, '0') + ':' +
+        String(minutosLlegada % 60).padStart(2, '0');
 }
 
 function limpiarOrigen() {
@@ -179,6 +196,7 @@ direccionOrigen.addEventListener('input', limpiarOrigen);
 departamentoOrigen.addEventListener('change', limpiarOrigen);
 direccionDestino.addEventListener('input', limpiarRuta);
 departamentoDestino.addEventListener('change', limpiarRuta);
+horaSalida.addEventListener('input', actualizarHoraEstimada);
 
 document.getElementById('ubicar').addEventListener('click', async function () {
     if (!posicionOrigen || !origen.value) {
@@ -204,16 +222,21 @@ document.getElementById('ubicar').addEventListener('click', async function () {
         }
 
         const datosRuta = await respuestaRuta.json();
-        const geometria = datosRuta.features && datosRuta.features[0] &&
-            datosRuta.features[0].geometry;
+        const featureRuta = datosRuta.features && datosRuta.features[0];
+        const geometria = featureRuta && featureRuta.geometry;
         const coordenadas = geometria && (geometria.type === 'MultiLineString'
             ? geometria.coordinates[0]
             : geometria.coordinates);
         if (!Array.isArray(coordenadas) || coordenadas.length === 0) {
             throw new Error('Se encontró el destino, pero no se pudo calcular la ruta.');
         }
+        if (!featureRuta.properties || typeof featureRuta.properties.time !== 'number' ||
+            !Number.isFinite(featureRuta.properties.time) || featureRuta.properties.time < 0) {
+            throw new Error('Se trazó la ruta, pero no se pudo calcular el tiempo estimado de llegada.');
+        }
 
         limpiarRuta();
+        duracionRutaSegundos = featureRuta.properties.time;
         posicionDestino = resultadoDestino.posicion;
         marcadorDestino = L.marker(posicionDestino, { icon: iconoDestino }).addTo(mapa);
         const puntos = coordenadas.map(function ([longitud, latitud]) {
@@ -221,8 +244,12 @@ document.getElementById('ubicar').addEventListener('click', async function () {
         });
         ruta = L.polyline(puntos, { color: 'blue', weight: 5 }).addTo(mapa);
         destino.value = resultadoDestino.direccion;
+        actualizarHoraEstimada();
         mapa.fitBounds(ruta.getBounds());
-        estadoTraslado.textContent = 'Destino encontrado y ruta trazada.';
+        estadoTraslado.textContent = horaEstimada.value
+            ? 'Ruta trazada. Duración estimada: ' + Math.ceil(duracionRutaSegundos / 60) +
+                ' min. Hora estimada de llegada: ' + horaEstimada.value + '.'
+            : 'Ruta trazada. Ingresá la hora de salida para calcular la llegada.';
     } catch (error) {
         estadoTraslado.textContent = error.message;
     }
