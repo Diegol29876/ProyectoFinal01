@@ -124,15 +124,25 @@ function limpiarRuta() {
 }
 
 function actualizarHoraEstimada() {
-    if (duracionRutaSegundos === null || !horaSalida.value) {
+    if (duracionRutaSegundos === null) {
         horaEstimada.value = '';
         return;
     }
 
+    const duracionMinutos = Math.ceil(duracionRutaSegundos / 60);
+    if (!horaSalida.value) {
+        horaEstimada.value = '';
+        estadoTraslado.textContent = 'Ruta trazada. Duración estimada: ' + duracionMinutos +
+            ' min. Ingresá la hora de salida para calcular la llegada.';
+        return;
+    }
+
     const [horas, minutos] = horaSalida.value.split(':').map(Number);
-    const minutosLlegada = (horas * 60 + minutos + Math.ceil(duracionRutaSegundos / 60)) % (24 * 60);
+    const minutosLlegada = (horas * 60 + minutos + duracionMinutos) % (24 * 60);
     horaEstimada.value = String(Math.floor(minutosLlegada / 60)).padStart(2, '0') + ':' +
         String(minutosLlegada % 60).padStart(2, '0');
+    estadoTraslado.textContent = 'Ruta trazada. Duración estimada: ' + duracionMinutos +
+        ' min. Hora estimada de llegada: ' + horaEstimada.value + '.';
 }
 
 function limpiarOrigen() {
@@ -246,10 +256,6 @@ document.getElementById('ubicar').addEventListener('click', async function () {
         destino.value = resultadoDestino.direccion;
         actualizarHoraEstimada();
         mapa.fitBounds(ruta.getBounds());
-        estadoTraslado.textContent = horaEstimada.value
-            ? 'Ruta trazada. Duración estimada: ' + Math.ceil(duracionRutaSegundos / 60) +
-                ' min. Hora estimada de llegada: ' + horaEstimada.value + '.'
-            : 'Ruta trazada. Ingresá la hora de salida para calcular la llegada.';
     } catch (error) {
         estadoTraslado.textContent = error.message;
     }
