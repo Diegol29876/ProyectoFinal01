@@ -4,115 +4,180 @@
 }
 
 body {
-    margin: 0;
     background: #eef5fc;
     color: #1b2a41;
+    margin: 0;
+    min-height: 100vh;
 }
 
-h1,
-h2,
-p {
-    margin-top: 0;
-}
-
-h1,
-h2 {
-    color: #13315c;
-}
-
-.encabezado {
-    display: flex;
+header {
     align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    padding: 14px 22px;
     background: #fff;
     box-shadow: 0 2px 8px #ccc;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    padding: 15px 20px;
 }
 
-.marca img {
-    display: block;
-    width: 160px;
-}
-
-.titulo {
+header h1 {
+    color: #13315c;
+    font-size: 24px;
+    margin: 0;
     text-align: center;
 }
 
-.titulo p {
-    margin-bottom: 5px;
-    color: #0b5fa5;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.titulo h1 {
-    margin-bottom: 0;
-    font-size: 24px;
-}
-
-.boton-secundario {
-    padding: 10px 14px;
-    border-radius: 8px;
-    background: #dcebff;
-    color: #13315c;
+header a {
+    background: #0b5fa5;
+    border-radius: 7px;
+    color: #fff;
+    flex: 0 0 auto;
     font-size: 14px;
-    font-weight: bold;
+    padding: 9px 13px;
     text-decoration: none;
 }
 
-.boton-secundario:hover {
-    background: #c9e0fb;
+header a:hover,
+header a:focus-visible {
+    background: #094d86;
 }
 
-.contenido {
-    max-width: 1200px;
+main {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.4fr);
     margin: 0 auto;
-    padding: 28px 18px;
+    max-width: 1200px;
+    padding: 30px 18px;
 }
 
-.panel-muestras {
-    max-width: 760px;
-    margin: 20px auto;
-    padding: 24px;
+main section {
+    background: #fff;
     border: 1px solid #dce9f7;
     border-radius: 12px;
-    background: #fff;
     box-shadow: 0 4px 12px #dce5ef;
+    min-width: 0;
+    padding: 22px;
 }
 
-.panel-muestras h2 {
-    margin-bottom: 10px;
+main h2 {
+    color: #13315c;
+    font-size: 21px;
+    margin: 0 0 16px;
 }
 
-.panel-muestras p {
-    color: #5b6b7b;
+#formulario-muestra label {
+    color: #344b62;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 12px 0 5px;
+}
+
+#formulario-muestra input:not([type="hidden"]) {
+    background: #fbfdff;
+    border: 1px solid #cbd9e8;
+    border-radius: 7px;
+    color: #1b2a41;
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+}
+
+#formulario-muestra input:focus {
+    border-color: #5689cc;
+    box-shadow: 0 0 0 3px rgba(11, 95, 165, 0.12);
+    outline: none;
+}
+
+#formulario-muestra button {
+    background: #0b5fa5;
+    border: 0;
+    border-radius: 7px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 18px;
+    padding: 11px 16px;
+    width: 100%;
+}
+
+#formulario-muestra button:hover {
+    background: #094d86;
+}
+
+#estado-formulario,
+#estado-listado {
+    color: #39546e;
+    font-size: 14px;
     line-height: 1.5;
+    margin: 12px 0 0;
 }
 
-.panel-muestras .estado {
-    margin: 18px 0 0;
-    padding: 12px;
-    border-radius: 8px;
-    background: #f1f7fd;
+.tabla-contenedor {
+    overflow-x: auto;
+    width: 100%;
 }
 
-@media (max-width: 650px) {
-    .encabezado {
+table {
+    border-collapse: collapse;
+    min-width: 540px;
+    width: 100%;
+}
+
+th,
+td {
+    border-bottom: 1px solid #e4edf7;
+    padding: 11px 10px;
+    text-align: left;
+}
+
+th {
+    background: #dcebff;
+    color: #13315c;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+tbody tr:nth-child(even) {
+    background: #f8fbff;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #9bc9f2;
+    outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+    header {
         flex-wrap: wrap;
         justify-content: center;
     }
 
-    .marca img {
-        width: 125px;
+    header h1 {
+        flex: 1 0 100%;
+        order: -1;
     }
 
-    .titulo {
-        order: 1;
-        width: 100%;
-    }
-
-    .contenido {
+    main {
+        grid-template-columns: 1fr;
         padding: 20px 12px;
+    }
+
+    main section {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 420px) {
+    header a {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    header h1 {
+        font-size: 21px;
     }
 }

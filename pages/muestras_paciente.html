@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muestras del paciente - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/muestras_paciente.css">
     <link rel="stylesheet" href="../css/footer.css?v=20261007">
 </head>
 <body>
@@ -41,20 +42,22 @@
         <section>
             <h2>Muestras registradas</h2>
             <p id="estado-listado" role="status" aria-live="polite">Cargando muestras...</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Cédula</th>
-                        <th>Muestra realizada</th>
-                        <th>Fecha</th>
-                    </tr>
-                </thead>
-                <tbody id="filas-muestras">
-                    <tr><td colspan="5">Cargando...</td></tr>
-                </tbody>
-            </table>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Cédula</th>
+                            <th>Muestra realizada</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filas-muestras">
+                        <tr><td colspan="5">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 

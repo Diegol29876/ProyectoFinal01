@@ -11,6 +11,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 try {
     $conexion = conectar_bd();
+
     
     $sql = "SELECT 
                 t.ID_Traslado,
@@ -42,6 +43,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Ambulancias - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/panel_fun.css">
+    <link rel="stylesheet" href="../css/reportes.css">
     <link rel="stylesheet" href="../css/footer.css?v=20261007">
 </head>
 <body>
@@ -68,42 +70,44 @@ try {
                 <button onclick="window.print()" class="btn-imprimir">Imprimir / Descargar PDF</button>
             </div>
 
-            <table class="tabla-reporte">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha</th>
-                        <th>Salida</th>
-                        <th>Llegada</th>
-                        <th>Ambulancia</th>
-                        <th>Conductor</th>
-                        <th>Funcionario</th>
-                        <th>Estado</th>
-                        <th>Observaciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($resultado && $resultado->num_rows > 0): ?>
-                        <?php while ($fila = $resultado->fetch_assoc()): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($fila['ID_Traslado']) ?></td>
-                                <td><?= htmlspecialchars($fila['Fecha_solicitud']) ?></td>
-                                <td><?= htmlspecialchars($fila['Hora_Salida']) ?></td>
-                                <td><?= htmlspecialchars($fila['Hora_llegada_efectiva']) ?></td>
-                                <td><?= htmlspecialchars(($fila['Modelo'] ?? '') . ' (' . ($fila['Matricula'] ?? 'Sin asignado') . ')') ?></td>
-                                <td><?= htmlspecialchars($fila['Conductor'] ?? 'No asignado') ?></td>
-                                <td><?= htmlspecialchars($fila['Funcionario'] ?? 'Sistema') ?></td>
-                                <td><?= htmlspecialchars($fila['Estado']) ?></td>
-                                <td><?= htmlspecialchars($fila['Observaciones']) ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
+            <div class="tabla-reporte-contenedor">
+                <table class="tabla-reporte">
+                    <thead>
                         <tr>
-                            <td colspan="9">No hay registros de traslados en la base de datos.</td>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Salida</th>
+                            <th>Llegada</th>
+                            <th>Ambulancia</th>
+                            <th>Conductor</th>
+                            <th>Funcionario</th>
+                            <th>Estado</th>
+                            <th>Observaciones</th>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php if ($resultado && $resultado->num_rows > 0): ?>
+                            <?php while ($fila = $resultado->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($fila['ID_Traslado']) ?></td>
+                                    <td><?= htmlspecialchars($fila['Fecha_solicitud']) ?></td>
+                                    <td><?= htmlspecialchars($fila['Hora_Salida']) ?></td>
+                                    <td><?= htmlspecialchars($fila['Hora_llegada_efectiva']) ?></td>
+                                    <td><?= htmlspecialchars(($fila['Modelo'] ?? '') . ' (' . ($fila['Matricula'] ?? 'Sin asignado') . ')') ?></td>
+                                    <td><?= htmlspecialchars($fila['Conductor'] ?? 'No asignado') ?></td>
+                                    <td><?= htmlspecialchars($fila['Funcionario'] ?? 'Sistema') ?></td>
+                                    <td><?= htmlspecialchars($fila['Estado']) ?></td>
+                                    <td><?= htmlspecialchars($fila['Observaciones']) ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="9">No hay registros de traslados en la base de datos.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 
