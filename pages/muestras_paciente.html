@@ -4,18 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muestras del paciente - Hospital de Clínicas</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="../css/muestras_paciente.css">
+=======
+    <link rel="stylesheet" href="../css/muestras_paciente.css?v=20261020">
+    <link rel="stylesheet" href="../css/boton_panel.css?v=20261007">
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     <link rel="stylesheet" href="../css/footer.css?v=20261007">
 </head>
 <body>
-    <header>
-        <a href="panel_fun.html">Volver al panel</a>
-        <h1>Muestras del paciente</h1>
-        <a href="traslados_funcionario.html">Volver a traslados</a>
+    <header class="encabezado">
+        <a href="panel_fun.html" class="marca">
+            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
+        </a>
+        <div class="titulo">
+            <p>Gestión interna</p>
+            <h1>Muestras del paciente</h1>
+        </div>
+        <a href="panel_fun.html" class="boton-volver-panel">Volver al Panel</a>
     </header>
 
-    <main>
-        <section>
+    <main class="contenido">
+        <section class="panel-muestras">
             <h2>Registrar una muestra</h2>
             <form id="formulario-muestra">
                 <label for="nombre">Nombre</label>
@@ -39,7 +49,7 @@
             </form>
         </section>
 
-        <section>
+        <section class="panel-muestras">
             <h2>Muestras registradas</h2>
             <p id="estado-listado" role="status" aria-live="polite">Cargando muestras...</p>
             <div class="tabla-contenedor">

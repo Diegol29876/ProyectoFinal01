@@ -1,18 +1,57 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #eef5fc;
+    color: #1b2a41;
+}
+
 .encabezado-panel {
     align-items: center;
     background: #fff;
     box-shadow: 0 2px 8px #ccc;
     display: flex;
     justify-content: space-between;
+    gap: 20px;
     padding: 15px 20px;
 }
 
+<<<<<<< HEAD
 .encabezado-panel h1 {
+=======
+.marca {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.marca img {
+    display: block;
+    width: 200px;
+}
+
+.titulo {
+    text-align: center;
+}
+
+.titulo p {
+    color: #0b5fa5;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 5px;
+}
+
+.titulo h1 {
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     color: #13315c;
     font-size: 24px;
     margin: 0;
 }
 
+<<<<<<< HEAD
 main {
     margin: 0 auto;
     max-width: 1200px;
@@ -132,12 +171,16 @@ a:focus-visible {
     outline-offset: 2px;
 }
 
+=======
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
 @media (max-width: 650px) {
     .encabezado-panel {
+        align-items: flex-start;
         flex-wrap: wrap;
         gap: 18px;
     }
 
+<<<<<<< HEAD
     .encabezado-panel h1 {
         font-size: 21px;
     }
@@ -157,5 +200,18 @@ a:focus-visible {
     #form-editar h2,
     #form-editar button {
         grid-column: 1;
+=======
+    .marca img {
+        width: 150px;
+    }
+
+    .titulo {
+        order: 1;
+        width: 100%;
+    }
+
+    .boton-volver-panel {
+        margin-left: auto;
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     }
 }

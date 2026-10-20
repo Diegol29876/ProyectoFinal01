@@ -99,7 +99,6 @@ function renderizarTraslados() {
         [
             ['Ver', 'ver'],
             ['Modificar', 'editar'],
-            ['Mapa', 'mapa'],
             ['Eliminar', 'eliminar']
         ].forEach(function (definicion) {
             const boton = document.createElement('button');
@@ -199,8 +198,6 @@ filas.addEventListener('click', async function (evento) {
             'Observaciones: ' + (traslado.observaciones || 'Sin observaciones')
         ].join('\n');
         alert(resumen);
-    } else if (boton.dataset.accion === 'mapa') {
-        alert('El mapa en vivo estará disponible próximamente.');
     } else if (boton.dataset.accion === 'editar') {
         await abrirFormulario(traslado);
     } else if (boton.dataset.accion === 'eliminar' &&

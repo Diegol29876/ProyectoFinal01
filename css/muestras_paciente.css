@@ -12,6 +12,12 @@ body {
 
 header {
     align-items: center;
+<<<<<<< HEAD
+=======
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 20px;
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     background: #fff;
     box-shadow: 0 2px 8px #ccc;
     display: flex;
@@ -20,10 +26,25 @@ header {
     padding: 15px 20px;
 }
 
+<<<<<<< HEAD
 header h1 {
     color: #13315c;
     font-size: 24px;
     margin: 0;
+=======
+.marca {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+}
+
+.marca img {
+    display: block;
+    width: 200px;
+}
+
+.titulo {
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     text-align: center;
 }
 
@@ -120,6 +141,7 @@ main h2 {
     width: 100%;
 }
 
+<<<<<<< HEAD
 table {
     border-collapse: collapse;
     min-width: 540px;
@@ -152,10 +174,82 @@ a:focus-visible {
 
 @media (max-width: 760px) {
     header {
+=======
+.panel-muestras form {
+    display: grid;
+    gap: 8px;
+}
+
+.panel-muestras label {
+    margin-top: 6px;
+    color: #344b62;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.panel-muestras input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd9e8;
+    border-radius: 7px;
+    background: #fbfdff;
+    color: #1b2a41;
+}
+
+.panel-muestras input:focus {
+    outline: 2px solid #9bc9f2;
+}
+
+.panel-muestras button {
+    justify-self: start;
+    margin-top: 8px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: #0b5fa5;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.panel-muestras button:hover {
+    background: #094d86;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.panel-muestras table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.panel-muestras th,
+.panel-muestras td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e4edf7;
+    text-align: left;
+}
+
+.panel-muestras th {
+    background: #dcebff;
+    color: #13315c;
+}
+
+.panel-muestras tbody tr:nth-child(even) {
+    background: #f8fbff;
+}
+
+@media (max-width: 650px) {
+    .encabezado {
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
         flex-wrap: wrap;
-        justify-content: center;
+        align-items: flex-start;
     }
 
+<<<<<<< HEAD
     header h1 {
         flex: 1 0 100%;
         order: -1;
@@ -179,5 +273,26 @@ a:focus-visible {
 
     header h1 {
         font-size: 21px;
+=======
+    .marca img {
+        width: 150px;
+    }
+
+    .titulo {
+        order: 1;
+        width: 100%;
+    }
+
+    .boton-volver-panel {
+        margin-left: auto;
+    }
+
+    .contenido {
+        padding: 20px 12px;
+    }
+
+    .panel-muestras {
+        padding: 18px 14px;
+>>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     }
 }
