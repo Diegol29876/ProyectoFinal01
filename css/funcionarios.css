@@ -4,9 +4,10 @@
 }
 
 body {
-    margin: 0;
     background: #eef5fc;
     color: #1b2a41;
+    margin: 0;
+    width: 100%;
 }
 
 .encabezado-panel {
@@ -15,17 +16,58 @@ body {
     box-shadow: 0 2px 8px #ccc;
     display: flex;
     justify-content: space-between;
-    gap: 20px;
     padding: 15px 20px;
+    width: 100%;
 }
 
-<<<<<<< HEAD
-.encabezado-panel h1 {
-=======
-.marca {
-    align-items: center;
-    display: flex;
-    flex: 0 0 auto;
+footer.footer-site {
+    margin-top: 0;
+    width: 100%;
+}
+
+main {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 28px 18px;
+}
+
+.lista-funcionarios {
+    overflow: hidden;
+    padding: 22px;
+    border: 1px solid #dce9f7;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px #dce5ef;
+}
+
+.lista-funcionarios h2 {
+    color: #13315c;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.lista-funcionarios table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lista-funcionarios th,
+.lista-funcionarios td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e4edf7;
+    text-align: left;
+}
+
+.lista-funcionarios th {
+    background: #dcebff;
+    color: #13315c;
+    white-space: nowrap;
+}
+
+.lista-funcionarios tbody tr:nth-child(even) {
+    background: #f8fbff;
 }
 
 .marca img {
@@ -45,162 +87,26 @@ body {
 }
 
 .titulo h1 {
->>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     color: #13315c;
     font-size: 24px;
     margin: 0;
 }
 
-<<<<<<< HEAD
-main {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 30px 18px;
-}
-
-main section {
-    background: #fff;
-    border: 1px solid #e4edf7;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px #dce5ef;
-    margin-top: 18px;
-    padding: 22px;
-}
-
-main h2 {
-    color: #13315c;
-    font-size: 22px;
-    margin: 0 0 16px;
-}
-
-#mensaje {
-    color: #39546e;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.tabla-contenedor {
-    overflow-x: auto;
-    width: 100%;
-}
-
-table {
-    border-collapse: collapse;
-    min-width: 1000px;
-    width: 100%;
-}
-
-th,
-td {
-    border-bottom: 1px solid #e4edf7;
-    padding: 11px 10px;
-    text-align: left;
-    vertical-align: top;
-}
-
-th {
-    background: #dcebff;
-    color: #13315c;
-    font-size: 14px;
-    white-space: nowrap;
-}
-
-tbody tr:nth-child(even) {
-    background: #f8fbff;
-}
-
-tbody tr:hover {
-    background: #edf6ff;
-}
-
-td button,
-#form-editar button {
-    background: #0b5fa5;
-    border: 0;
-    border-radius: 6px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 13px;
-    margin: 2px 5px 2px 0;
-    padding: 8px 11px;
-}
-
-td button:hover,
-#form-editar button:hover {
-    background: #094d86;
-}
-
-#form-editar {
-    display: grid;
-    gap: 8px 14px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-#form-editar[hidden] {
-    display: none;
-}
-
-#form-editar h2,
-#form-editar button {
-    grid-column: 1 / -1;
-}
-
-#form-editar label {
-    color: #344b62;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-#form-editar input,
-#form-editar select {
-    background: #fbfdff;
-    border: 1px solid #cbd9e8;
-    border-radius: 7px;
-    color: #1b2a41;
-    font-size: 14px;
-    margin-top: 5px;
-    padding: 10px;
-    width: 100%;
-}
-
-#form-editar input:focus,
-#form-editar select:focus,
-button:focus-visible,
-a:focus-visible {
-    outline: 3px solid #9bc9f2;
-    outline-offset: 2px;
-}
-
-=======
->>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
 @media (max-width: 650px) {
+    main {
+        padding: 20px 12px;
+    }
+
+    .lista-funcionarios {
+        padding: 16px;
+    }
+
     .encabezado-panel {
         align-items: flex-start;
         flex-wrap: wrap;
         gap: 18px;
     }
 
-<<<<<<< HEAD
-    .encabezado-panel h1 {
-        font-size: 21px;
-    }
-
-    main {
-        padding: 20px 12px;
-    }
-
-    main section {
-        padding: 16px;
-    }
-
-    #form-editar {
-        grid-template-columns: 1fr;
-    }
-
-    #form-editar h2,
-    #form-editar button {
-        grid-column: 1;
-=======
     .marca img {
         width: 150px;
     }
@@ -212,6 +118,5 @@ a:focus-visible {
 
     .boton-volver-panel {
         margin-left: auto;
->>>>>>> 52065d5891212c5b77869584be21d118d8e2c87e
     }
 }
