@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #eef5fc;
+    color: #1b2a41;
+}
+
+header.encabezado-seguimiento {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 20px;
+    background: #fff;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.marca {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+}
+
+.marca img {
+    display: block;
+    width: 200px;
+}
+
+.titulo {
+    text-align: center;
+}
+
+.titulo p {
+    margin: 0 0 5px;
+    color: #0b5fa5;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.titulo h1 {
+    margin: 0;
+    color: #13315c;
+    font-size: 24px;
+}
+
+main {
+    flex: 1 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 18px;
+}
+
+.info {
+    margin-bottom: 18px;
+    padding: 22px;
+    border: 1px solid #dce9f7;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px #dce5ef;
+}
+
+.info h2 {
+    color: #13315c;
+}
+
+.info label {
+    display: block;
+    margin-bottom: 6px;
+    color: #344b62;
+    font-weight: bold;
+}
+
+.info select {
+    width: 100%;
+    margin-bottom: 14px;
+    padding: 10px;
+    border: 1px solid #cbd9e8;
+    border-radius: 7px;
+    background: #fbfdff;
+    color: #1b2a41;
+}
+
+.info p {
+    overflow-wrap: anywhere;
+}
+
+button {
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #0b5fa5;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #094d86;
+}
+
+.aviso {
+    margin: 0 0 18px;
+    border: 1px solid #f0d98a;
+    border-radius: 8px;
+    background: #fff3cd;
+    padding: 12px;
+}
+
+#mapa {
+    width: 100%;
+    height: 450px;
+    border-radius: 8px;
+}
+
+@media (max-width: 650px) {
+    header.encabezado-seguimiento {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .marca img {
+        width: 150px;
+    }
+
+    .titulo {
+        order: 1;
+        width: 100%;
+    }
+
+    .boton-volver-panel {
+        margin-left: 0;
+    }
+
+    main {
+        padding: 20px 12px;
+    }
+
+    .info {
+        padding: 18px;
+    }
+}

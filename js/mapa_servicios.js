@@ -2,6 +2,15 @@ const API_KEY = '4572a7318c164b3b873097a1f7b2c618';
 
 export async function buscarDestino(direccion, departamento, origen) {
     const texto = `${direccion.trim()}, ${departamento}, Uruguay`;
+    return buscarDireccion(texto, origen);
+}
+
+export async function buscarDireccionCompleta(direccion, origen) {
+    const texto = /uruguay/i.test(direccion) ? direccion.trim() : `${direccion.trim()}, Uruguay`;
+    return buscarDireccion(texto, origen);
+}
+
+async function buscarDireccion(texto, origen) {
     const parametros = new URLSearchParams({
         text: texto,
         filter: 'countrycode:uy',

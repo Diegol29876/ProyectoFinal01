@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de ambulancias</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="../css/seguimiento_ambulancias.css?v=20261027">
+    <link rel="stylesheet" href="../css/boton_panel.css?v=20261007">
+    <link rel="stylesheet" href="../css/footer.css?v=20261007">
+</head>
+<body>
+    <header class="encabezado-seguimiento">
+        <a href="panel_fun.html" class="marca">
+            <img src="../img/Logo_Hc_small.png" alt="Logo Hospital de Clínicas">
+        </a>
+        <div class="titulo">
+            <p>Gestión interna</p>
+            <h1>Seguimiento de ambulancias</h1>
+        </div>
+        <a href="panel_fun.html" class="boton-volver-panel">Volver al Panel</a>
+    </header>
+
+    <main>
+        <section class="info">
+            <h2>Traslado registrado</h2>
+            <label for="traslado">Elegí un traslado</label>
+            <select id="traslado">
+                <option value="">Cargando traslados...</option>
+            </select>
+            <p>Ambulancia: <span id="ambulancia">—</span></p>
+            <p>Origen: <span id="origen-traslado">—</span></p>
+            <p>Destino: <span id="destino-traslado">—</span></p>
+            <p>Estado: <strong id="estado">Seleccioná un traslado</strong></p>
+            <p>Distancia por calles: <span id="distancia">—</span></p>
+            <p>Tiempo estimado de viaje: <span id="hora">—</span></p>
+        </section>
+
+        <p class="aviso">El mapa muestra el trayecto guardado al registrar el traslado. En traslados «En camino», el marcador simula el recorrido usando el tiempo estimado; no es seguimiento GPS en vivo.</p>
+
+        <section class="info">
+            <h2>Mapa</h2>
+            <div id="mapa"></div>
+        </section>
+    </main>
+
+    <footer class="footer-site">
+        <strong>Tu información está protegida</strong>
+        <p>Sitio desarrollado por GID Stack</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script defer src="../js/seguimiento_ambulancias.js?v=20261027-7"
+        onerror="document.getElementById('estado').textContent='No se pudo cargar el JavaScript de seguimiento.'; document.getElementById('traslado').replaceChildren(new Option('No se pudo cargar el seguimiento', ''));"></script>
+</body>
+</html>
