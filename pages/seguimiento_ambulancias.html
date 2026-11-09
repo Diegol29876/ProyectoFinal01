@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/boton_panel.css?v=20261007">
     <link rel="stylesheet" href="../css/footer.css?v=20261007">
 </head>
+
 <body>
     <header class="encabezado-seguimiento">
         <a href="panel_fun.html" class="marca">
@@ -24,8 +25,8 @@
 
     <main>
         <section class="info">
-            <h2>Traslado registrado</h2>
-            <label for="traslado">Elegí un traslado</label>
+            <h2>Ambulancias registradas</h2>
+            <label for="traslado">Elegí una ambulancia</label>
             <select id="traslado">
                 <option value="">Cargando traslados...</option>
             </select>
@@ -35,9 +36,14 @@
             <p>Estado: <strong id="estado">Seleccioná un traslado</strong></p>
             <p>Distancia por calles: <span id="distancia">—</span></p>
             <p>Tiempo estimado de viaje: <span id="hora">—</span></p>
+            <button id="boton-ubicacion" type="button">Obtener ubicación actual</button>
+            <p id="resultado-ubicacion" role="status" aria-live="polite">
+                La ubicación todavía no fue solicitada.
+            </p>
         </section>
 
-        <p class="aviso">El mapa muestra el trayecto guardado al registrar el traslado. En traslados «En camino», el marcador simula el recorrido usando el tiempo estimado; no es seguimiento GPS en vivo.</p>
+        <p class="aviso">El botón obtiene la ubicación del dispositivo que abre esta página. Para ubicar una ambulancia,
+            abrí el seguimiento desde un dispositivo que viaje en ella y permití el acceso al GPS.</p>
 
         <section class="info">
             <h2>Mapa</h2>
@@ -50,8 +56,19 @@
         <p>Sitio desarrollado por GID Stack</p>
     </footer>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script defer src="../js/seguimiento_ambulancias.js?v=20261027-7"
-        onerror="document.getElementById('estado').textContent='No se pudo cargar el JavaScript de seguimiento.'; document.getElementById('traslado').replaceChildren(new Option('No se pudo cargar el seguimiento', ''));"></script>
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    window.mapa = L.map('mapa').setView([-34.89119, -56.15182], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(window.mapa);
+</script>
+
+<script src="../js/seguimiento_ambulancias.js"></script>
 </body>
+
 </html>

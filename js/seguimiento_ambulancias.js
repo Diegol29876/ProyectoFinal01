@@ -1,314 +1,174 @@
-const selectorTraslado = document.getElementById('traslado');
-const elementoMapa = document.getElementById('mapa');
-const elementoEstado = document.getElementById('estado');
-const elementoTiempo = document.getElementById('hora');
-const elementoDistancia = document.getElementById('distancia');
-const elementoAmbulancia = document.getElementById('ambulancia');
-const elementoOrigen = document.getElementById('origen-traslado');
-const elementoDestino = document.getElementById('destino-traslado');
+let rutaMapa;
+let marcadorOrigen;
+let marcadorDestino;
+let marcadorAmbulancia;
 
-if (!selectorTraslado || !elementoMapa || !elementoEstado || !elementoTiempo ||
-    !elementoDistancia || !elementoAmbulancia || !elementoOrigen || !elementoDestino) {
-    throw new Error('Faltan elementos de seguimiento en la página.');
-}
+function cargarAmbulancias() {
+    let lista = document.getElementById("traslado");
 
-let mapa = null;
-let capasRuta = null;
-let traslados = [];
-let solicitudActual = 0;
-let intervaloSimulacion = null;
-const apiGeoapify = '4572a7318c164b3b873097a1f7b2c618';
+    fetch("../php/seguimiento_ambulancias.php")
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+            lista.innerHTML = '<option value="">Elegí una ambulancia</option>';
 
-function esTrasladoVigente(traslado) {
-    return ['pendiente', 'en camino'].includes(
-        String(traslado.estado || '').trim().toLowerCase()
-    );
-}
+            datos.forEach(a => {
+                let opcion = document.createElement("option");
 
-function prepararMapa() {
-    if (mapa) return;
-    if (typeof L === 'undefined') {
-        throw new Error('No se pudo cargar el mapa. Revisá tu conexión a internet y recargá la página.');
-    }
+                opcion.value = a.ID_Traslado;
+                opcion.textContent = "Traslado " + a.ID_Traslado + " - " + a.Matricula;
 
-    mapa = L.map(elementoMapa).setView([-34.89119, -56.15182], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-    }).addTo(mapa);
-    capasRuta = L.layerGroup().addTo(mapa);
-}
+                opcion.dataset.ambulancia = a.Matricula + " - " + a.Modelo;
+                opcion.dataset.origen = a.Origen || "";
+                opcion.dataset.destino = a.Destino || "";
+                opcion.dataset.estado = a.Estado || "Sin traslado";
 
-function mostrarDuracion(segundos) {
-    const minutosTotales = Math.ceil(segundos / 60);
-    const horas = Math.floor(minutosTotales / 60);
-    const minutos = minutosTotales % 60;
-
-    return horas === 0 ? minutos + ' min' : horas + ' h ' + minutos + ' min';
-}
-
-function distanciaEntre(puntoA, puntoB) {
-    const radioTierra = 6371000;
-    const latitudA = puntoA[0] * Math.PI / 180;
-    const latitudB = puntoB[0] * Math.PI / 180;
-    const diferenciaLatitud = (puntoB[0] - puntoA[0]) * Math.PI / 180;
-    const diferenciaLongitud = (puntoB[1] - puntoA[1]) * Math.PI / 180;
-    const calculo = Math.sin(diferenciaLatitud / 2) ** 2 +
-        Math.cos(latitudA) * Math.cos(latitudB) *
-        Math.sin(diferenciaLongitud / 2) ** 2;
-    return 2 * radioTierra * Math.atan2(Math.sqrt(calculo), Math.sqrt(1 - calculo));
-}
-
-function crearTramos(puntos) {
-    let distanciaTotal = 0;
-    const tramos = [];
-
-    for (let indice = 1; indice < puntos.length; indice += 1) {
-        const distancia = distanciaEntre(puntos[indice - 1], puntos[indice]);
-        if (distancia === 0) continue;
-
-        tramos.push({
-            inicio: puntos[indice - 1],
-            fin: puntos[indice],
-            desde: distanciaTotal,
-            distancia: distancia
+                lista.appendChild(opcion);
+            });
         });
-        distanciaTotal += distancia;
-    }
-
-    return { tramos, distanciaTotal };
 }
 
-function posicionEnRuta(tramos, distanciaRecorrida) {
-    const tramo = tramos.find(function (item) {
-        return distanciaRecorrida <= item.desde + item.distancia;
-    }) || tramos[tramos.length - 1];
-    const avance = Math.min(1, Math.max(0,
-        (distanciaRecorrida - tramo.desde) / tramo.distancia));
+document.addEventListener("DOMContentLoaded", function() {
+    cargarAmbulancias();
 
-    return [
-        tramo.inicio[0] + (tramo.fin[0] - tramo.inicio[0]) * avance,
-        tramo.inicio[1] + (tramo.fin[1] - tramo.inicio[1]) * avance
-    ];
-}
+    let boton = document.getElementById("boton-ubicacion");
+    let resultado = document.getElementById("resultado-ubicacion");
 
-async function buscarDireccionCompleta(direccion, origen) {
-    const texto = /uruguay/i.test(direccion) ? direccion.trim() : direccion.trim() + ', Uruguay';
-    const parametros = new URLSearchParams({
-        text: texto,
-        filter: 'countrycode:uy',
-        lang: 'es',
-        limit: '1',
-        format: 'json',
-        apiKey: apiGeoapify
-    });
+    if (boton && resultado) {
+        boton.addEventListener("click", function() {
+            resultado.textContent = "Obteniendo ubicación...";
 
-    if (origen) {
-        parametros.set('bias', 'proximity:' + origen[1] + ',' + origen[0]);
-    }
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    let lat = position.coords.latitude;
+                    let lon = position.coords.longitude;
 
-    const respuesta = await fetch('https://api.geoapify.com/v1/geocode/search?' + parametros);
-    if (!respuesta.ok) throw new Error('Falló la búsqueda de una dirección.');
-    const datos = await respuesta.json();
-    return datos.results && datos.results[0] ? datos.results[0] : null;
-}
+                    resultado.innerHTML =
+                        "Latitud: " + lat + "<br>" +
+                        "Longitud: " + lon;
 
-async function calcularRuta(origen, destino) {
-    const waypoints = origen[0] + ',' + origen[1] + '|' + destino[0] + ',' + destino[1];
-    const url = 'https://api.geoapify.com/v1/routing?waypoints=' +
-        encodeURIComponent(waypoints) +
-        '&mode=drive&units=metric&lang=es&apiKey=' + apiGeoapify;
-    const respuesta = await fetch(url);
-    if (!respuesta.ok) throw new Error('Falló el cálculo de la ruta.');
-    return respuesta.json();
-}
+                    if (marcadorAmbulancia) {
+                        window.mapa.removeLayer(marcadorAmbulancia);
+                    }
 
-function mostrarDatosTraslado(traslado) {
-    elementoAmbulancia.textContent = traslado.ambulancia || 'Sin ambulancia asignada';
-    elementoOrigen.textContent = traslado.origen || 'Sin origen registrado';
-    elementoDestino.textContent = traslado.destino || 'Sin destino registrado';
-    elementoEstado.textContent = traslado.estado || 'Sin estado';
-    elementoTiempo.textContent = 'Calculando...';
-    elementoDistancia.textContent = 'Calculando...';
-    if (capasRuta) capasRuta.clearLayers();
-}
+                    marcadorAmbulancia = L.marker([lat, lon])
+                        .addTo(window.mapa)
+                        .bindPopup("Ubicación actual del dispositivo");
 
-async function mostrarRutaSeleccionada() {
-    if (intervaloSimulacion) {
-        clearInterval(intervaloSimulacion);
-        intervaloSimulacion = null;
-    }
+                    window.mapa.setView([lat, lon], 15);
+                },
+                function(error) {
+                    resultado.textContent = "No se pudo obtener la ubicación.";
 
-    const idSeleccionado = selectorTraslado.value;
-    const traslado = traslados.find(function (item) {
-        return String(item.id) === idSeleccionado;
-    });
-    const idSolicitud = ++solicitudActual;
-
-    if (capasRuta) capasRuta.clearLayers();
-    if (!traslado) {
-        elementoEstado.textContent = 'No hay traslados registrados.';
-        elementoTiempo.textContent = '—';
-        elementoDistancia.textContent = '—';
-        elementoAmbulancia.textContent = '—';
-        elementoOrigen.textContent = '—';
-        elementoDestino.textContent = '—';
-        return;
-    }
-
-    mostrarDatosTraslado(traslado);
-    if (!traslado.origen || !traslado.destino) {
-        elementoEstado.textContent = 'El traslado no tiene origen o destino registrados.';
-        return;
-    }
-
-    elementoEstado.textContent = 'Buscando las direcciones registradas...';
-    try {
-        prepararMapa();
-        const ubicacionOrigen = await buscarDireccionCompleta(traslado.origen);
-        if (idSolicitud !== solicitudActual) return;
-        if (!ubicacionOrigen) {
-            throw new Error('No se pudo encontrar el origen registrado.');
-        }
-
-        const coordenadasOrigen = [Number(ubicacionOrigen.lat), Number(ubicacionOrigen.lon)];
-        const ubicacionDestino = await buscarDireccionCompleta(traslado.destino, coordenadasOrigen);
-        if (idSolicitud !== solicitudActual) return;
-        if (!ubicacionDestino) {
-            throw new Error('No se pudo encontrar el destino registrado.');
-        }
-
-        const coordenadasDestino = [Number(ubicacionDestino.lat), Number(ubicacionDestino.lon)];
-        const datosRuta = await calcularRuta(coordenadasOrigen, coordenadasDestino);
-        if (idSolicitud !== solicitudActual) return;
-
-        const feature = datosRuta.features && datosRuta.features[0];
-        const geometria = feature && feature.geometry;
-        const propiedades = feature && feature.properties;
-        if (!geometria || !Array.isArray(geometria.coordinates) ||
-            !propiedades || !Number.isFinite(propiedades.time) ||
-            !Number.isFinite(propiedades.distance)) {
-            throw new Error('El servicio no devolvió una ruta válida.');
-        }
-
-        const coordenadas = geometria.type === 'MultiLineString'
-            ? geometria.coordinates.flat()
-            : geometria.coordinates;
-        const puntos = coordenadas.map(function (coordenada) {
-            return [coordenada[1], coordenada[0]];
+                    console.log("Error de geolocalización:", error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+            );
         });
-        if (puntos.length < 2) {
-            throw new Error('La ruta calculada no tiene suficientes puntos.');
+    }
+
+    document.getElementById("traslado").addEventListener("change", function() {
+        let opcion = this.options[this.selectedIndex];
+
+        document.getElementById("ambulancia").textContent =
+            opcion.dataset.ambulancia || "—";+
+        document.getElementById("origen-traslado").textContent =
+            opcion.dataset.origen || "—";
+        document.getElementById("destino-traslado").textContent =
+            opcion.dataset.destino || "—";
+        document.getElementById("estado").textContent =
+            opcion.value ? opcion.dataset.estado : "Seleccioná una ambulancia";
+        document.getElementById("distancia").textContent = "—";
+        document.getElementById("hora").textContent = "—";
+
+        if (opcion.dataset.origen && opcion.dataset.destino) {
+            mostrarRuta(opcion.dataset.origen, opcion.dataset.destino);
         }
+    });
+});
 
-        const linea = L.polyline(puntos, {
-            color: '#0b5fa5',
-            weight: 5
-        }).addTo(capasRuta);
+function mostrarRuta(origen, destino) {
+    let destinoCorregido = destino.replace(/Hostpital/gi, "Hospital");
+    let origenLimpio = [...new Set(origen.split(",").map(p => p.trim()))].join(", ");
+    let destinoLimpio = [...new Set(destinoCorregido.split(",").map(p => p.trim()))].join(", ");
 
-        L.marker(puntos[0])
-            .bindPopup('Origen registrado')
-            .addTo(capasRuta);
-        L.marker(puntos[puntos.length - 1])
-            .bindPopup('Destino registrado')
-            .addTo(capasRuta);
+    fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(origen))
+        .then(respuesta => respuesta.json())
+        .then(punto1 => {
+            return fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(destino))
+                .then(respuesta => respuesta.json())
+                .then(punto2 => {
 
-        const marcadorAmbulancia = L.marker(puntos[0], {
-            title: 'Posición simulada de la ambulancia'
-        }).bindPopup('Ambulancia · posición simulada').addTo(capasRuta);
+                    console.log("Origen recibido:", origen);
+                    console.log("Destino recibido:", destinoCorregido);
+                    console.log("Resultado origen:", punto1);
+                    console.log("Resultado destino:", punto2);
 
-        mapa.fitBounds(linea.getBounds(), { padding: [20, 20] });
-        elementoDistancia.textContent = (propiedades.distance / 1000).toFixed(1) + ' km';
-        elementoTiempo.textContent = mostrarDuracion(propiedades.time);
+                    if (!punto1.length || !punto2.length) {
+                        throw new Error("No se encontraron las direcciones");
+                    }
 
-        if (String(traslado.estado).trim().toLowerCase() === 'en camino') {
-            const resultadoTramos = crearTramos(puntos);
-            if (!resultadoTramos.tramos.length || propiedades.time <= 0) {
-                throw new Error('No se pudo iniciar la simulación de esta ruta.');
+                    let inicio = punto1[0].lon + "," + punto1[0].lat;
+                    let fin = punto2[0].lon + "," + punto2[0].lat;
+
+                    let url = "https://router.project-osrm.org/route/v1/driving/" +
+                        inicio + ";" + fin + "?overview=full&geometries=geojson";
+
+                    return fetch(url);
+                });
+        })
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+            if (!datos.routes || !datos.routes.length) {
+                throw new Error("No se encontró el recorrido");
             }
 
-            const inicioSimulacion = Date.now();
-            elementoEstado.textContent = 'Simulación en curso según el tiempo estimado. No es GPS real.';
-            intervaloSimulacion = setInterval(function () {
-                const segundosTranscurridos = (Date.now() - inicioSimulacion) / 1000;
-                const avance = Math.min(segundosTranscurridos / propiedades.time, 1);
-                marcadorAmbulancia.setLatLng(posicionEnRuta(
-                    resultadoTramos.tramos,
-                    resultadoTramos.distanciaTotal * avance
-                ));
+            let ruta = datos.routes[0];
+            let minutos = Math.round(ruta.duration / 60);
+            
+            document.getElementById("distancia").textContent =
+                (ruta.distance / 1000).toFixed(1) + " km";
+            document.getElementById("hora").textContent =
+                minutos >= 60
+                    ? Math.floor(minutos / 60) + " h " + minutos % 60 + " min"
+                    : minutos + " minutos";
 
-                if (avance >= 1) {
-                    clearInterval(intervaloSimulacion);
-                    intervaloSimulacion = null;
-                    elementoEstado.textContent = 'Simulación finalizada. No representa una ubicación GPS real.';
-                }
-            }, 1000);
-        } else {
-            elementoEstado.textContent = 'Traslado pendiente. El marcador permanece en el origen hasta que figure En camino. No es GPS real.';
-        }
-    } catch (error) {
-        if (idSolicitud !== solicitudActual) return;
-        elementoEstado.textContent = 'No se pudo mostrar la ruta: ' + error.message;
-        elementoTiempo.textContent = 'No disponible';
-        elementoDistancia.textContent = 'No disponible';
-    }
-}
+            let puntos = ruta.geometry.coordinates.map(p => [p[1], p[0]]);
 
-async function cargarTraslados() {
-    selectorTraslado.disabled = true;
-    selectorTraslado.replaceChildren(new Option('Cargando traslados...', ''));
+            if (rutaMapa) {
+                window.mapa.removeLayer(rutaMapa);
+            }
 
-    try {
-        const respuesta = await fetch('../php/traslados.php?action=list', {
-            credentials: 'same-origin',
-            cache: 'no-store',
-            headers: { Accept: 'application/json' }
+            if (marcadorOrigen) {
+                window.mapa.removeLayer(marcadorOrigen);
+            }
+
+            if (marcadorDestino) {
+                window.mapa.removeLayer(marcadorDestino);
+            }
+
+            rutaMapa = L.polyline(puntos, {
+                color: "blue",
+                weight: 5
+            }).addTo(window.mapa);
+
+            marcadorOrigen = L.marker(puntos[0])
+                .addTo(window.mapa)
+                .bindPopup("Punto de origen");
+
+            marcadorDestino = L.marker(puntos[puntos.length - 1])
+                .addTo(window.mapa)
+                .bindPopup("Destino");
+
+            window.mapa.fitBounds(rutaMapa.getBounds());
+        })
+        .catch(error => {
+            console.log("Error al mostrar recorrido:", error);
+
+            document.getElementById("distancia").textContent = "No disponible";
+            document.getElementById("hora").textContent = "No disponible";
         });
-        let datos;
-        try {
-            datos = await respuesta.json();
-        } catch (error) {
-            throw new Error('El servidor no devolvió una respuesta válida. Verificá que XAMPP esté activo y que hayas iniciado sesión.');
-        }
-        if (!respuesta.ok || !datos.status) {
-            throw new Error(datos.mensaje || 'No se pudieron cargar los traslados.');
-        }
-
-        traslados = Array.isArray(datos.traslados)
-            ? datos.traslados.filter(esTrasladoVigente)
-            : [];
-        selectorTraslado.replaceChildren();
-
-        if (traslados.length === 0) {
-            selectorTraslado.appendChild(new Option('No hay traslados vigentes', ''));
-            selectorTraslado.disabled = true;
-            await mostrarRutaSeleccionada();
-            return;
-        }
-
-        selectorTraslado.appendChild(new Option('Seleccioná un traslado', ''));
-        traslados.forEach(function (traslado) {
-            const texto = [
-                traslado.ambulancia || 'Sin ambulancia',
-                traslado.fecha || 'Sin fecha',
-                traslado.estado || 'Sin estado'
-            ].join(' · ');
-            selectorTraslado.appendChild(new Option(texto, traslado.id));
-        });
-
-        selectorTraslado.disabled = false;
-        selectorTraslado.addEventListener('change', mostrarRutaSeleccionada);
-        selectorTraslado.value = String(traslados[0].id);
-        await mostrarRutaSeleccionada();
-    } catch (error) {
-        selectorTraslado.replaceChildren(new Option('No se pudieron cargar los traslados', ''));
-        selectorTraslado.disabled = true;
-        elementoEstado.textContent = error.message;
-        elementoTiempo.textContent = 'No disponible';
-        elementoDistancia.textContent = 'No disponible';
-        if (error.message === 'Iniciá sesión para gestionar traslados.') {
-            window.location.href = 'login.html';
-        }
-    }
 }
-
-cargarTraslados();
