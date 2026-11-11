@@ -35,5 +35,27 @@ export async function calcularRuta(origen, destino) {
         `&mode=drive&units=metric&lang=es&apiKey=${API_KEY}`;
     const respuesta = await fetch(url);
     if (!respuesta.ok) throw new Error('Falló el cálculo de la ruta.');
-    return respuesta.json();
+
+    const datos = await respuesta.json();
+    const featureRuta = datos.features && datos.features[0];
+    const geometria = featureRuta && featureRuta.geometry;
+    const coordenadas = geometria && (geometria.type === 'MultiLineString'
+        ? geometria.coordinates[0]
+        : geometria.coordinates);
+
+    if (!Array.isArray(coordenadas) || coordenadas.length === 0) {
+        throw new Error('No se pudo calcular la ruta.');
+    }
+    if (!featureRuta.properties || typeof featureRuta.properties.time !== 'number' ||
+        !Number.isFinite(featureRuta.properties.time) || featureRuta.properties.time < 0) {
+        throw new Error('No se pudo calcular el tiempo estimado de llegada.');
+    }
+
+    return {
+        puntos: coordenadas.map(function ([longitud, latitud]) {
+            return [latitud, longitud];
+        }),
+        distanciaMetros: Number(featureRuta.properties.distance),
+        duracionSegundos: featureRuta.properties.time
+    };
 }

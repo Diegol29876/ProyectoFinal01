@@ -17,6 +17,69 @@ function hora_valida(string $hora): bool
     return preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $hora) === 1;
 }
 
+function validar_datos_paciente(array $entrada): array
+{
+    $valor = static fn(string $clave): string => trim((string) ($entrada[$clave] ?? ''));
+    $datos = [
+        'paciente_nombre' => $valor('paciente_nombre'),
+        'paciente_apellido' => $valor('paciente_apellido'),
+        'paciente_cedula' => $valor('paciente_cedula'),
+        'paciente_nacimiento' => $valor('paciente_nacimiento'),
+        'paciente_email' => $valor('paciente_email')
+    ];
+
+    if (!$datos['paciente_nombre'] || !$datos['paciente_apellido'] || !$datos['paciente_cedula'] ||
+        !fecha_valida($datos['paciente_nacimiento']) ||
+        !filter_var($datos['paciente_email'], FILTER_VALIDATE_EMAIL) ||
+        strlen($datos['paciente_nombre']) > 100 || strlen($datos['paciente_apellido']) > 100 ||
+        strlen($datos['paciente_cedula']) > 20 || strlen($datos['paciente_email']) > 100) {
+        throw new InvalidArgumentException('Completá correctamente todos los datos obligatorios del paciente.');
+    }
+
+    return $datos;
+}
+
+function validar_datos_conductor(array $entrada): array
+{
+    $valor = static fn(string $clave): string => trim((string) ($entrada[$clave] ?? ''));
+    $datos = [
+        'conductor_nombre' => $valor('conductor_nombre'),
+        'conductor_documento' => $valor('conductor_documento'),
+        'conductor_licencia' => $valor('conductor_licencia'),
+        'conductor_telefono' => $valor('conductor_telefono')
+    ];
+
+    if (!$datos['conductor_nombre'] || !$datos['conductor_documento'] || !$datos['conductor_licencia'] ||
+        !$datos['conductor_telefono'] || strlen($datos['conductor_nombre']) > 100 ||
+        strlen($datos['conductor_documento']) > 20 || strlen($datos['conductor_licencia']) > 50 ||
+        strlen($datos['conductor_telefono']) > 20) {
+        throw new InvalidArgumentException('Completá correctamente todos los datos obligatorios del chofer.');
+    }
+
+    return $datos;
+}
+
+function validar_datos_ambulancia(array $entrada): array
+{
+    $valor = static fn(string $clave): string => trim((string) ($entrada[$clave] ?? ''));
+    $datos = [
+        'ambulancia_modelo' => $valor('ambulancia_modelo'),
+        'ambulancia_matricula' => $valor('ambulancia_matricula'),
+        'ambulancia_anio' => entero_positivo($entrada['ambulancia_anio'] ?? 0),
+        'ambulancia_estado' => $valor('ambulancia_estado') ?: 'Disponible'
+    ];
+
+    if (!$datos['ambulancia_modelo'] || !$datos['ambulancia_matricula'] ||
+        !$datos['ambulancia_anio'] || $datos['ambulancia_anio'] < 1900 ||
+        $datos['ambulancia_anio'] > (int) date('Y') + 1 || !$datos['ambulancia_estado'] ||
+        strlen($datos['ambulancia_modelo']) > 100 || strlen($datos['ambulancia_matricula']) > 30 ||
+        strlen($datos['ambulancia_estado']) > 50) {
+        throw new InvalidArgumentException('Completá correctamente todos los datos obligatorios de la ambulancia.');
+    }
+
+    return $datos;
+}
+
 function validar_datos_traslado(array $entrada, string $accion): array
 {
     $valor = static fn(string $clave): string => trim((string) ($entrada[$clave] ?? ''));
@@ -63,25 +126,8 @@ function validar_datos_traslado(array $entrada, string $accion): array
         (!$datos['nueva_ambulancia'] && !$datos['ambulancia_id'])) {
         throw new InvalidArgumentException('Seleccioná un paciente, un chofer y una ambulancia.');
     }
-    if ($datos['nuevo_paciente'] && (!$datos['paciente_nombre'] || !$datos['paciente_apellido'] ||
-        !$datos['paciente_cedula'] || !fecha_valida($datos['paciente_nacimiento']) ||
-        !filter_var($datos['paciente_email'], FILTER_VALIDATE_EMAIL) || strlen($datos['paciente_nombre']) > 100 ||
-        strlen($datos['paciente_apellido']) > 100 || strlen($datos['paciente_cedula']) > 20 ||
-        strlen($datos['paciente_email']) > 100)) {
-        throw new InvalidArgumentException('Completá correctamente todos los datos obligatorios del paciente.');
-    }
-    if ($datos['nuevo_conductor'] && (!$datos['conductor_nombre'] || !$datos['conductor_documento'] ||
-        !$datos['conductor_licencia'] || !$datos['conductor_telefono'] ||
-        strlen($datos['conductor_nombre']) > 100 || strlen($datos['conductor_documento']) > 20 ||
-        strlen($datos['conductor_licencia']) > 50 || strlen($datos['conductor_telefono']) > 20)) {
-        throw new InvalidArgumentException('Completá los datos obligatorios del chofer.');
-    }
-    if ($datos['nueva_ambulancia'] && (!$datos['ambulancia_modelo'] || !$datos['ambulancia_matricula'] ||
-        !$datos['ambulancia_anio'] || $datos['ambulancia_anio'] < 1900 ||
-        $datos['ambulancia_anio'] > (int) date('Y') + 1 || !$datos['ambulancia_estado'] ||
-        strlen($datos['ambulancia_modelo']) > 100 || strlen($datos['ambulancia_matricula']) > 30 ||
-        strlen($datos['ambulancia_estado']) > 50)) {
-        throw new InvalidArgumentException('Completá correctamente los datos de la ambulancia.');
-    }
+    if ($datos['nuevo_paciente']) validar_datos_paciente($datos);
+    if ($datos['nuevo_conductor']) validar_datos_conductor($datos);
+    if ($datos['nueva_ambulancia']) validar_datos_ambulancia($datos);
     return $datos;
 }

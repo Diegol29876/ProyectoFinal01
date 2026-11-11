@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-10-2026 a las 15:34:35
+-- Tiempo de generación: 11-11-2026 a las 18:29:36
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -41,7 +41,10 @@ CREATE TABLE `acompañante` (
 --
 
 INSERT INTO `acompañante` (`ID_Acompañante`, `Nombre`, `Documento`, `Telefono`, `Rol`, `ID_Traslado`) VALUES
-(3, 'lola', '', '', 'Acompañante', 3);
+(5, 'lola', '', '', 'Acompañante', 4),
+(8, 'lola', '', '', 'Acompañante', 6),
+(9, 'Pablo', '', '', 'Acompañante', 7),
+(10, 'Pablo', '', '', 'Acompañante', 8);
 
 -- --------------------------------------------------------
 
@@ -164,7 +167,9 @@ INSERT INTO `funcionario` (`ID_Funcionario`, `n_usuario`, `contrasenia`, `c_elec
 (4, 'Diegol', '$2y$10$jwKfMVoxvZziTN.jQVy/GeMTA3vPDkFoT6cc8Bx6/y0fJSBf4fxWS', 'diego12@gmail.com', 'urguay', '2026-09-01', '12121212', '098212312', '2026-09-01', 'Activo'),
 (5, 'DIGOLORITO', '$2y$10$9i7hbN9WC6VJ7OfCY6MwOeiKQfRUXbAGnuiWk0lwGsiCXBoH/UDgK', 'diegolo@gmail.com', 'Panama', '2026-09-12', '23213333', '00394445', '2026-09-05', 'Inactivo'),
 (6, 'DIGOLORITO1', '$2y$10$5g5xSiZLXgRDIpNfgBYLsO1XiZAA70EPDwxw0NDoc9ov/TIbxGZye', 'diegolo32312@gmail.com', 'Panama', '2026-09-12', '13121212', '00394445', '2026-09-05', 'Inactivo'),
-(7, 'Diego Gonzalez', '$2y$10$QT8BDNelGK9bYJZ3gFzUv.ODNNHXW3M2l6fGFmYXJyLJk/KAi531a', 'diego0098@gmail.com', 'Paysandu', '2026-10-03', '12345678', '123456789', '2026-10-03', 'Activo');
+(7, 'Diego Gonzalez', '$2y$10$QT8BDNelGK9bYJZ3gFzUv.ODNNHXW3M2l6fGFmYXJyLJk/KAi531a', 'diego0098@gmail.com', 'Paysandu', '2026-10-03', '12345678', '123456789', '2026-10-03', 'Activo'),
+(8, 'Prueba', '$2y$10$vwjgbTIpTTFxu1qyJfTbWufq3v8dVYwFz/vG8pcQKHPAEQ5eRNWXW', 'prueba@gmail.com', 'Uruguay', '2026-10-21', '11111111', '09999999', '2026-10-21', 'Activo'),
+(9, 'rodrigo', '$2y$10$FY5yFA6IaWYCsrADafdsR.cYxCde/BPfUcNhb9z0AQMN.6cxPlG9S', 'diegofransisco2021467@gmail.com', 'zoriila 1243', '2002-02-28', '57631332', '099559323', '2026-11-03', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -180,6 +185,14 @@ CREATE TABLE `muestra_paciente` (
   `Muestra` varchar(255) NOT NULL,
   `Fecha_Muestra` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `muestra_paciente`
+--
+
+INSERT INTO `muestra_paciente` (`ID_Muestra`, `Nombre`, `Apellido`, `Cedula`, `Muestra`, `Fecha_Muestra`) VALUES
+(1, 'Diego', 'González', '22222222', 'Sangre', '2026-10-20'),
+(2, 'Thiago', 'Diaz', '12334562', 'Sangre', '2026-10-20');
 
 -- --------------------------------------------------------
 
@@ -220,7 +233,10 @@ CREATE TABLE `paciente_traslado` (
 --
 
 INSERT INTO `paciente_traslado` (`ID_Paciente`, `ID_Traslado`) VALUES
-(1, 3);
+(1, 4),
+(1, 6),
+(1, 7),
+(1, 8);
 
 -- --------------------------------------------------------
 
@@ -292,8 +308,14 @@ CREATE TABLE `ruta` (
 --
 
 INSERT INTO `ruta` (`ID_ruta`, `Descripcion`, `Tipo`, `Local_Nacional`, `ID_Traslado`) VALUES
-(5, 'Montevideo', 'Origen', 'Local', 3),
-(6, 'Hostpital de clinicas', 'Destino', 'Local', 3);
+(9, 'Montevideo', 'Origen', 'Local', 4),
+(10, 'Hostpital de clinicas', 'Destino', 'Local', 4),
+(15, 'Latitud -34.892901, longitud -56.153097', 'Origen', 'Local', 6),
+(16, 'Tapes, Montevideo, Uruguay', 'Destino', 'Local', 6),
+(17, 'Avenida Italia 2886, Montevideo, Uruguay', 'Origen', 'Local', 7),
+(18, 'Caramurú 5939, Montevideo, Uruguay', 'Destino', 'Local', 7),
+(19, 'Avenida Italia 2886, Montevideo, Uruguay', 'Origen', 'Local', 8),
+(20, 'La Blanqueada, Montevideo, Uruguay', 'Destino', 'Local', 8);
 
 -- --------------------------------------------------------
 
@@ -319,7 +341,10 @@ CREATE TABLE `traslado` (
 --
 
 INSERT INTO `traslado` (`ID_Traslado`, `Fecha_solicitud`, `Hora_Salida`, `Hora_llegada_estimada`, `Hora_llegada_efectiva`, `Estado`, `Observaciones`, `ID_ambulancia`, `ID_Conductor`, `ID_Funcionario`) VALUES
-(3, '2026-10-07', '11:11:00', '15:14:00', '00:00:00', 'En camino', 'xd', 1, 1, 7);
+(4, '2026-10-07', '23:22:00', '00:00:00', '00:00:00', 'Finalizado', '', 1, 1, 7),
+(6, '2026-10-08', '11:12:00', '11:10:00', '11:10:00', 'Pendiente', '', 1, 1, 7),
+(7, '2026-10-14', '10:26:00', '11:31:00', '00:00:00', 'En camino', 'La persona se descompuso', 1, 1, 7),
+(8, '2026-11-11', '08:01:00', '08:04:00', '00:00:00', 'En camino', '', 1, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -330,6 +355,20 @@ INSERT INTO `traslado` (`ID_Traslado`, `Fecha_solicitud`, `Hora_Salida`, `Hora_l
 CREATE TABLE `traslado_elemento` (
   `ID_Traslado` int(11) NOT NULL,
   `ID_elemento` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ubicacion_traslado`
+--
+
+CREATE TABLE `ubicacion_traslado` (
+  `id_ubicacion` int(11) NOT NULL,
+  `latitud` decimal(10,7) NOT NULL,
+  `longuitod` decimal(10,7) NOT NULL,
+  `fecha_hora` datetime NOT NULL DEFAULT current_timestamp(),
+  `id_traslado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -438,14 +477,27 @@ ALTER TABLE `traslado_elemento`
   ADD KEY `ID_elemento` (`ID_elemento`);
 
 --
+-- Indices de la tabla `ubicacion_traslado`
+--
+ALTER TABLE `ubicacion_traslado`
+  ADD PRIMARY KEY (`id_ubicacion`),
+  ADD KEY `id_traslado` (`id_traslado`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+  MODIFY `ID_Respuesta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `acompañante`
 --
 ALTER TABLE `acompañante`
-  MODIFY `ID_Acompañante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_Acompañante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `ambulancia`
@@ -481,105 +533,32 @@ ALTER TABLE `encuesta`
 -- AUTO_INCREMENT de la tabla `funcionario`
 --
 ALTER TABLE `funcionario`
-  MODIFY `ID_Funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID_Funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `muestra_paciente`
 --
 ALTER TABLE `muestra_paciente`
-  MODIFY `ID_Muestra` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Muestra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `ID_Paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `qr`
---
-ALTER TABLE `qr`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `respuesta`
---
-ALTER TABLE `respuesta`
-  MODIFY `ID_Respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ID_Paciente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ruta`
 --
 ALTER TABLE `ruta`
-  MODIFY `ID_ruta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID_ruta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `traslado`
 --
 ALTER TABLE `traslado`
-  MODIFY `ID_Traslado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_Traslado` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `acompañante`
---
-ALTER TABLE `acompañante`
-  ADD CONSTRAINT `acompañante_ibfk_1` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`);
-
---
--- Filtros para la tabla `documento`
---
-ALTER TABLE `documento`
-  ADD CONSTRAINT `documento_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`);
-
---
--- Filtros para la tabla `paciente`
---
-ALTER TABLE `paciente`
-  ADD CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`ID_Encuesta`) REFERENCES `encuesta` (`ID_Encuesta`);
-
---
--- Filtros para la tabla `paciente_traslado`
---
-ALTER TABLE `paciente_traslado`
-  ADD CONSTRAINT `paciente_traslado_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`),
-  ADD CONSTRAINT `paciente_traslado_ibfk_2` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`);
-
---
--- Filtros para la tabla `qr`
---
-ALTER TABLE `qr`
-  ADD CONSTRAINT `qr_ibfk_1` FOREIGN KEY (`Id_Documento`) REFERENCES `documento` (`Id_Documento`);
-
---
--- Filtros para la tabla `respuesta`
---
-ALTER TABLE `respuesta`
-  ADD CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`ID_Encuesta`) REFERENCES `encuesta` (`ID_Encuesta`);
-
---
--- Filtros para la tabla `ruta`
---
-ALTER TABLE `ruta`
-  ADD CONSTRAINT `ruta_ibfk_1` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`);
-
---
--- Filtros para la tabla `traslado`
---
-ALTER TABLE `traslado`
-  ADD CONSTRAINT `traslado_ibfk_1` FOREIGN KEY (`ID_ambulancia`) REFERENCES `ambulancia` (`ID_ambulancia`),
-  ADD CONSTRAINT `traslado_ibfk_2` FOREIGN KEY (`ID_Conductor`) REFERENCES `conductor` (`ID_Conductor`),
-  ADD CONSTRAINT `traslado_ibfk_3` FOREIGN KEY (`ID_Funcionario`) REFERENCES `funcionario` (`ID_Funcionario`);
-
---
--- Filtros para la tabla `traslado_elemento`
---
-ALTER TABLE `traslado_elemento`
-  ADD CONSTRAINT `traslado_elemento_ibfk_1` FOREIGN KEY (`ID_Traslado`) REFERENCES `traslado` (`ID_Traslado`),
-  ADD CONSTRAINT `traslado_elemento_ibfk_2` FOREIGN KEY (`ID_elemento`) REFERENCES `elementos_traslados` (`ID_elemento`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

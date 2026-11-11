@@ -1,59 +1,57 @@
 <?php
-header("Content-Type: application/json");
+header('Content-Type: application/json; charset=utf-8');
 
-$archivo = "ubicaciones.json";
-
-// RECIBIR Y GUARDAR UBICACIÓN
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $datos = json_decode(file_get_contents("php://input"), true);
-
-    if (!isset($datos["id_ambulancia"]) || !isset($datos["latitud"]) || !isset($datos["longitud"])) {
-        echo json_encode(["error" => "Faltan datos"]);
-        exit;
-    }
-
-    $ubicaciones = [];
-
-    if (file_exists($archivo)) {
-        $ubicaciones = json_decode(file_get_contents($archivo), true);
-
-        if (!is_array($ubicaciones)) {
-            $ubicaciones = [];
-        }
-    }
-
-    $id = $datos["id_ambulancia"];
-
-    $ubicaciones[$id] = [
-        "latitud" => $datos["latitud"],
-        "longitud" => $datos["longitud"]
-    ];
-
-    file_put_contents($archivo, json_encode($ubicaciones), LOCK_EX);
-
-    echo json_encode(["mensaje" => "Ubicación guardada"]);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['error' => 'Método no permitido.']);
     exit;
 }
 
+$datos = json_decode(file_get_contents('php://input'), true);
 
-// CONSULTAR UBICACIÓN
-if (isset($_GET["id"])) {
-
-    if (file_exists($archivo)) {
-        $ubicaciones = json_decode(file_get_contents($archivo), true);
-
-        if (isset($ubicaciones[$_GET["id"]])) {
-            echo json_encode($ubicaciones[$_GET["id"]]);
-        } else {
-            echo json_encode(["error" => "Todavía no hay ubicación"]);
-        }
-    } else {
-        echo json_encode(["error" => "Todavía no hay ubicación"]);
-    }
-
+if (!is_array($datos)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Los datos de ubicación no son válidos.']);
     exit;
 }
 
-echo json_encode(["error" => "Solicitud incorrecta"]);
-?>
+$idTraslado = filter_var($datos['id_traslado'] ?? null, FILTER_VALIDATE_INT);
+$latitud = $datos['latitud'] ?? null;
+$longitud = $datos['longitud'] ?? null;
+
+if (
+    $idTraslado === false ||
+    $idTraslado === null ||
+    $idTraslado <= 0 ||
+    !is_numeric($latitud) ||
+    !is_numeric($longitud) ||
+    (float) $latitud < -90 ||
+    (float) $latitud > 90 ||
+    (float) $longitud < -180 ||
+    (float) $longitud > 180
+) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Los datos de ubicación no son válidos.']);
+    exit;
+}
+
+require_once __DIR__ . '/conexion.php';
+
+try {
+    $conexion = conectar_bd();
+    $consulta = $conexion->prepare(
+        'INSERT INTO ubicacion_traslado (latitud, longuitod, id_traslado) VALUES (?, ?, ?)'
+    );
+    $latitud = (float) $latitud;
+    $longitud = (float) $longitud;
+    $consulta->bind_param('ddi', $latitud, $longitud, $idTraslado);
+    $consulta->execute();
+    $consulta->close();
+    $conexion->close();
+
+    echo json_encode(['mensaje' => 'Ubicación guardada.']);
+} catch (Throwable $error) {
+    error_log('Error al guardar ubicación de traslado: ' . $error->getMessage());
+    http_response_code(500);
+    echo json_encode(['error' => 'No se pudo guardar la ubicación.']);
+}

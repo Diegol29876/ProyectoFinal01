@@ -57,7 +57,7 @@ try {
 		$conexion->rollback();
 	}
 	error_log('Error al guardar encuesta: ' . $error->getMessage());
-	echo 'No se pudo guardar la encuesta. Revisá que exista la encuesta con ID 1.';
+	echo 'No se pudo guardar la encuesta. Revisá el esquema de la tabla respuesta: ID_Respuesta debe ser AUTO_INCREMENT.';
 }
 
 ?>

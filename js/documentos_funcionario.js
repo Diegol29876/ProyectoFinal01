@@ -46,7 +46,7 @@ function renderizarDocumentos() {
 
 async function cargarCatalogo() {
     try {
-        const respuesta = await fetch('../php/documentos_publicos.php');
+        const respuesta = await fetch('../php/documentos_publicos.php', { cache: 'no-store' });
         if (!respuesta.ok) throw new Error('No se pudo cargar el catálogo.');
         documentos = await respuesta.json();
         renderizarDocumentos();
@@ -87,7 +87,7 @@ function generarQr(documento) {
     }, 100);
 }
 
-lista.addEventListener('click', (event) => {
+lista.addEventListener('click', async (event) => {
     const boton = event.target.closest('[data-accion]');
     if (!boton) return;
     const documento = documentos.find(function (item) {
@@ -101,11 +101,24 @@ lista.addEventListener('click', (event) => {
     }
 
     if (boton.dataset.accion === 'eliminar') {
-        if (confirm('¿Eliminar "' + documento.nombre + '"?')) {
-            documentos = documentos.filter(function (item) {
-                return item.id !== documento.id;
+        if (!confirm('¿Eliminar "' + documento.nombre + '"?')) return;
+
+        boton.disabled = true;
+        try {
+            const datos = new URLSearchParams({ id: documento.id });
+            const respuesta = await fetch('../php/eliminar_documento.php', {
+                method: 'POST',
+                body: datos
             });
-            renderizarDocumentos();
+            const mensaje = await respuesta.text();
+            if (!respuesta.ok) throw new Error(mensaje || 'Error del servidor.');
+
+            estado.textContent = mensaje || 'Documento eliminado.';
+            await cargarCatalogo();
+        } catch (error) {
+            estado.textContent = `No se pudo eliminar el documento: ${error.message}`;
+        } finally {
+            boton.disabled = false;
         }
     }
 

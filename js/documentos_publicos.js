@@ -27,7 +27,7 @@ function mostrarDocumentos(documentos) {
     });
 }
 
-fetch('../php/documentos_publicos.php')
+fetch('../php/documentos_publicos.php', { cache: 'no-store' })
     .then((respuesta) => respuesta.json())
     .then(mostrarDocumentos)
     .catch(() => { listaDocumentos.innerHTML = '<p>No se pudieron cargar los documentos.</p>'; });

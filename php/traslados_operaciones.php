@@ -44,12 +44,8 @@ function verificar_unico(mysqli $conexion, string $tabla, string $columna, strin
     if ($duplicado) throw new InvalidArgumentException($mensaje);
 }
 
-function resolver_paciente(mysqli $conexion, array $datos): int
+function crear_paciente(mysqli $conexion, array $datos): int
 {
-    if (!$datos['nuevo_paciente']) {
-        verificar_relacion($conexion, 'paciente', 'ID_Paciente', $datos['paciente_id']);
-        return $datos['paciente_id'];
-    }
     verificar_unico($conexion, 'paciente', 'Cedula', $datos['paciente_cedula'],
         'La cédula del paciente ya está registrada. Seleccioná el paciente existente.');
     $encuesta = $conexion->query('SELECT ID_Encuesta FROM encuesta ORDER BY ID_Encuesta LIMIT 1')->fetch_assoc();
@@ -61,12 +57,26 @@ function resolver_paciente(mysqli $conexion, array $datos): int
     );
 }
 
+function resolver_paciente(mysqli $conexion, array $datos): int
+{
+    if (!$datos['nuevo_paciente']) {
+        verificar_relacion($conexion, 'paciente', 'ID_Paciente', $datos['paciente_id']);
+        return $datos['paciente_id'];
+    }
+    return crear_paciente($conexion, $datos);
+}
+
 function resolver_conductor(mysqli $conexion, array $datos): int
 {
     if (!$datos['nuevo_conductor']) {
         verificar_relacion($conexion, 'conductor', 'ID_Conductor', $datos['conductor_id']);
         return $datos['conductor_id'];
     }
+    return crear_conductor($conexion, $datos);
+}
+
+function crear_conductor(mysqli $conexion, array $datos): int
+{
     verificar_unico($conexion, 'conductor', 'Documento', $datos['conductor_documento'],
         'El documento del chofer ya está registrado. Seleccioná el chofer existente.');
     return insertar_id($conexion, 'INSERT INTO conductor (Nombre, Documento, Licencia, Telefono) VALUES (?, ?, ?, ?)',
@@ -79,6 +89,11 @@ function resolver_ambulancia(mysqli $conexion, array $datos): int
         verificar_relacion($conexion, 'ambulancia', 'ID_ambulancia', $datos['ambulancia_id']);
         return $datos['ambulancia_id'];
     }
+    return crear_ambulancia($conexion, $datos);
+}
+
+function crear_ambulancia(mysqli $conexion, array $datos): int
+{
     verificar_unico($conexion, 'ambulancia', 'Matricula', $datos['ambulancia_matricula'],
         'La matrícula ya está registrada. Seleccioná la ambulancia existente.');
     return insertar_id($conexion, 'INSERT INTO ambulancia (Estado, Año, Modelo, Matricula) VALUES (?, ?, ?, ?)',

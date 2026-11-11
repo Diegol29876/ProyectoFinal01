@@ -41,6 +41,58 @@ $accion = (string) ($entrada['action'] ?? '');
 $id = entero_positivo($entrada['id'] ?? 0);
 try {
     $conexion = conectar_bd();
+    if ($accion === 'create-patient') {
+        $datosPaciente = validar_datos_paciente($entrada);
+        $conexion->begin_transaction();
+        try {
+            $pacienteId = crear_paciente($conexion, $datosPaciente);
+            $conexion->commit();
+        } catch (Throwable $error) {
+            $conexion->rollback();
+            throw $error;
+        }
+        responder_json(true, 'Paciente creado correctamente.', [
+            'registro' => [
+                'id' => $pacienteId,
+                'nombre' => $datosPaciente['paciente_nombre'] . ' ' . $datosPaciente['paciente_apellido'] .
+                    ' (' . $datosPaciente['paciente_cedula'] . ')'
+            ]
+        ]);
+    }
+    if ($accion === 'create-driver') {
+        $datosConductor = validar_datos_conductor($entrada);
+        $conexion->begin_transaction();
+        try {
+            $conductorId = crear_conductor($conexion, $datosConductor);
+            $conexion->commit();
+        } catch (Throwable $error) {
+            $conexion->rollback();
+            throw $error;
+        }
+        responder_json(true, 'Chofer creado correctamente.', [
+            'registro' => [
+                'id' => $conductorId,
+                'nombre' => $datosConductor['conductor_nombre']
+            ]
+        ]);
+    }
+    if ($accion === 'create-ambulance') {
+        $datosAmbulancia = validar_datos_ambulancia($entrada);
+        $conexion->begin_transaction();
+        try {
+            $ambulanciaId = crear_ambulancia($conexion, $datosAmbulancia);
+            $conexion->commit();
+        } catch (Throwable $error) {
+            $conexion->rollback();
+            throw $error;
+        }
+        responder_json(true, 'Ambulancia creada correctamente.', [
+            'registro' => [
+                'id' => $ambulanciaId,
+                'nombre' => $datosAmbulancia['ambulancia_modelo'] . ' (' . $datosAmbulancia['ambulancia_matricula'] . ')'
+            ]
+        ]);
+    }
     if ($accion === 'delete') {
         if (!$id) responder_json(false, 'El traslado indicado no es válido.', [], 422);
         if (!eliminar_traslado($conexion, $id)) responder_json(false, 'No se encontró el traslado.', [], 404);
@@ -60,9 +112,31 @@ try {
         responder_json(false, 'No se pudo eliminar el traslado.', [], 500);
     }
     error_log('traslados.php guardar: ' . $error->getMessage());
-    $mensaje = $error->getCode() === 1062
-        ? 'Ya existe un registro con los mismos datos únicos (por ejemplo, cédula o matrícula).'
-        : 'No se pudo guardar el traslado. Verificá los datos y que la migración esté aplicada.';
+    if ($error->getCode() === 1062) {
+        if ($accion === 'create-patient') {
+            responder_json(false, 'La cédula del paciente ya está registrada.', [], 422);
+        }
+        if ($accion === 'create-driver') {
+            responder_json(false, 'El documento del chofer ya está registrado.', [], 422);
+        }
+        if ($accion === 'create-ambulance') {
+            responder_json(false, 'La matrícula de la ambulancia ya está registrada.', [], 422);
+        }
+        if ($accion === 'create' || $accion === 'update') {
+            responder_json(false,
+                'Hay un ID duplicado al guardar el traslado. En la base de datos, traslado.ID_Traslado y ruta.ID_ruta deben tener AUTO_INCREMENT.',
+                [], 500);
+        }
+        responder_json(false, 'Ya existe un registro con los mismos datos únicos (por ejemplo, cédula o matrícula).', [], 422);
+    }
+
+    $mensaje = $accion === 'create-patient'
+        ? 'No se pudo guardar el paciente. Verificá que ID_Paciente tenga AUTO_INCREMENT en la base de datos.'
+        : ($accion === 'create-driver'
+            ? 'No se pudo guardar el chofer. Verificá los datos y la conexión con la base de datos.'
+            : ($accion === 'create-ambulance'
+                ? 'No se pudo guardar la ambulancia. Verificá los datos y la conexión con la base de datos.'
+                : 'No se pudo guardar el traslado. Verificá los datos y que la migración esté aplicada.'));
     responder_json(false, $mensaje, [], 500);
 } catch (Throwable $error) {
     if (isset($conexion) && $conexion->thread_id) $conexion->rollback();

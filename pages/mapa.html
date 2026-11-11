@@ -42,6 +42,7 @@
                     <input id="paciente-nacimiento" name="paciente_nacimiento" type="date" required disabled>
                     <label for="paciente-email">Correo electrónico</label>
                     <input id="paciente-email" name="paciente_email" type="email" maxlength="100" required disabled>
+                    <button id="guardar-paciente" type="button">Guardar paciente</button>
                 </div>
             </section>
 
@@ -134,6 +135,7 @@
                     <input id="conductor-licencia" name="conductor_licencia" maxlength="50" required disabled>
                     <label for="conductor-telefono">Teléfono</label>
                     <input id="conductor-telefono" name="conductor_telefono" maxlength="20" required disabled>
+                    <button id="guardar-conductor" type="button">Guardar chofer</button>
                 </div>
             </section>
 
@@ -151,6 +153,7 @@
                     <input id="ambulancia-anio" name="ambulancia_anio" type="number" min="1900" max="2100" required disabled>
                     <label for="ambulancia-estado">Estado</label>
                     <input id="ambulancia-estado" name="ambulancia_estado" maxlength="50" value="Disponible" required disabled>
+                    <button id="guardar-ambulancia" type="button">Guardar ambulancia</button>
                 </div>
             </section>
 
@@ -180,6 +183,6 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="../js/mapa.js"></script>
+    <script type="module" src="../js/mapa.js?v=20261111-2"></script>
 </body>
 </html>

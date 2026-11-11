@@ -1,6 +1,9 @@
+import { buscarDireccionCompleta, calcularRuta } from './mapa_servicios.js';
+
 const formulario = document.getElementById('formulario-traslado');
 const estadoTraslado = document.getElementById('estado-traslado');
 const botonGuardar = document.getElementById('guardar-traslado');
+const botonGuardarPaciente = document.getElementById('guardar-paciente');
 const origen = document.getElementById('origen');
 const destino = document.getElementById('destino');
 const direccionOrigen = document.getElementById('origen');
@@ -162,20 +165,13 @@ function direccionCompleta(calle, departamento) {
     return direccion;
 }
 
-async function buscarDireccion(calle, departamento) {
+async function buscarDireccion(calle, departamento, origen) {
     const consulta = direccionCompleta(calle, departamento);
-    const url = 'https://api.geoapify.com/v1/geocode/search?' +
-        'text=' + encodeURIComponent(consulta) +
-        '&filter=countrycode:uy&lang=es&limit=1&format=json&apiKey=4572a7318c164b3b873097a1f7b2c618';
-    const respuesta = await fetch(url);
-    if (!respuesta.ok) {
-        throw new Error('No se pudo buscar la dirección.');
-    }
-    const datos = await respuesta.json();
-    const resultado = datos.results && datos.results[0];
+    const resultado = await buscarDireccionCompleta(consulta, origen);
     if (!resultado) {
         throw new Error('No se encontró la dirección ingresada.');
     }
+
     return {
         posicion: [Number(resultado.lat), Number(resultado.lon)],
         direccion: consulta
@@ -220,39 +216,18 @@ document.getElementById('ubicar').addEventListener('click', async function () {
 
     estadoTraslado.textContent = 'Buscando destino y trazando la ruta...';
     try {
-        const resultadoDestino = await buscarDireccion(direccionDestino.value, departamentoDestino.value);
-        const waypoints = posicionOrigen[0] + ',' + posicionOrigen[1] + '|' +
-            resultadoDestino.posicion[0] + ',' + resultadoDestino.posicion[1];
-        const urlRuta = 'https://api.geoapify.com/v1/routing?' +
-            'waypoints=' + encodeURIComponent(waypoints) +
-            '&mode=drive&units=metric&lang=es&apiKey=4572a7318c164b3b873097a1f7b2c618';
-        const respuestaRuta = await fetch(urlRuta);
-        if (!respuestaRuta.ok) {
-            throw new Error('Se encontró el destino, pero no se pudo calcular la ruta.');
-        }
-
-        const datosRuta = await respuestaRuta.json();
-        const featureRuta = datosRuta.features && datosRuta.features[0];
-        const geometria = featureRuta && featureRuta.geometry;
-        const coordenadas = geometria && (geometria.type === 'MultiLineString'
-            ? geometria.coordinates[0]
-            : geometria.coordinates);
-        if (!Array.isArray(coordenadas) || coordenadas.length === 0) {
-            throw new Error('Se encontró el destino, pero no se pudo calcular la ruta.');
-        }
-        if (!featureRuta.properties || typeof featureRuta.properties.time !== 'number' ||
-            !Number.isFinite(featureRuta.properties.time) || featureRuta.properties.time < 0) {
-            throw new Error('Se trazó la ruta, pero no se pudo calcular el tiempo estimado de llegada.');
-        }
+        const resultadoDestino = await buscarDireccion(
+            direccionDestino.value,
+            departamentoDestino.value,
+            posicionOrigen
+        );
+        const datosRuta = await calcularRuta(posicionOrigen, resultadoDestino.posicion);
 
         limpiarRuta();
-        duracionRutaSegundos = featureRuta.properties.time;
+        duracionRutaSegundos = datosRuta.duracionSegundos;
         posicionDestino = resultadoDestino.posicion;
         marcadorDestino = L.marker(posicionDestino, { icon: iconoDestino }).addTo(mapa);
-        const puntos = coordenadas.map(function ([longitud, latitud]) {
-            return [latitud, longitud];
-        });
-        ruta = L.polyline(puntos, { color: 'blue', weight: 5 }).addTo(mapa);
+        ruta = L.polyline(datosRuta.puntos, { color: 'blue', weight: 5 }).addTo(mapa);
         destino.value = resultadoDestino.direccion;
         actualizarHoraEstimada();
         mapa.fitBounds(ruta.getBounds());
@@ -263,6 +238,69 @@ document.getElementById('ubicar').addEventListener('click', async function () {
 
 Object.values(selects).forEach(function (select) {
     select.addEventListener('change', alternarCamposNuevos);
+});
+
+async function guardarRegistroNuevo(tipo, accion) {
+    const grupo = gruposNuevos[tipo];
+    const campos = grupo.querySelectorAll('input');
+    for (const campo of campos) {
+        if (!campo.reportValidity()) return;
+    }
+
+    const boton = grupo.querySelector('button[type="button"]');
+    const select = selects[tipo];
+    const etiquetas = {
+        paciente: 'paciente',
+        conductor: 'chofer',
+        ambulancia: 'ambulancia'
+    };
+    estadoTraslado.textContent = 'Guardando ' + etiquetas[tipo] + '...';
+    boton.disabled = true;
+    const datos = Object.fromEntries(Array.from(campos, function (campo) {
+        return [campo.name, campo.value];
+    }));
+    datos.action = accion;
+    datos.csrf_token = formulario.elements.csrf_token.value;
+
+    try {
+        const resultado = await solicitar('../php/traslados.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        });
+        if (!resultado.registro || resultado.registro.id == null || !resultado.registro.nombre) {
+            throw new Error('El servidor no devolvió los datos del registro creado.');
+        }
+        const opcion = document.createElement('option');
+        opcion.value = resultado.registro.id;
+        opcion.textContent = resultado.registro.nombre;
+        select.insertBefore(opcion, select.querySelector('option[value="nuevo"]'));
+        select.value = String(resultado.registro.id);
+        campos.forEach(function (campo) {
+            campo.value = '';
+        });
+        alternarCamposNuevos();
+        estadoTraslado.textContent = resultado.mensaje;
+    } catch (error) {
+        estadoTraslado.textContent = error.message;
+        if (error.message === 'Iniciá sesión para gestionar traslados.') {
+            window.location.href = 'login.html';
+        }
+    } finally {
+        boton.disabled = false;
+    }
+}
+
+botonGuardarPaciente.addEventListener('click', function () {
+    guardarRegistroNuevo('paciente', 'create-patient');
+});
+
+document.getElementById('guardar-conductor').addEventListener('click', function () {
+    guardarRegistroNuevo('conductor', 'create-driver');
+});
+
+document.getElementById('guardar-ambulancia').addEventListener('click', function () {
+    guardarRegistroNuevo('ambulancia', 'create-ambulance');
 });
 
 formulario.addEventListener('submit', async function (evento) {
