@@ -12,7 +12,6 @@ function responder($correcto, $mensaje, $usuario = null) {
     if ($usuario !== null) {
         $respuesta['usuario'] = $usuario;
     }
-
     echo json_encode($respuesta);
     exit;
 }
@@ -37,7 +36,7 @@ try {
     $consulta->execute();
     $fila = $consulta->get_result()->fetch_assoc();
 
-    if (!$fila || !password_verify($contrasenia, $fila['contrasenia'])) {
+    if (!$fila || empty($fila['contrasenia']) || !password_verify($contrasenia, $fila['contrasenia'])) {
         responder(false, 'Cédula o contraseña incorrecta.');
     }
 
